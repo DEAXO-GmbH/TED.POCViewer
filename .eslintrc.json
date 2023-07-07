@@ -45,6 +45,8 @@
         "prefer-spread": 0,
         "prefer-const": "warn",
         "@typescript-eslint/no-non-null-assertion": 0,
-        "@typescript-eslint/no-empty-function": 0
+        "@typescript-eslint/no-empty-function": 0,
+        "no-trailing-spaces": "error",
+        "@typescript-eslint/no-namespace": "off"
     }
 }
