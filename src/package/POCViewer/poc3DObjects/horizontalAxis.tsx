@@ -10,7 +10,9 @@ import { pocViewerStore } from 'package/stores/POCViewerStore';
 
 
 const HorizontalAxis = (props: {horizontalAxis: IHorizontalAxis}) => {
-    const position = new Vector3(-pocViewerStore.planesWidth / 2, props.horizontalAxis.distance - pocViewerStore.planesLength / 2, 0);
+    // the offset fr
+    const position = new Vector3(0, props.horizontalAxis.distance, 0);
+
     const text = props.horizontalAxis.name;
     const length = pocViewerStore.planesWidth;
 

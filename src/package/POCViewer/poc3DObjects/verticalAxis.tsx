@@ -10,7 +10,7 @@ import { observer } from 'mobx-react';
 
 
 export const VerticalAxis = observer((props: {verticalAxis: IVerticalAxis}) => {
-    const position = new Vector3(props.verticalAxis.distance - pocViewerStore.planesWidth / 2, -pocViewerStore.planesLength / 2, 0);
+    const position = new Vector3(props.verticalAxis.distance, 0, 0);
     const text = props.verticalAxis.name;
     const length = pocViewerStore.planesLength;
 

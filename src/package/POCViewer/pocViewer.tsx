@@ -1,25 +1,21 @@
-import React, { Suspense } from 'react';
+/* eslint react/no-unknown-property: 0 */
+import React from 'react';
 import { observer } from 'mobx-react';
 
-import { pocViewerStore } from 'package/stores/POCViewerStore';
-import { FlyControls, OrbitControls, OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
+import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 
-import * as THREE from 'three';
 
 import './pocViewer.css';
-import { VerticalAxis } from './poc3DObjects/verticalAxis';
-import HorizontalAxis from './poc3DObjects/horizontalAxis';
 import { POCObjectsGenerator } from './pocObjectsGenerator';
-
-// Due to ESLint bug with unknown props
-/* eslint react/no-unknown-property: 0 */
+import { pocViewerStore } from 'package/stores/POCViewerStore';
+import { concatClassnames as cn } from 'package/utils';
 
 
 
 export const POCViewer = observer(() => {
     return (
-        <div className='poc-viewer_cont'>
+        <div className={cn('poc-viewer_cont', pocViewerStore.hoveredPOCIds.size>0 && 'poc-hovered')}>
             <Canvas>
                 <PerspectiveCamera makeDefault position={[0,0,300]} />
                 <OrbitControls

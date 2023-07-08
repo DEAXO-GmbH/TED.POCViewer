@@ -7,6 +7,7 @@ import { ILevelPlane } from 'package/stores/POCViewerStore/types';
 import { observer } from 'mobx-react';
 import HorizontalAxis from './horizontalAxis';
 import { VerticalAxis } from './verticalAxis';
+import { POCObject3D } from './pocObject3D';
 
 
 
@@ -24,13 +25,10 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
             position={position}
             ref={planeGroupRef}
             onClick={e => {
-                console.log(props.levelPlane.levelName, planeGroupRef.current);
-                e.stopPropagation();
+                // console.log(props.levelPlane.levelName, planeGroupRef.current);
+                // console.log('pocs: ', pocViewerStore.getAllLevelPOCs(props.levelPlane.id));
+                // e.stopPropagation();
             }}
-            // onPointerMove={e => {
-            //     console.log(props.levelPlane.levelName, planeGroupRef.current);
-            //     e.stopPropagation();
-            // }}
         >
             <Plane
                 args={[pocViewerStore.planesWidth, pocViewerStore.planesLength]}
@@ -41,11 +39,11 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
             </Plane>
 
             <Plane
-                args={[pocViewerStore.planesWidth + 10, pocViewerStore.planesLength + 10]}
+                args={[pocViewerStore.planesWidth + 12, pocViewerStore.planesLength + 12]}
                 rotation={new Euler(1.5 * Math.PI, 0, 0)}
                 position={[0, -0.1, 0]}
             >
-                <meshBasicMaterial attach="material" color={color} opacity={0.5} transparent={true} side={DoubleSide} />
+                <meshBasicMaterial attach="material" color={0x8899CC} opacity={0.7} transparent={true} side={DoubleSide} />
             </Plane>
 
             <Suspense fallback={<></>}>
@@ -62,8 +60,13 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
                 </Text>
             </Suspense>
 
-            {pocViewerStore.horizontalAxis.map((axis, i) => <HorizontalAxis key={i} horizontalAxis={axis} />)}
-            {pocViewerStore.verticalAxis.map((axis, i) => <VerticalAxis key={i} verticalAxis={axis} />)}
+            <group position={new Vector3(-pocViewerStore.planesWidth / 2, 0, pocViewerStore.planesLength / 2)}>
+                {pocViewerStore.getAllLevelPOCs(props.levelPlane.id).map((poc, i) => {
+                    return <POCObject3D poc={poc} key={i} />;
+                })}
+                {pocViewerStore.horizontalAxis.map((axis, i) => <HorizontalAxis key={i} horizontalAxis={axis} />)}
+                {pocViewerStore.verticalAxis.map((axis, i) => <VerticalAxis key={i} verticalAxis={axis} />)}
+            </group>
         </group>
     );
 });
