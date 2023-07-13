@@ -8,6 +8,7 @@ import { observer } from 'mobx-react';
 import HorizontalAxis from './horizontalAxis';
 import { VerticalAxis } from './verticalAxis';
 import { POCObject3D } from './pocObject3D';
+import { widgetStore } from 'package/stores/widgetStore';
 
 
 
@@ -15,9 +16,14 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
     const position = new Vector3(0, props.levelPlane.distance, 0);
     const color = 0xAAAAFF;
     const textScale = 15;
+    const hidden = widgetStore.hiddenLayers.has(props.levelPlane.id);
     const planeOffset = 10;
 
     const planeGroupRef = useRef<any>(null);
+
+    if (hidden) {
+        return null;
+    }
 
 
     return (

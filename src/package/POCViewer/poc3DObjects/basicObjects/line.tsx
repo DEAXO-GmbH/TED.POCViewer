@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unknown-property */
 import React, { useLayoutEffect } from 'react';
-import * as THREE from 'three';
-import { BufferGeometry, Vector3 } from 'three';
+
 
 export const Line = (props: any) => {
     const ref = React.useRef<any>(null!);

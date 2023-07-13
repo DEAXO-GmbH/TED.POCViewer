@@ -10,6 +10,7 @@ import './pocViewer.css';
 import { POCObjectsGenerator } from './pocObjectsGenerator';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 import { concatClassnames as cn } from 'package/utils';
+import { ButtonPannel } from './components/buttonPannel';
 
 
 
@@ -37,6 +38,8 @@ export const POCViewer = observer(() => {
 
                 <POCObjectsGenerator />
             </Canvas>
+
+            <ButtonPannel />
         </div>
     );
 });

@@ -1,0 +1,41 @@
+.poc-viewer__layers {
+    display: block;
+    width: 250px;
+    position: absolute;
+    top: 8px;
+    right: 40px;
+
+    background-color: #ebebeb;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.poc-viewer__layers:not(.open) {
+    display: none;
+}
+
+.poc-viewer__layers_top {
+    padding: 4px 16px;
+    border-bottom: 1px solid black;
+}
+
+.poc-viewer__layers_main {
+    padding: 10px 16px;
+}
+
+.poc-viewer__layers_top .anticon-close {
+    position: absolute;
+    right: 5px;
+}
+
+.poc-viewer__layers_layer {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+    user-select: none;
+}
+
+.poc-viewer__layers_layer > .eye-button {
+    transform: translateY(1px);
+}
+

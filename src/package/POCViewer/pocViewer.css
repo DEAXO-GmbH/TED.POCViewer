@@ -1,4 +1,5 @@
 .poc-viewer_cont {
+    position: relative;
     background-color: #FFF;
     width: 100%;
     height: 100%;
