@@ -1,3 +1,18 @@
+export interface IPOCViewerInputParameters {
+    xAxes: IAxisXDTO[]
+    yAxes: IAxisYDTO[]
+    levels: ILevelDTO[]
+    pocs: IPocDTO[]
+    pocLines: IPOCLineDTO[]
+}
+
+export type POCViewer3DPoint = {
+    x: number
+    y: number
+    z: number
+}
+
+// ========== DTO objects ==========
 export interface IAxisXDTO {
     id: string
     name: string
@@ -18,28 +33,42 @@ export interface ILevelDTO {
 
 export interface IPocDTO {
     id: string
+    pocLineId: string | null
+
     name: string
-    level: string
-    xAxis: string
-    yAxis: string
-    pocLine?: string
-    mediaCapacity: number
+    description: string
+    space: string
+
+    index: number
+
+    buildingId: string
+    levelId: string
+    axisXStartId: string
+    axisYStartId: string
+    axisXEndId: string
+    axisYEndId: string
+
+    mediaCapacity: string
+    occupiedMediaCapacity: string
+    physicalCapacity: string
+    occupiedPhysicalCapacity: string
 }
 
 export interface IPOCLineDTO {
     id: string
+    parentPOCLineId: string | null
+
     name: string
-    pocLine?: string
-}
+    description: string
 
-export interface IPOCViewerInputParameters {
-    xAxes: IAxisXDTO[]
-    yAxes: IAxisYDTO[]
-    levels: ILevelDTO[]
-    pocs: IPocDTO[]
-    pocLines: IPOCLineDTO[]
-}
+    index: number
 
+    incomingVolumeCapacity: string
+}
+// =================================
+
+
+// ========= Store objects =========
 export interface IVerticalAxis {
     id: string
     name: string
@@ -58,18 +87,50 @@ export interface ILevelPlane {
     levelName: string
 }
 
-export interface IPOCLineTreeNode {
+export enum ViewerPOCTypes {
+    POC,
+    POCLine,
+}
+
+export interface IViewerPOCLine {
     id: string
-    pocLineParent: string
-    points: ([number, number, number] | IPOCLineTreeNode)[] // Array of child pocLines & pocs
-    direction: 'horizontal' | 'vertical'
-    endPoint: [number, number, number] // The point that's added in the end to get offset
+    parentPOCLineId: string | null
+
+    name: string
+    desciption: string
+    type: ViewerPOCTypes.POCLine
+
+    index: number
+
+    getDirection: (children: POCViewer3DPoint[]) => 'horizontal' | 'vertical'
+    getChildrenPoints: (children: Array<IViewerPOCLine | IViewerPOC>) => POCViewer3DPoint[]
 }
 
 export interface IViewerPOC {
     id: string
-    level: ILevelPlane
-    xAxis: IHorizontalAxis
-    yAxis: IVerticalAxis
+    parentPOCLineId: string | null
+
     name: string
+    description: string
+    type: ViewerPOCTypes.POC
+
+    index: number
+
+    level: ILevelPlane
+    xAxisStart: IHorizontalAxis
+    yAxisStart: IVerticalAxis
+    xAxisEnd: IHorizontalAxis
+    yAxisEnd: IVerticalAxis
+
+    position: {
+        x: number
+        y: number
+        z: number
+    }
+
+    mediaCapacity: string
+    occupiedMediaCapacity: string
+    physicalCapacity: string
+    occupiedPhysicalCapacity: string
 }
+// =================================

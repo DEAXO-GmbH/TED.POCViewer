@@ -2,6 +2,7 @@ import React from 'react';
 import { POCViewer } from './package/POCViewer';
 import './App.css';
 
+import * as THREE from 'three';
 
 
 function App() {

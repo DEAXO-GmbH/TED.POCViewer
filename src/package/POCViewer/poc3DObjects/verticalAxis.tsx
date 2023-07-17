@@ -7,6 +7,7 @@ import { Text } from './basicObjects/text';
 import { IVerticalAxis } from 'package/stores/POCViewerStore/types';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 import { observer } from 'mobx-react';
+import { AXES_COLOR } from 'package/constants';
 
 
 export const VerticalAxis = observer((props: {verticalAxis: IVerticalAxis}) => {
@@ -15,7 +16,7 @@ export const VerticalAxis = observer((props: {verticalAxis: IVerticalAxis}) => {
     const length = pocViewerStore.planesLength;
 
     const radius = 1;
-    const color = 0x000000;
+    const color = AXES_COLOR;
     const textSize = 1;
     const axisLabelOffset = 3;
 

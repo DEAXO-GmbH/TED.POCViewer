@@ -6,18 +6,18 @@ import { Line } from './basicObjects/line';
 import { Text } from './basicObjects/text';
 import { IHorizontalAxis } from 'package/stores/POCViewerStore/types';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
+import { AXES_COLOR } from 'package/constants';
 
 
 
 const HorizontalAxis = (props: {horizontalAxis: IHorizontalAxis}) => {
-    // the offset fr
     const position = new Vector3(0, props.horizontalAxis.distance, 0);
 
     const text = props.horizontalAxis.name;
     const length = pocViewerStore.planesWidth;
 
     const radius = 1;
-    const color = 0x000000;
+    const color = AXES_COLOR;
     const textSize = 1;
     const axisLabelOffset = 3;
 
@@ -28,22 +28,20 @@ const HorizontalAxis = (props: {horizontalAxis: IHorizontalAxis}) => {
             <Circle
                 color={color}
                 radius={radius}
-                position={
-                    new Vector3(
-                        position.x + axisLabelOffset  + length + radius,
-                        position.y,
-                        position.z)
-                }
+                position={new Vector3(
+                    position.x + axisLabelOffset  + length + radius,
+                    position.y,
+                    position.z
+                )}
             />
             <Text
                 text={text}
                 color={color}
-                position={
-                    new Vector3(
-                        position.x + axisLabelOffset  + length + radius - textSize/2.2,
-                        position.y - textSize/2.2,
-                        position.z
-                    )}
+                position={new Vector3(
+                    position.x + axisLabelOffset  + length + radius - textSize/2.2,
+                    position.y - textSize/2.2,
+                    position.z
+                )}
                 size ={textSize}
             />
 
