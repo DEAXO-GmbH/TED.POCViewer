@@ -55,9 +55,14 @@ export const transformToViewerPOCLines = (pocs: IViewerPOC[], pocLineDtos: IPOCL
 
                 if (pocLineDto.parentPOCLineId === null) {
                     // If pocLine parent === null, connect it to the root pocLines
-                    const mainPOCLineConnectionPoint: POCViewer3DPoint = { ...last(points)! };
-                    mainPOCLineConnectionPoint.x = 0;
-                    points.push(mainPOCLineConnectionPoint);
+                    const mainPOCLineConnectionPoint: POCViewer3DPoint = { ...points[0] };
+
+                    if (this.getDirection(points) === 'horizontal') {
+                        mainPOCLineConnectionPoint.x = 0;
+                    } else {
+                        mainPOCLineConnectionPoint.y = 0;
+                    }
+                    points.unshift(mainPOCLineConnectionPoint);
                 }
 
 

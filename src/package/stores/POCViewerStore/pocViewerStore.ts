@@ -271,7 +271,7 @@ const mock1: IPOCViewerInputParameters = {
             axisXEndId: 'c',
             axisYStartId: '5',
             axisYEndId: '6',
-            index: 1100,
+            index: 50,
             mediaCapacity: '0',
             occupiedMediaCapacity: '0',
             occupiedPhysicalCapacity: '0',
