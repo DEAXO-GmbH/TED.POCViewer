@@ -3,7 +3,7 @@ import { pocViewerStore } from 'package/stores/POCViewerStore';
 
 import { IViewerPOCLine } from 'package/stores/POCViewerStore/types';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import * as THREE from 'three';
 import { extend } from '@react-three/fiber';
 import { POCLINE_COLOR } from 'package/constants';
@@ -18,6 +18,7 @@ interface IPOCLineProps {
 
 export const POCLine = ({ pocLine }: IPOCLineProps) => {
     const ref = React.useRef<any>();
+    const lineColor = useMemo(() => new THREE.Color(0xFFFFFF * Math.random() || POCLINE_COLOR), []);
 
     useEffect(() => {
         const points = pocLine.getChildrenPoints([...pocViewerStore.pocs, ...pocViewerStore.pocLines]);
@@ -31,7 +32,7 @@ export const POCLine = ({ pocLine }: IPOCLineProps) => {
                 <meshLineGeometry ref={ref}/>
                 <meshLineMaterial
                     lineWidth={0.5}
-                    color={new THREE.Color(0xFFFFFF * Math.random() || POCLINE_COLOR)}
+                    color={lineColor}
                     resolution={new THREE.Vector2(121, 121)}
                 />
             </mesh>

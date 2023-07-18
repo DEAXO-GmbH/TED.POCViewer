@@ -53,6 +53,13 @@ export const transformToViewerPOCLines = (pocs: IViewerPOC[], pocLineDtos: IPOCL
                     }
                 }).filter(Boolean);// remove undefined from points
 
+                if (pocLineDto.parentPOCLineId === null) {
+                    // If pocLine parent === null, connect it to the root pocLines
+                    const mainPOCLineConnectionPoint: POCViewer3DPoint = { ...last(points)! };
+                    mainPOCLineConnectionPoint.x = 0;
+                    points.push(mainPOCLineConnectionPoint);
+                }
+
 
                 // TODO add offset here
                 return points;

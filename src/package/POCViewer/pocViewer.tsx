@@ -36,7 +36,7 @@ export const POCViewer = observer(() => {
                     rotateSpeed={0.4}
                 />
                 <ambientLight />
-                <pointLight position={[10, 10, 10]} />
+                {/* <pointLight position={[10, 10, 10]} /> */}
 
                 <gridHelper args={[500, 250, SCENE_GRID_FIRST_COLOR, SCENE_GRID_FIRST_COLOR]} position={[0, -0.2, 0]} />
                 <gridHelper args={[500, 25, SCENE_GRID_SECOND_COLOR, SCENE_GRID_SECOND_COLOR]} position={[0, -0.2, 0]} />
@@ -44,6 +44,11 @@ export const POCViewer = observer(() => {
 
                 <gridHelper args={[500, 250, 0xFF0000, 0xFF0000]} position={[0, -0.2, 500]} />
                 <gridHelper args={[500, 25, 0xFF0000, 0xFF0000]} position={[0, -0.2, 500]} />
+
+                <directionalLight position={[0, 2, 1]} intensity={0.5} />
+                <directionalLight position={[1, 2, -1]} intensity={0.25} />
+                <directionalLight position={[1, -2, -1]} intensity={0.1} />
+                {/* <directionalLight /> */}
 
                 <POCObjectsGenerator />
 

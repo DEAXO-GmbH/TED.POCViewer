@@ -122,11 +122,7 @@ export interface IViewerPOC {
     xAxisEnd: IHorizontalAxis
     yAxisEnd: IVerticalAxis
 
-    position: {
-        x: number
-        y: number
-        z: number
-    }
+    position: POCViewer3DPoint
 
     mediaCapacity: string
     occupiedMediaCapacity: string
