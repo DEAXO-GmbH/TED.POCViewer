@@ -13,7 +13,7 @@ export const Line = (props: any) => {
                     props.endPoint
                 ]);
         }
-    }, []);
+    }, [props]);
 
     return (
         <>

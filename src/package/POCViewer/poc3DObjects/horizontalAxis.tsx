@@ -7,10 +7,11 @@ import { Text } from './basicObjects/text';
 import { IHorizontalAxis } from 'package/stores/POCViewerStore/types';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 import { AXES_COLOR } from 'package/constants';
+import { observer } from 'mobx-react';
 
 
 
-const HorizontalAxis = (props: {horizontalAxis: IHorizontalAxis}) => {
+const HorizontalAxis = observer((props: {horizontalAxis: IHorizontalAxis}) => {
     const position = new Vector3(0, props.horizontalAxis.distance, 0);
 
     const text = props.horizontalAxis.name;
@@ -76,6 +77,6 @@ const HorizontalAxis = (props: {horizontalAxis: IHorizontalAxis}) => {
         </group>
 
     );
-};
+});
 
 export default HorizontalAxis;

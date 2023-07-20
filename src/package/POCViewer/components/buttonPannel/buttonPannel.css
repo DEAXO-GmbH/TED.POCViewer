@@ -1,5 +1,8 @@
 .poc-viewer__button-pannel {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     top: 8px;
     right: 8px;
 }
@@ -15,7 +18,8 @@
     height: 28px;
     cursor: pointer;
     background-color: var(--button-panel-bg);
-    border-width: 1px;
+    border-width: 2px;
+
     box-shadow: inset 0 0 0px 1px #eff1f020;
     transition: all 60ms;
     user-select: none;
@@ -28,4 +32,22 @@
 
     font-size: 13px;
     color: var(--button-panel-text-color);
+}
+
+.poc-viewer__button-pannel_btn:first-child {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.poc-viewer__button-pannel_btn:last-child {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+
+.poc-viewer__button-pannel_btn:not(:last-child) {
+    border-bottom: none;
+} 
+
+.poc-viewer__button-pannel_btn:hover {
+    filter: brightness(1.1);
 }

@@ -1,12 +1,28 @@
 // CSS Variables
 export const CSS_BUTTON_PANEL_BTN_BG = '#626262';
-export const CSS_BUTON_PANEL_BTN_TEXT_COLOR = '#b7b7b7';
+export const CSS_BUTTON_PANEL_BTN_TEXT_COLOR = '#b7b7b7';
 export const CSS_BUTTON_PANEL_BTN_BORDER = '#202020';
+
+export const CSS_BUTTON_PANEL_MODAL_BG_1 = '#6f6f6f';
+export const CSS_BUTTON_PANEL_MODAL_BG_2 = '#626262';
+export const CSS_BUTTON_PANEL_MODAL_TEXT_COLOR_1 = '#c5c8cc';
+export const CSS_BUTTON_PANEL_MODAL_TEXT_COLOR_2 = '#c0c0c0';
+export const CSS_BUTTON_PANEL_MODAL_BORDER = '#202020';
+export const CSS_BUTTON_PANEL_MODAL_THUMB_COLOR = '#999999';
+export const CSS_BUTTON_PANEL_MODAL_THUMB_COLOR_HOVER = '#888888';
 
 export const POC_VIEWER_CSS_VARIABLES = {
     '--button-panel-bg': CSS_BUTTON_PANEL_BTN_BG,
-    '--button-panel-text-color': CSS_BUTON_PANEL_BTN_TEXT_COLOR,
+    '--button-panel-text-color': CSS_BUTTON_PANEL_BTN_TEXT_COLOR,
     '--button-panel-btn-border': CSS_BUTTON_PANEL_BTN_BORDER,
+
+    '--button-panel-modal-bg-1': CSS_BUTTON_PANEL_MODAL_BG_1,
+    '--button-panel-modal-bg-2': CSS_BUTTON_PANEL_MODAL_BG_2,
+    '--button-panel-modal-text-color-1': CSS_BUTTON_PANEL_MODAL_TEXT_COLOR_1,
+    '--button-panel-modal-text-color-2': CSS_BUTTON_PANEL_MODAL_TEXT_COLOR_2,
+    '--button-panel-modal-border': CSS_BUTTON_PANEL_MODAL_BORDER,
+    '--button-panel-modal-thumb-color': CSS_BUTTON_PANEL_MODAL_THUMB_COLOR,
+    '--button-panel-modal-thumb-color-hover': CSS_BUTTON_PANEL_MODAL_THUMB_COLOR_HOVER,
 } as React.CSSProperties;
 
 
@@ -31,3 +47,4 @@ export const POC_CRYSTAL_LABEL_COLOR = SCENE_DEFAULT_TEXT_COLOR;
 export const POC_CRYSTAL_METRIC_COLOR = 0x777777;
 export const POC_CRYSTAL_METRIC_OVERLOAD_COLOR = 0xFF0000;
 export const POCLINE_COLOR = 0x110900;
+export const POCLINE_OFFSET_LENGTH = 2;

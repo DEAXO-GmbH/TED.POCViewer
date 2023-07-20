@@ -1,5 +1,5 @@
 /* eslint react/no-unknown-property: 0 */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
@@ -13,11 +13,23 @@ import { concatClassnames as cn } from 'package/utils';
 import { ButtonPannel } from './components/buttonPannel';
 import TextSprite from './poc3DObjects/basicObjects/textSprite';
 import { LEVEL_PLANE_LABEL_COLOR, POC_VIEWER_CSS_VARIABLES, SCENE_BACKGROUND_COLOR, SCENE_GRID_FIRST_COLOR, SCENE_GRID_SECOND_COLOR } from 'package/constants';
-// import { AxesHelper } from 'three';
+import { IPOCViewerInputParameters } from 'package/stores/POCViewerStore/types';
 
 
+interface IPOCViewerProps {
+    pocInputParameters: IPOCViewerInputParameters | null
+}
 
-export const POCViewer = observer(() => {
+export const POCViewer = observer(({ pocInputParameters }: IPOCViewerProps) => {
+
+    useEffect(() => {
+        if (pocInputParameters) {
+            pocViewerStore.setPocInputParameters(pocInputParameters);
+        } else {
+            pocViewerStore.resetSceneData();
+        }
+    }, [pocInputParameters]);
+
     return (
         <div style={{ ...POC_VIEWER_CSS_VARIABLES }} className={cn('poc-viewer_cont', pocViewerStore.hoveredPOCIds.size > 0 && 'poc-hovered')}>
             <Canvas>

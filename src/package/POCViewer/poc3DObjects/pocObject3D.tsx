@@ -19,7 +19,6 @@ export const POCObject3D = observer(({ poc }: {poc: IViewerPOC}) => {
     const capacityClippingPlane = useMemo(() => {
         const plane = new THREE.Plane(new THREE.Vector3(0, 0, 0), 10);
         plane.constant = 0;
-        console.log('POC', poc.name, poc.position);
         return plane;
     }, []);
 
@@ -47,7 +46,7 @@ export const POCObject3D = observer(({ poc }: {poc: IViewerPOC}) => {
             </mesh>
 
             <TextSprite color={POC_CRYSTAL_LABEL_COLOR} fontSize={55} position={[0, 4.6, 0]}>
-                {poc.name}
+                {poc.name} {`index: ${poc.index}`}
             </TextSprite>
 
             <TextSprite color={mediaMetricColor} fontSize={40} position={[0, 4, 0]}>

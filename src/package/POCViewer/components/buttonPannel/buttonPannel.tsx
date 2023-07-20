@@ -1,12 +1,22 @@
-import { CopyOutlined, FullscreenOutlined } from '@ant-design/icons';
-import React from 'react';
-import './buttonPannel.css';
+import React, { useRef } from 'react';
 import { observer } from 'mobx-react';
-import { widgetStore } from 'package/stores/widgetStore';
+
+import { CopyOutlined, FullscreenOutlined, UploadOutlined, ScissorOutlined } from '@ant-design/icons';
 import { LayersWidget } from '../layersWidget';
 
+import { widgetStore } from 'package/stores/widgetStore';
+import { pocViewerStore } from 'package/stores/POCViewerStore';
+
+import { downloadFile } from 'package/utils';
+
+import './buttonPannel.css';
+
+
+
 export const ButtonPannel = observer(() => {
-    const onFullscreenclick = () => {
+    const jsonImportButtonRef = useRef<HTMLInputElement>(null!);
+
+    const onFullscreenClick = () => {
         const viewerCont = document.querySelector('.poc-viewer_cont');
         const isFullscreen = viewerCont?.clientWidth === window.innerWidth && viewerCont.clientHeight === window.innerHeight;
 
@@ -17,7 +27,7 @@ export const ButtonPannel = observer(() => {
         }
     };
 
-    const onLayersClock = () => {
+    const onLayersClick = () => {
         if (widgetStore.isWidgetOpen) {
             widgetStore.closeWidget();
         } else {
@@ -25,12 +35,46 @@ export const ButtonPannel = observer(() => {
         }
     };
 
+    const onExportAsJSONClick = () => {
+        const pocViewerSceneDataJson = JSON.stringify(pocViewerStore.pocInputParameters);
+
+        const d = new Date();
+        const exportFileName = `poc_json ${d.getMonth()+1}.${d.getDate()}.${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}.json`;
+        const file = new File([new Blob([pocViewerSceneDataJson], { type: 'text/json' })], exportFileName);
+
+        downloadFile(file);
+    };
+
+    const onImportJSONClick = () => {
+        jsonImportButtonRef.current.click();
+    };
+
+    const onJSONFileImport = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const jsonFile = e.target.files?.[0] || null;
+
+        if (jsonFile) {
+            pocViewerStore.importPocParametersFromJSON(jsonFile);
+        }
+    };
+
+
     return (
         <>
+            <input ref={jsonImportButtonRef} accept='.json' type='file' hidden onChange={onJSONFileImport} />
+
             <div className='poc-viewer__button-pannel'>
                 <div className='poc-viewer__button-pannel_btn-group'>
-                    <button className='poc-viewer__button-pannel_btn' onClick={onLayersClock}><CopyOutlined /></button>
-                    <button className='poc-viewer__button-pannel_btn' onClick={onFullscreenclick}><FullscreenOutlined /></button>
+                    <button className='poc-viewer__button-pannel_btn' onClick={onFullscreenClick}><FullscreenOutlined /></button>
+                </div>
+
+                <div className='poc-viewer__button-pannel_btn-group'>
+                    <button className='poc-viewer__button-pannel_btn' onClick={onLayersClick}><CopyOutlined /></button>
+                    <button className='poc-viewer__button-pannel_btn' ><ScissorOutlined /></button>
+                </div>
+
+                <div className='poc-viewer__button-pannel_btn-group'>
+                    <button style={{ fontSize: 8 }} className='poc-viewer__button-pannel_btn' onClick={onExportAsJSONClick}>JSON</button>
+                    <button className='poc-viewer__button-pannel_btn' onClick={onImportJSONClick}><UploadOutlined /></button>
                 </div>
             </div>
 

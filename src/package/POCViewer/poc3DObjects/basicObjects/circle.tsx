@@ -1,8 +1,9 @@
 /* eslint-disable react/no-unknown-property */
+import { observer } from 'mobx-react';
 import React, { useLayoutEffect } from 'react';
 import { BufferGeometry, EllipseCurve, Mesh, ShapeGeometry, Vector3 } from 'three';
 
-export const Circle = (props: any) => {
+export const Circle = observer((props: any) => {
     const ref = React.useRef<any>(null!);
     const { position, radius, color } = props;
 
@@ -20,7 +21,7 @@ export const Circle = (props: any) => {
         curve.getPoints(50).map(point => points3d.push(new Vector3(point.x,point.y,position.z)));
         void ref.current.setFromPoints(points3d);
 
-    }, []);
+    }, [props]);
 
 
     return (
@@ -29,6 +30,6 @@ export const Circle = (props: any) => {
             <lineBasicMaterial color={color} opacity={0.4} transparent />
         </line>
     );
-};
+});
 
 export default Circle;

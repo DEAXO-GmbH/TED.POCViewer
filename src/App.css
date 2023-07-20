@@ -1,3 +1,36 @@
 body {
     background-color: rgb(85, 87, 90) !important;
 }
+
+.mock-buttons {
+    padding-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.mock-buttons > div {
+    width: 100%;
+    color: white;
+}
+
+.mock-buttons > button {
+    background-color: rgb(120, 120, 120);
+    color: white;
+    outline: 0;
+    border: 0;
+    width: 70px;
+    padding: 4px 6px;
+    cursor: pointer;
+}
+.mock-buttons > button:hover {
+    filter: brightness(1.1)
+}
+
+.mock-buttons > button.clicked {
+    pointer-events: none;
+    background-color: rgb(104, 102, 102);
+    color: rgb(157, 155, 155);
+    cursor: default;
+}
+

@@ -1,13 +1,32 @@
+@keyframes poc_viewer_layers_appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 .poc-viewer__layers {
     display: block;
     width: 250px;
     position: absolute;
     top: 8px;
     right: 40px;
+    animation: poc_viewer_layers_appear 50ms;
+    
+    color: var(--button-panel-modal-text-color-2);
+    font-size: 13px;
 
-    background-color: #ebebeb;
-    border: 1px solid black;
+    box-shadow: inset 0 0 0px 1px #eff1f030, 0 0 5px 0 rgba(0, 0, 0, 0.348);
+    background-color: var(--button-panel-modal-bg-2);
+    border: 1px solid var(--button-panel-modal-border);
     border-radius: 5px;
+
+    text-shadow: 0px 1px 2px #00000090;
+
+    overflow: hidden;
 }
 
 .poc-viewer__layers:not(.open) {
@@ -16,26 +35,73 @@
 
 .poc-viewer__layers_top {
     padding: 4px 16px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--button-panel-modal-border);
+    background-color: var(--button-panel-modal-bg-1);
+    color: var(--button-panel-modal-text-color-1);
+    box-shadow: inset 0 0 0px 1px #eff1f020, 0 0 2px 2px #00000017;
+    position: relative;
+    user-select: none;
 }
 
 .poc-viewer__layers_main {
-    padding: 10px 16px;
+    padding: 14px 16px 20px;
+    
+    max-height: 200px;
+    overflow: hidden auto;
 }
+.poc-viewer__layers_main::-webkit-scrollbar {
+    height: 8px;
+    width: 15px;
+}
+.poc-viewer__layers_main::-webkit-scrollbar-track {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+.poc-viewer__layers_main::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    border: 6px solid var(--button-panel-modal-bg-2);
+    background: var(--button-panel-modal-thumb-color);
+}
+.poc-viewer__layers_main::-webkit-scrollbar-thumb:hover {
+    background: var(--button-panel-modal-thumb-color-hover);
+}
+.poc-viewer__layers_main::-webkit-scrollbar-thumb:window-inactive {
+    background: var(--button-panel-modal-thumb-color);
+}
+
 
 .poc-viewer__layers_top .anticon-close {
     position: absolute;
     right: 5px;
+    top: 50%;
+    font-size: 12px;
+    transform: translateY(-50%);
+}
+.poc-viewer__layers_top .anticon-close:hover {
+    opacity: 0.6;
 }
 
 .poc-viewer__layers_layer {
     display: flex;
-    gap: 6px;
     margin-bottom: 10px;
     user-select: none;
 }
 
 .poc-viewer__layers_layer > .eye-button {
-    transform: translateY(1px);
+    cursor: pointer;
+    margin-right: 10px;
+    transform: translateY(1px) scaleX(1.1);
 }
 
+.poc-viewer__layers_layer > .eye-button:hover {
+    opacity: 0.75;
+}
+
+.poc-viewer__layers_layer > .eye-button > .anticon-eye-invisible {
+    opacity: 0.5;
+}
+
+.poc-viewer__layers_layer_level-name {
+    /* text-decoration: wavy; */
+}

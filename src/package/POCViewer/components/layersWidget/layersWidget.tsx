@@ -16,10 +16,12 @@ export const LayersWidget = observer(() => {
     };
 
     return (
-        <div className={cn('poc-viewer__layers', widgetStore.isWidgetOpen && 'open')}>
+        <div className={cn('poc-viewer__layers', widgetStore.isWidgetOpen && 'open')} onContextMenu={(e)=> e.preventDefault()}>
             <div className='poc-viewer__layers_top'>
-                Levels visibility <CloseOutlined onClick={() => widgetStore.closeWidget()} />
+                Levels visibility
+                <CloseOutlined onClick={() => widgetStore.closeWidget()} />
             </div>
+
             <div className='poc-viewer__layers_main'>
                 {pocViewerStore.levelPlanes.slice().reverse().map(levelPlane => {
                     const isVisible = widgetStore.hiddenLayers.has(levelPlane.id);
@@ -28,7 +30,10 @@ export const LayersWidget = observer(() => {
                             <span className='eye-button' onClick={() => onEyeClick(levelPlane.id)}>
                                 {isVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
                             </span>
-                            {levelPlane.levelName}
+
+                            <span className='poc-viewer__layers_layer_level-name'>
+                                {levelPlane.levelName}
+                            </span>
                         </div>
                     );
                 })}

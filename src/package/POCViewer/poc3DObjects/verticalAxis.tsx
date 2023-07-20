@@ -20,6 +20,10 @@ export const VerticalAxis = observer((props: {verticalAxis: IVerticalAxis}) => {
     const textSize = 1;
     const axisLabelOffset = 3;
 
+    if (props.verticalAxis.name === '3') {
+        console.log('"3" vertical axis rerender', props.verticalAxis);
+    }
+
     return (
         <group
             rotation={new Euler(1.5 * Math.PI, 0, 0)}

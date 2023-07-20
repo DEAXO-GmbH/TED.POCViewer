@@ -101,6 +101,7 @@ export interface IViewerPOCLine {
     type: ViewerPOCTypes.POCLine
 
     index: number
+    incomingVolumeCapacity: string
 
     getDirection: (children: POCViewer3DPoint[]) => 'horizontal' | 'vertical'
     getChildrenPoints: (children: Array<IViewerPOCLine | IViewerPOC>) => POCViewer3DPoint[]
