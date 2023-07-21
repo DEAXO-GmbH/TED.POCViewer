@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 import { CopyOutlined, FullscreenOutlined, UploadOutlined, ScissorOutlined } from '@ant-design/icons';
 import { LayersWidget } from '../layersWidget';
 
-import { widgetStore } from 'package/stores/widgetStore';
+import { layersWidgetStore } from 'package/stores/widgetStore';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 
 import { downloadFile } from 'package/utils';
@@ -28,10 +28,10 @@ export const ButtonPannel = observer(() => {
     };
 
     const onLayersClick = () => {
-        if (widgetStore.isWidgetOpen) {
-            widgetStore.closeWidget();
+        if (layersWidgetStore.isWidgetOpen) {
+            layersWidgetStore.closeWidget();
         } else {
-            widgetStore.openWidget();
+            layersWidgetStore.openWidget();
         }
     };
 

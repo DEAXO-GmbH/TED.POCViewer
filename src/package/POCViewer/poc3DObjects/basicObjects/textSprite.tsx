@@ -2,13 +2,16 @@
 import React, { useMemo } from 'react';
 
 
-const CANVAS_WIDTH = 500;
-const CANVAS_HEIGHT = 100;
+const CANVAS_BASE_WIDTH = 100;
+const CANVAS_BASE_HEIGHT = 100;
 
 export const TextSprite = (props: any) => {
-    const { fontSize = 100, color = 0x000088, children, position=[0, 0, 0] } = props;
+    const { fontSize = 100, color = 0x000088, children, position=[0, 0, 0], alignment='center', width=5, bgColor=0x000000, bgOpacity=0 } = props;
 
     const canvas = useMemo(() => {
+        const CANVAS_WIDTH = CANVAS_BASE_WIDTH * width;
+        const CANVAS_HEIGHT = CANVAS_BASE_HEIGHT;
+
         const spriteText = Array.isArray(children) ? children.join(' ') : children;
 
         const fontface = 'Arial';
@@ -19,6 +22,15 @@ export const TextSprite = (props: any) => {
         canvas.height = CANVAS_HEIGHT;
         const protoContext = canvas.getContext('2d');
         const context = protoContext!;
+
+        if (bgOpacity > 0) {
+            const opacity = (0xFF * bgOpacity).toString(16).slice(0, 2);
+            const hexCode = bgColor.toString(16).padStart(6, '0');
+
+            const fillStyle = `#${hexCode}${opacity}`;
+            context.fillStyle = fillStyle;
+            context.fillRect(0, 0, CANVAS_WIDTH, CANVAS_BASE_HEIGHT);
+        }
 
         context.textBaseline = 'middle';
         // context.font = `bold ${fontSize}px ${fontface}-apple-system, avenir, helvetica, roboto`;
@@ -31,14 +43,20 @@ export const TextSprite = (props: any) => {
 
         context.fillStyle = `#${color.toString(16)}`;
         // context.fillText(children, textWidth * 1.2 - (textWidth*0.8), fontSize);
-        context.fillText(spriteText, (CANVAS_WIDTH - textWidth) / 2, 50);
+        let textXcoordinate = 0;
+
+        if (alignment === 'center') {
+            textXcoordinate = (CANVAS_WIDTH - textWidth) / 2;
+        }
+
+        context.fillText(spriteText, textXcoordinate, 50);
 
         return canvas;
-    }, [children]);
+    }, [children, props]);
 
 
     return (
-        <sprite scale={[5, 1, 1]} position={position}>
+        <sprite scale={[width, 1, 1]} position={position}>
             <spriteMaterial attach="material" transparent alphaTest={0.5} >
                 <canvasTexture attach="map" image={canvas} />
             </spriteMaterial>

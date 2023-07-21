@@ -45,15 +45,15 @@ export const POCObject3D = observer(({ poc }: {poc: IViewerPOC}) => {
                 <meshLambertMaterial flatShading attach="material" color={pocBodyColor} clippingPlanes={capacityClippingPlane} />
             </mesh>
 
-            <TextSprite color={POC_CRYSTAL_LABEL_COLOR} fontSize={55} position={[0, 4.6, 0]}>
-                {poc.name} {`index: ${poc.index}`}
+            <TextSprite bgOpacity={1} width={2} color={POC_CRYSTAL_LABEL_COLOR} fontSize={55} position={[0, 4.6, 0]} alignment='left'>
+                {poc.name}
             </TextSprite>
 
-            <TextSprite color={mediaMetricColor} fontSize={40} position={[0, 4, 0]}>
+            <TextSprite bgOpacity={0.1} width={2} color={mediaMetricColor} fontSize={40} position={[0, 4, 0]} alignment='left'>
                 {poc.occupiedMediaCapacity} / {poc.mediaCapacity}
             </TextSprite>
 
-            <TextSprite color={physicalMetricColor} fontSize={40} position={[0, 3.5, 0]}>
+            <TextSprite bgOpacity={0.5} width={2} color={physicalMetricColor} fontSize={40} position={[0, 3.5, 0]} alignment='left'>
                 {poc.occupiedPhysicalCapacity} / {poc.physicalCapacity}
             </TextSprite>
         </group>

@@ -4,7 +4,7 @@ import type { IPOCViewerInputParameters } from '../package/stores/POCViewerStore
 
 export const mock1: IPOCViewerInputParameters = {
     levels: [
-        { id: '00', distance: 0, name: 'Level 00' }, { id:'01', distance: 5, name: 'Level 01' }, { id: '02', distance: 20, name: 'Level 02' }, { id: '03', distance: 30, name: 'Level 03' }, { id: '04', distance: 4, name: 'Level 04' },
+        { id: '00', distance: 0, name: 'Level 00' }, { id:'01', distance: 5, name: 'Level 01 AKA Super Long Name to Test' }, { id: '02', distance: 20, name: 'Level 02 WORLD' }, { id: '03', distance: 30, name: 'Level 03' }, { id: '04', distance: 4, name: 'Level 04' },
         { id: '06', distance: 100, name: 'Level 05' }, { id:'07', distance: 5, name: 'Level 06' }, { id: '08', distance: 20, name: 'Level 07' }, { id: '09', distance: 30, name: 'Level 08' }, { id: '10', distance: 4, name: 'Level 09' },
         { id: '1a', distance: 50, name: 'Level 10' }, { id:'11', distance: 5, name: 'Level 11' }, { id: '12', distance: 20, name: 'Level 12' }, { id: '13', distance: 30, name: 'Level 13' }, { id: '14', distance: 4, name: 'Level 14' },
     ],
@@ -161,7 +161,7 @@ export const mock1: IPOCViewerInputParameters = {
         {
             id: 'pl1',
             description: 'POCLine 2',
-            incomingVolumeCapacity: '0',
+            incomingVolumeCapacity: '20',
             index: 102,
             name: 'Super name',
             parentPOCLineId: 'pl3',
@@ -169,7 +169,7 @@ export const mock1: IPOCViewerInputParameters = {
         {
             id: 'pl2',
             description: 'POCLine hehe',
-            incomingVolumeCapacity: '0',
+            incomingVolumeCapacity: '12',
             index: 105,
             name: 'Super name',
             parentPOCLineId: 'pl3',
@@ -177,7 +177,7 @@ export const mock1: IPOCViewerInputParameters = {
         {
             id: 'pl3',
             description: 'POCLine hehe',
-            incomingVolumeCapacity: '0',
+            incomingVolumeCapacity: '50',
             index: 2,
             name: 'Super name',
             parentPOCLineId: null,

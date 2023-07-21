@@ -1,39 +1,58 @@
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { widgetStore } from 'package/stores/widgetStore';
+import { CloseOutlined, EyeOutlined, EyeInvisibleOutlined, DownOutlined } from '@ant-design/icons';
+import { LayerOption } from './layerOption';
+
 import { concatClassnames as cn } from 'package/utils';
-import { CloseOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-import React from 'react';
-import './layerWidget.css';
+
+import { layersWidgetStore } from 'package/stores/widgetStore';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 
+import './layerWidget.css';
+
+
+
 export const LayersWidget = observer(() => {
-    const onEyeClick = (levelId: string) => {
-        if (widgetStore.hiddenLayers.has(levelId)) {
-            widgetStore.revealLayer(levelId);
-        } else {
-            widgetStore.hideLayer(levelId);
-        }
-    };
+    useEffect(() => {
+        layersWidgetStore.addLevels(pocViewerStore.levelPlanes);
+    }, [pocViewerStore.levelPlanes]);
+
 
     return (
-        <div className={cn('poc-viewer__layers', widgetStore.isWidgetOpen && 'open')} onContextMenu={(e)=> e.preventDefault()}>
+        <div className={cn('poc-viewer__layers', layersWidgetStore.isWidgetOpen && 'open')} onContextMenu={(e)=> e.preventDefault()}>
             <div className='poc-viewer__layers_top'>
                 Levels visibility
-                <CloseOutlined onClick={() => widgetStore.closeWidget()} />
+                <CloseOutlined onClick={() => layersWidgetStore.closeWidget()} />
             </div>
 
             <div className='poc-viewer__layers_main'>
-                {pocViewerStore.levelPlanes.slice().reverse().map(levelPlane => {
-                    const isVisible = widgetStore.hiddenLayers.has(levelPlane.id);
-                    return (
-                        <div key={levelPlane.id} className='poc-viewer__layers_layer'>
-                            <span className='eye-button' onClick={() => onEyeClick(levelPlane.id)}>
-                                {isVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-                            </span>
+                {layersWidgetStore.layerVisibilityOptions.map(levelPlane => {
+                    const levelOptions = layersWidgetStore.getLevelOptionsById(levelPlane.levelId);
 
-                            <span className='poc-viewer__layers_layer_level-name'>
-                                {levelPlane.levelName}
-                            </span>
+                    return (
+                        <div key={levelPlane.levelId} className='poc-viewer__layers_layer'>
+                            <div className='poc-viewer__layers_layer_main-bar'>
+                                <div onClick={() => layersWidgetStore.toggleLayerExpanded(levelPlane.levelId)} className={cn('expand-button', levelOptions.isLayerExpanded && 'expanded')}>
+                                    <DownOutlined />
+                                </div>
+
+                                <span className='eye-button' onClick={() => layersWidgetStore.toggleLayerVisibility(levelPlane.levelId)}>
+                                    {levelOptions.levelHidden ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                                </span>
+
+                                <span className='poc-viewer__layers_layer_level-name'>
+                                    {levelPlane.levelName}
+                                </span>
+                            </div>
+
+                            {
+                                levelOptions.isLayerExpanded &&
+                                <div className='poc-viewer__layers_layer_options'>
+                                    <LayerOption onToggle={() => layersWidgetStore.toggleAxesVisibility(levelPlane.levelId)} isVisible={levelOptions.axesHidden} label='Axes' />
+                                    <LayerOption onToggle={() => layersWidgetStore.togglePOCVisibility(levelPlane.levelId)} isVisible={levelOptions.pocsHidden} label='POCs' />
+                                    <LayerOption onToggle={() => layersWidgetStore.toggleToolsVisibility(levelPlane.levelId)} isVisible={levelOptions.toolsHidden} label='Tools' />
+                                </div>
+                            }
                         </div>
                     );
                 })}

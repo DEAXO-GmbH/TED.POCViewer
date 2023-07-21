@@ -24,7 +24,7 @@
     border: 1px solid var(--button-panel-modal-border);
     border-radius: 5px;
 
-    text-shadow: 0px 1px 2px #00000090;
+    text-shadow: 0px 1px 1px #00000090;
 
     overflow: hidden;
 }
@@ -38,7 +38,7 @@
     border-bottom: 1px solid var(--button-panel-modal-border);
     background-color: var(--button-panel-modal-bg-1);
     color: var(--button-panel-modal-text-color-1);
-    box-shadow: inset 0 0 0px 1px #eff1f020, 0 0 2px 2px #00000017;
+    box-shadow: inset 0 0 0px 1px #eff1f020;
     position: relative;
     user-select: none;
 }
@@ -46,8 +46,9 @@
 .poc-viewer__layers_main {
     padding: 14px 16px 20px;
     
-    max-height: 200px;
+    max-height: 340px;
     overflow: hidden auto;
+    user-select: none;
 }
 .poc-viewer__layers_main::-webkit-scrollbar {
     height: 8px;
@@ -83,25 +84,96 @@
 }
 
 .poc-viewer__layers_layer {
-    display: flex;
     margin-bottom: 10px;
-    user-select: none;
 }
 
-.poc-viewer__layers_layer > .eye-button {
+.poc-viewer__layers_layer_main-bar {
+    display: flex;
+    margin-bottom: 4px;
+    user-select: none;
+    justify-content: flex-start;
+}
+
+.poc-viewer__layers_layer_main-bar > .eye-button {
     cursor: pointer;
     margin-right: 10px;
     transform: translateY(1px) scaleX(1.1);
 }
 
-.poc-viewer__layers_layer > .eye-button:hover {
+.poc-viewer__layers_layer_main-bar > .eye-button:hover {
     opacity: 0.75;
 }
 
-.poc-viewer__layers_layer > .eye-button > .anticon-eye-invisible {
+.poc-viewer__layers_layer_main-bar > .eye-button > .anticon-eye-invisible {
     opacity: 0.5;
 }
 
-.poc-viewer__layers_layer_level-name {
-    /* text-decoration: wavy; */
+.poc-viewer__layers_layer_main-bar > .expand-button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+    margin-right: 4px;
+    transform: translateY(3px) rotate(-90deg);
 }
+
+.poc-viewer__layers_layer_main-bar > .expand-button:hover {
+    opacity: 0.6;
+}
+
+.poc-viewer__layers_layer_main-bar > .expand-button.expanded {
+    transform: translateY(3px);
+}
+
+.poc-viewer__layers_layer_main-bar > .expand-button .anticon {
+    display: block;
+}
+
+.poc-viewer__layers_layer_level-name {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.poc-viewer__layers_layer_options {
+    position: relative;
+    padding-left: 35px;
+    margin-top: 8px;;
+    margin-bottom: 12px;
+}
+
+.poc-viewer__layers_layer_options::before {
+    position: absolute;
+    content: '';
+    left: 7px;
+    top: 4px;
+    display: block;
+    width: 1px;
+    height: calc(100% - 5px);
+    background-color: var(--button-panel-modal-text-color-2);
+    opacity: 0.3;
+}
+
+.poc-viewer__layers_layer_option {
+    margin-bottom: 4px;
+}
+
+.poc-viewer__layers_layer_option > .eye-button {
+    cursor: pointer;
+    margin-right: 10px;
+    transform: translateY(1px) scaleX(1.1);
+}
+
+.poc-viewer__layers_layer_option > .eye-button:hover {
+    opacity: 0.75;
+}
+
+.poc-viewer__layers_layer_option > .eye-button > .anticon-eye-invisible {
+    opacity: 0.5;
+}
+
