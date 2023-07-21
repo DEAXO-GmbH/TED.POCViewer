@@ -13,14 +13,20 @@ import { concatClassnames as cn } from 'package/utils';
 import { ButtonPannel } from './components/buttonPannel';
 import TextSprite from './poc3DObjects/basicObjects/textSprite';
 import { LEVEL_PLANE_LABEL_COLOR, POC_VIEWER_CSS_VARIABLES, SCENE_BACKGROUND_COLOR, SCENE_GRID_FIRST_COLOR, SCENE_GRID_SECOND_COLOR } from 'package/constants';
-import { IPOCViewerInputParameters } from 'package/stores/POCViewerStore/types';
+import { IPOCViewerInputParameters, IViewerPOC } from 'package/stores/POCViewerStore/types';
 
 
 interface IPOCViewerProps {
     pocInputParameters: IPOCViewerInputParameters | null
+    onPOCClick: (poc: IViewerPOC) => void
 }
 
-export const POCViewer = observer(({ pocInputParameters }: IPOCViewerProps) => {
+export const POCViewer = observer(({ pocInputParameters, onPOCClick }: IPOCViewerProps) => {
+    useEffect(() => {
+        if (pocViewerStore.clickedPOC) {
+            onPOCClick(pocViewerStore.clickedPOC);
+        }
+    }, [pocViewerStore.clickedPOC]);
 
     useEffect(() => {
         if (pocInputParameters) {

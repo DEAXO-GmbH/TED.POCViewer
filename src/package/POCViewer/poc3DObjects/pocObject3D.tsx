@@ -25,7 +25,7 @@ export const POCObject3D = observer(({ poc }: {poc: IViewerPOC}) => {
 
     return (
         <group
-            onClick={e => {e.stopPropagation(); console.log(poc, capacityClippingPlane);}}
+            onClick={e => {e.stopPropagation(); pocViewerStore.setClickedPOC(poc);}}
             position={[poc.position.x, 1, -poc.position.z]}
 
             onPointerEnter={(e) => {

@@ -7,7 +7,8 @@ import { transformLevelsToLevelPlanes, transformToHorizontalAxes, transformToVer
 class POCViewerStore {
     @observable pocInputParameters: IPOCViewerInputParameters | null = null;
     @observable hoveredPOCIds: Set<string> = new Set();
-    @observable idk: string[] = [];
+    @observable clickedPOC: IViewerPOC | null = null;
+
 
     @computed
     get horizontalAxis (): IHorizontalAxis[] {
@@ -105,6 +106,11 @@ class POCViewerStore {
     @action
     public setPocInputParameters (pocInputParameters: IPOCViewerInputParameters) {
         this.pocInputParameters = pocInputParameters;
+    }
+
+    @action
+    public setClickedPOC (poc: IViewerPOC) {
+        this.clickedPOC = poc;
     }
 
     @action

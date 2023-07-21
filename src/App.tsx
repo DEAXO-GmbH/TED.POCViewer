@@ -24,7 +24,7 @@ function App() {
     return (
         <main style={{ padding: 20 }}>
             <div style={{ width: '100%', height: 600 }}>
-                <POCViewer pocInputParameters={mocks[mock]} />
+                <POCViewer onPOCClick={poc => console.log('poc =>', poc)} pocInputParameters={mocks[mock]} />
             </div>
 
             <div className='mock-buttons'>
