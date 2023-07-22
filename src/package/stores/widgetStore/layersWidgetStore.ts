@@ -5,6 +5,7 @@ import { ILevelPlane } from '../POCViewerStore/types';
 class LayersWidgetStore {
     @observable isWidgetOpen = false;
     @observable layerVisibilityOptions: ILevelLayerOption[] = [];
+    @observable showInterconnections = true;
 
     constructor () {
         makeObservable(this);
@@ -90,6 +91,11 @@ class LayersWidgetStore {
     public toggleToolsVisibility (levelId: string) {
         const layer = this.layerVisibilityOptions.find(layer => layer.levelId === levelId)!;
         layer.toolsHidden = !layer.toolsHidden;
+    }
+
+    @action
+    public toggleShowInterconnections () {
+        this.showInterconnections = !this.showInterconnections;
     }
 }
 

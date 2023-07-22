@@ -1,6 +1,6 @@
-import { POCLINE_OFFSET_LENGTH } from 'package/constants';
-import { IAxisXDTO, IAxisYDTO, IHorizontalAxis, ILevelDTO, ILevelPlane, IPOCLineDTO, IVerticalAxis, IViewerPOC, IViewerPOCLine, POCViewer3DPoint, ViewerPOCTypes } from './types';
-import { sortBy, last } from 'lodash';
+import { POCLINE_OFFSET_LENGTH, TOOL_DEFAULT_HEIGHT, TOOL_DEFAULT_LENGTH, TOOL_DEFAULT_WIDTH } from 'package/constants';
+import { IAxisXDTO, IAxisYDTO, IHorizontalAxis, ILevelDTO, ILevelPlane, IPOCLineDTO, IToolDTO, IVerticalAxis, IViewerPOC, IViewerPOCLine, IViewerTool, POCViewer3DPoint, ViewerPOCTypes } from './types';
+import { sortBy } from 'lodash';
 import { pocViewerStore } from './pocViewerStore';
 
 export const transformLevelsToLevelPlanes = (levels: ILevelDTO[]): ILevelPlane[] => {
@@ -97,6 +97,49 @@ export const transformToViewerPOCLines = (pocs: IViewerPOC[], pocLineDtos: IPOCL
 
                 return (maxX - minX) > (maxZ - minZ) ? 'horizontal' : 'vertical';
             }
+        };
+    });
+};
+
+
+export const transformToVIewerTools = (tools: IToolDTO[]): IViewerTool[] => {
+    pocViewerStore;
+
+    return tools.map(tool => {
+        const xAxisStart = pocViewerStore.horizontalAxis.find(axis => axis.id === tool.axisXStartId)!;
+        const xAxisEnd = pocViewerStore.horizontalAxis.find(axis => axis.id === tool.axisXEndId) || xAxisStart;
+        const yAxisStart = pocViewerStore.verticalAxis.find(axis => axis.id === tool.axisYStartId)!;
+        const yAxisEnd = pocViewerStore.verticalAxis.find(axis => axis.id === tool.axisYEndId) || yAxisStart;
+        const level = pocViewerStore.levelPlanes.find(level => level.id === tool.levelId)!;
+
+        const toolLength = (xAxisEnd.distance - xAxisStart.distance) || TOOL_DEFAULT_LENGTH;
+        const toolWidth = (yAxisEnd.distance - yAxisStart.distance) || TOOL_DEFAULT_WIDTH;
+        const toolHeight = tool.height || TOOL_DEFAULT_HEIGHT;
+
+        const position = {
+            x: yAxisStart.distance + (yAxisEnd.distance - yAxisStart.distance) / 2,
+            y: level.distance,
+            z: xAxisStart.distance + (xAxisEnd.distance - xAxisStart.distance) / 2,
+        };
+
+
+        return {
+            id: tool.id,
+            name: tool.name,
+
+            buildingId: tool.buildingId,
+            level: level,
+            axisXStart: xAxisStart,
+            axisXEnd: xAxisEnd,
+            axisYStart: yAxisStart,
+            axisYEnd: yAxisEnd,
+
+            height: toolHeight,
+            length: toolLength,
+            width: toolWidth,
+            position: position,
+
+            pocIds: tool.pocIds,
         };
     });
 };

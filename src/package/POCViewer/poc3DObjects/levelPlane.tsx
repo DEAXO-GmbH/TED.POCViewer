@@ -10,6 +10,7 @@ import { VerticalAxis } from './verticalAxis';
 import { POCObject3D } from './pocObject3D';
 import { layersWidgetStore } from 'package/stores/widgetStore';
 import { LEVEL_PLANE_INNER_COLOR, LEVEL_PLANE_LABEL_COLOR, LEVEL_PLANE_OUTER_COLOR, LEVEL_PLANE_OUTER_SECOND_COLOR } from 'package/constants';
+import { Tool } from './tool';
 
 
 
@@ -33,11 +34,6 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
         <group
             position={position}
             ref={planeGroupRef}
-            onClick={e => {
-                // console.log(props.levelPlane.levelName, planeGroupRef.current);
-                // console.log('pocs: ', pocViewerStore.getAllLevelPOCs(props.levelPlane.id));
-                // e.stopPropagation();
-            }}
         >
             {
                 !levelVisibilityOptions.axesHidden &&
@@ -73,12 +69,16 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
                     </Suspense>
                 </group>
             }
+
             <group>
                 {levelVisibilityOptions.pocsHidden || pocViewerStore.getAllLevelPOCs(props.levelPlane.id).map((poc, i) => {
                     return <POCObject3D poc={poc} key={i} />;
                 })}
+
                 {levelVisibilityOptions.axesHidden || pocViewerStore.horizontalAxis.map((axis, i) => <HorizontalAxis key={i} horizontalAxis={axis} />)}
                 {levelVisibilityOptions.axesHidden || pocViewerStore.verticalAxis.map((axis, i) => <VerticalAxis key={i} verticalAxis={axis} />)}
+
+                {levelVisibilityOptions.toolsHidden || pocViewerStore.tools.filter(tool => tool.level.id === props.levelPlane.id).map((tool, i) => <Tool key={i} tool={tool} />)}
             </group>
         </group>
     );

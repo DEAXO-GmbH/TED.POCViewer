@@ -9,6 +9,7 @@ import { layersWidgetStore } from 'package/stores/widgetStore';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 
 import './layerWidget.css';
+import { Checkbox } from 'antd';
 
 
 
@@ -23,6 +24,12 @@ export const LayersWidget = observer(() => {
             <div className='poc-viewer__layers_top'>
                 Levels visibility
                 <CloseOutlined onClick={() => layersWidgetStore.closeWidget()} />
+            </div>
+
+            <div className='poc-viewer__layers_global'>
+                <div onClick={() => layersWidgetStore.toggleShowInterconnections()} className='poc-viewer__layers_global_option'>
+                    <Checkbox checked={layersWidgetStore.showInterconnections} /> Show interconnections
+                </div>
             </div>
 
             <div className='poc-viewer__layers_main'>

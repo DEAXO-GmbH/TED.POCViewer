@@ -4,16 +4,20 @@ import { observer } from 'mobx-react';
 
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-
-
-import './pocViewer.css';
-import { POCObjectsGenerator } from './pocObjectsGenerator';
-import { pocViewerStore } from 'package/stores/POCViewerStore';
-import { concatClassnames as cn } from 'package/utils';
 import { ButtonPannel } from './components/buttonPannel';
 import TextSprite from './poc3DObjects/basicObjects/textSprite';
+import { POCObjectsGenerator } from './pocObjectsGenerator';
+
+import { concatClassnames as cn } from 'package/utils';
+
 import { LEVEL_PLANE_LABEL_COLOR, POC_VIEWER_CSS_VARIABLES, SCENE_BACKGROUND_COLOR, SCENE_GRID_FIRST_COLOR, SCENE_GRID_SECOND_COLOR } from 'package/constants';
+import { pocViewerStore } from 'package/stores/POCViewerStore';
+
 import { IPOCViewerInputParameters, IViewerPOC } from 'package/stores/POCViewerStore/types';
+
+import './pocViewer.css';
+import { SceneSettings } from './sceneSettings';
+
 
 
 interface IPOCViewerProps {
@@ -36,9 +40,12 @@ export const POCViewer = observer(({ pocInputParameters, onPOCClick }: IPOCViewe
         }
     }, [pocInputParameters]);
 
+
     return (
         <div style={{ ...POC_VIEWER_CSS_VARIABLES }} className={cn('poc-viewer_cont', pocViewerStore.hoveredPOCIds.size > 0 && 'poc-hovered')}>
-            <Canvas>
+            <Canvas gl={{ localClippingEnabled: true }}>
+                <SceneSettings />
+
                 <color attach='background' args={[SCENE_BACKGROUND_COLOR]} />
                 <PerspectiveCamera makeDefault position={[0,0,300]} far={1000} />
                 <OrbitControls
@@ -54,12 +61,8 @@ export const POCViewer = observer(({ pocInputParameters, onPOCClick }: IPOCViewe
                     rotateSpeed={0.4}
                 />
 
-                <gridHelper args={[500, 250, SCENE_GRID_FIRST_COLOR, SCENE_GRID_FIRST_COLOR]} position={[0, -0.2, 0]} />
-                <gridHelper args={[500, 25, SCENE_GRID_SECOND_COLOR, SCENE_GRID_SECOND_COLOR]} position={[0, -0.2, 0]} />
-
-
-                <gridHelper args={[500, 250, 0xFF0000, 0xFF0000]} position={[0, -0.2, 500]} />
-                <gridHelper args={[500, 25, 0xFF0000, 0xFF0000]} position={[0, -0.2, 500]} />
+                <gridHelper args={[2000, 1000, SCENE_GRID_FIRST_COLOR, SCENE_GRID_FIRST_COLOR]} position={[0, -0.2, 0]} />
+                <gridHelper args={[2000, 100, SCENE_GRID_SECOND_COLOR, SCENE_GRID_SECOND_COLOR]} position={[0, -0.2, 0]} />
 
                 <ambientLight />
                 <pointLight position={[10, 10, 10]} />

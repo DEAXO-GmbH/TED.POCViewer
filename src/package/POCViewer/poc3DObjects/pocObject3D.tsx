@@ -1,26 +1,28 @@
 /* eslint-disable react/no-unknown-property */
 import { IViewerPOC } from 'package/stores/POCViewerStore/types';
 import React, { useMemo } from 'react';
-import TextSprite from './basicObjects/textSprite';
 import * as THREE from 'three';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 import { observer } from 'mobx-react';
-import { POC_CRYSTAL_COLOR, POC_CRYSTAL_HOVER_COLOR, POC_CRYSTAL_LABEL_COLOR, POC_CRYSTAL_METRIC_COLOR, POC_CRYSTAL_METRIC_OVERLOAD_COLOR } from 'package/constants';
+import { POC_CRYSTAL_COLOR, POC_CRYSTAL_HOVER_COLOR, POC_OVERFLOW_COLOR, POC_OVERFLOW_HOVER_COLOR } from 'package/constants';
+import POCLabel from './pocLabel';
 
 
 
 export const POCObject3D = observer(({ poc }: {poc: IViewerPOC}) => {
     const isHovered = pocViewerStore.hoveredPOCIds.has(poc.id);
 
-    const pocBodyColor = isHovered ? POC_CRYSTAL_HOVER_COLOR : POC_CRYSTAL_COLOR;
-    const mediaMetricColor = Number(poc.mediaCapacity) >= Number(poc.occupiedMediaCapacity) ? POC_CRYSTAL_METRIC_COLOR : POC_CRYSTAL_METRIC_OVERLOAD_COLOR;
-    const physicalMetricColor = Number(poc.physicalCapacity) >= Number(poc.occupiedPhysicalCapacity) ? POC_CRYSTAL_METRIC_COLOR : POC_CRYSTAL_METRIC_OVERLOAD_COLOR;
+    const isMediaOverflow = Number(poc.mediaCapacity) < Number(poc.occupiedMediaCapacity);
+    // const isPhysicalOverflow = Number(poc.physicalCapacity) < Number(poc.occupiedPhysicalCapacity);
+
+    const pocBodyColor =  (isMediaOverflow) ? (isHovered ? POC_OVERFLOW_HOVER_COLOR : POC_OVERFLOW_COLOR) : (isHovered ? POC_CRYSTAL_HOVER_COLOR : POC_CRYSTAL_COLOR);
+
+    const mediaCapacityFilled = Number(poc.occupiedMediaCapacity) / Number(poc.mediaCapacity) || 1;
 
     const capacityClippingPlane = useMemo(() => {
-        const plane = new THREE.Plane(new THREE.Vector3(0, 0, 0), 10);
-        plane.constant = 0;
+        const plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), poc.position.y + mediaCapacityFilled * 4);
         return plane;
-    }, []);
+    }, [poc]);
 
 
     return (
@@ -37,25 +39,37 @@ export const POCObject3D = observer(({ poc }: {poc: IViewerPOC}) => {
                 e.stopPropagation();
             }}
         >
-            <mesh geometry={new THREE.ConeGeometry(1, 2, 4)} position={[0, 0, 0]} rotation={[Math.PI, 0, 0]} >
-                <meshLambertMaterial flatShading attach="material" color={pocBodyColor} clippingPlanes={capacityClippingPlane} />
-            </mesh>
+            <group>
+                <mesh geometry={new THREE.ConeGeometry(1, 2, 4)} position={[0, 0, 0]} rotation={[Math.PI, 0, 0]}>
+                    <meshLambertMaterial flatShading attach="material" color={pocBodyColor} transparent opacity={0.3} side={THREE.DoubleSide}/>
+                </mesh>
 
-            <mesh geometry={new THREE.ConeGeometry(1, 2, 4)} position={[0, 2, 0]}>
-                <meshLambertMaterial flatShading attach="material" color={pocBodyColor} clippingPlanes={capacityClippingPlane} />
-            </mesh>
+                <mesh geometry={new THREE.ConeGeometry(1, 2, 4)} position={[0, 2, 0]}>
+                    <meshLambertMaterial flatShading color={pocBodyColor} side={THREE.DoubleSide} transparent opacity={0.3} />
+                </mesh>
+            </group>
 
-            <TextSprite bgOpacity={1} width={2} color={POC_CRYSTAL_LABEL_COLOR} fontSize={55} position={[0, 4.6, 0]} alignment='left'>
-                {poc.name}
-            </TextSprite>
+            <group scale={[0.8,0.8,0.8]}>
+                <mesh geometry={new THREE.ConeGeometry(1, 2, 4)} position={[0, 0.25, 0]} rotation={[Math.PI, 0, 0]} >
+                    <meshLambertMaterial flatShading attach="material" color={pocBodyColor} side={THREE.DoubleSide} clipShadows clippingPlanes={[capacityClippingPlane]}/>
+                </mesh>
 
-            <TextSprite bgOpacity={0.1} width={2} color={mediaMetricColor} fontSize={40} position={[0, 4, 0]} alignment='left'>
-                {poc.occupiedMediaCapacity} / {poc.mediaCapacity}
-            </TextSprite>
+                <mesh geometry={new THREE.ConeGeometry(1, 2, 4)} position={[0, 2.25, 0]}>
+                    <meshLambertMaterial flatShading color={pocBodyColor} side={THREE.DoubleSide} clipShadows clippingPlanes={[capacityClippingPlane]} />
+                </mesh>
+            </group>
 
-            <TextSprite bgOpacity={0.5} width={2} color={physicalMetricColor} fontSize={40} position={[0, 3.5, 0]} alignment='left'>
-                {poc.occupiedPhysicalCapacity} / {poc.physicalCapacity}
-            </TextSprite>
+
+            <POCLabel
+                mediaCapacity={poc.mediaCapacity}
+                occupiedMediaCapacity={poc.occupiedMediaCapacity}
+                occupiedPhysicalCapacity={poc.occupiedPhysicalCapacity}
+                physicalCapacity={poc.physicalCapacity}
+                pocName={poc.name}
+                unit={poc.unit}
+            />
+
+            <pointLight position={[0, 1, 0]} distance={2} intensity={20} />
         </group>
     );
 });

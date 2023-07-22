@@ -4,6 +4,8 @@ export interface IPOCViewerInputParameters {
     levels: ILevelDTO[]
     pocs: IPocDTO[]
     pocLines: IPOCLineDTO[]
+    tools: IToolDTO[]
+    interconnections: IInterconnectionDTO[]
 }
 
 export type POCViewer3DPoint = {
@@ -50,6 +52,7 @@ export interface IPocDTO {
 
     mediaCapacity: string
     occupiedMediaCapacity: string
+    unit: string
     physicalCapacity: string
     occupiedPhysicalCapacity: string
 }
@@ -64,6 +67,26 @@ export interface IPOCLineDTO {
     index: number
 
     incomingVolumeCapacity: string
+}
+
+export interface IToolDTO {
+    id: string
+    name: string
+    pocIds: string[]
+
+    buildingId: string
+    levelId: string
+    axisXStartId: string
+    axisYStartId: string
+    axisXEndId: string
+    axisYEndId: string
+
+    height: number
+}
+
+export interface IInterconnectionDTO {
+    firstToolId: string
+    secondToolId: string
 }
 // =================================
 
@@ -127,7 +150,32 @@ export interface IViewerPOC {
 
     mediaCapacity: string
     occupiedMediaCapacity: string
+    unit: string
     physicalCapacity: string
     occupiedPhysicalCapacity: string
+}
+
+export interface IViewerTool {
+    id: string
+    name: string
+    pocIds: string[]
+
+    buildingId: string
+
+    level: ILevelPlane
+    axisXStart: IHorizontalAxis
+    axisYStart: IHorizontalAxis
+    axisXEnd: IVerticalAxis
+    axisYEnd: IVerticalAxis
+
+    width: number
+    length: number
+    height: number
+    position: POCViewer3DPoint
+}
+
+export interface IViewerInterconnection {
+    firstTool: IViewerTool
+    secondTool: IViewerTool
 }
 // =================================

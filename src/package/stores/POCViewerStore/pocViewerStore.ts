@@ -1,6 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { IPOCViewerInputParameters, IHorizontalAxis, IVerticalAxis, ILevelPlane, IViewerPOC, ViewerPOCTypes, IViewerPOCLine } from './types';
-import { transformLevelsToLevelPlanes, transformToHorizontalAxes, transformToVerticalAxes, transformToViewerPOCLines } from './utils';
+import { IPOCViewerInputParameters, IHorizontalAxis, IVerticalAxis, ILevelPlane, IViewerPOC, ViewerPOCTypes, IViewerPOCLine, IViewerTool, IViewerInterconnection } from './types';
+import { transformLevelsToLevelPlanes, transformToHorizontalAxes, transformToVIewerTools, transformToVerticalAxes, transformToViewerPOCLines } from './utils';
 
 
 
@@ -65,6 +65,8 @@ class POCViewerStore {
                 xAxisEnd: xAxisEnd,
                 yAxisEnd: yAxisEnd,
 
+                unit: pocDto.unit,
+
                 position,
 
                 mediaCapacity: pocDto.mediaCapacity,
@@ -80,6 +82,28 @@ class POCViewerStore {
         if (!this.pocInputParameters) return [];
 
         return transformToViewerPOCLines(this.pocs, this.pocInputParameters.pocLines);
+    }
+
+    @computed
+    get tools (): IViewerTool[] {
+        if (!this.pocInputParameters) return [];
+
+        return transformToVIewerTools(this.pocInputParameters.tools);
+    }
+
+    @computed
+    get interconnections (): IViewerInterconnection[] {
+        if (!this.pocInputParameters) return [];
+
+        return this.pocInputParameters.interconnections.map(interconnection => {
+            const firstTool = this.tools.find(tool => tool.id === interconnection.firstToolId)!;
+            const secondTool = this.tools.find(tool => tool.id === interconnection.secondToolId)!;
+
+            return {
+                firstTool,
+                secondTool,
+            };
+        });
     }
 
 

@@ -1,1 +1,1 @@
-export { layersWidgetStore } from './widgetStore';
+export { layersWidgetStore } from './layersWidgetStore';
