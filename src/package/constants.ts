@@ -27,22 +27,22 @@ export const POC_VIEWER_CSS_VARIABLES = {
 
 
 // Scene and general
-export const SCENE_BACKGROUND_COLOR = 0x444444;
-export const SCENE_GRID_FIRST_COLOR = 0x151515;
-export const SCENE_GRID_SECOND_COLOR = 0x212121;
-export const SCENE_DEFAULT_TEXT_COLOR = 0xFFFFFF;
+export const SCENE_BACKGROUND_COLOR = 0xE7EEF3;
+export const SCENE_GRID_FIRST_COLOR = 0xD3DEE6;
+export const SCENE_GRID_SECOND_COLOR = 0xA2A8AD;
+export const SCENE_DEFAULT_TEXT_COLOR = 0x202121;
 
 // Levels and axes
 // TODO add offset constants
-export const LEVEL_PLANE_INNER_COLOR = 0x9999BB;
-export const LEVEL_PLANE_OUTER_COLOR = 0x7F7FBB;
-export const LEVEL_PLANE_OUTER_SECOND_COLOR = 0x9898FF;
+export const LEVEL_PLANE_INNER_COLOR = 0x3C7CAA;
+export const LEVEL_PLANE_OUTER_COLOR = 0xD3EDFF;
+export const LEVEL_PLANE_OUTER_SECOND_COLOR = 0xD3EDFF;
 export const LEVEL_PLANE_LABEL_COLOR = SCENE_DEFAULT_TEXT_COLOR;
-export const AXES_COLOR = 0x333344;
+export const AXES_COLOR = 0x202121;
 
 // POC and POCLines
-export const POC_CRYSTAL_COLOR = 0xFF7700;
-export const POC_CRYSTAL_HOVER_COLOR = 0xD35B00;
+export const POC_CRYSTAL_COLOR = 0x41A600;
+export const POC_CRYSTAL_HOVER_COLOR = 0x2A6C00;
 export const POC_OVERFLOW_COLOR = 0xFF1100;
 export const POC_OVERFLOW_HOVER_COLOR = 0xCC1100;
 export const POC_CRYSTAL_LABEL_COLOR = SCENE_DEFAULT_TEXT_COLOR;
@@ -52,7 +52,7 @@ export const POCLINE_COLOR = 0x110900;
 export const POCLINE_OFFSET_LENGTH = 2;
 
 // Tools
-export const TOOL_COLOR = 0x444466;
+export const TOOL_COLOR = 0x5A707F;
 export const TOOL_NAME_COLOR = 0xFFFFFF;
 export const TOOL_DEFAULT_WIDTH = 1.5;
 export const TOOL_DEFAULT_LENGTH = 1.5;
