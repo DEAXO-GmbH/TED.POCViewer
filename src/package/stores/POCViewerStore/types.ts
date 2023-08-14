@@ -44,11 +44,11 @@ export interface IPocDTO {
     index: number
 
     buildingId: string
-    levelId: string
-    axisXStartId: string
-    axisYStartId: string
-    axisXEndId: string
-    axisYEndId: string
+    levelId?: string
+    axisXStartId?: string
+    axisYStartId?: string
+    axisXEndId?: string
+    axisYEndId?: string
 
     mediaCapacity: string
     occupiedMediaCapacity: string
@@ -75,11 +75,11 @@ export interface IToolDTO {
     pocIds: string[]
 
     buildingId: string
-    levelId: string
-    axisXStartId: string
-    axisYStartId: string
-    axisXEndId: string
-    axisYEndId: string
+    levelId?: string
+    axisXStartId?: string
+    axisYStartId?: string
+    axisXEndId?: string
+    axisYEndId?: string
 
     height: number
 }

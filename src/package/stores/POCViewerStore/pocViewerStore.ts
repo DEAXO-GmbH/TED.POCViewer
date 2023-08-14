@@ -1,5 +1,5 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { IPOCViewerInputParameters, IHorizontalAxis, IVerticalAxis, ILevelPlane, IViewerPOC, ViewerPOCTypes, IViewerPOCLine, IViewerTool, IViewerInterconnection } from './types';
+import { IPOCViewerInputParameters, IHorizontalAxis, IVerticalAxis, ILevelPlane, IViewerPOC, ViewerPOCTypes, IViewerPOCLine, IViewerTool, IViewerInterconnection, IUnusedViewerPOC } from './types';
 import { transformLevelsToLevelPlanes, transformToHorizontalAxes, transformToVIewerTools, transformToVerticalAxes, transformToViewerPOCLines } from './utils';
 
 
@@ -35,13 +35,38 @@ class POCViewerStore {
     get pocs (): IViewerPOC[] {
         if (!this.pocInputParameters) return [];
 
-        return this.pocInputParameters.pocs.map(pocDto => {
-            const xAxisStart = this.horizontalAxis.find(axis => axis.id === pocDto.axisXStartId)!;
-            const yAxisStart = this.verticalAxis.find(axis => axis.id === pocDto.axisYStartId)!;
-            // in case end axes aren't specified, consider them same as starting ones
-            const xAxisEnd = this.horizontalAxis.find(axis => axis.id === pocDto.axisXEndId) || xAxisStart;
-            const yAxisEnd = this.verticalAxis.find(axis => axis.id === pocDto.axisYEndId) || yAxisStart;
-            const level = this.levelPlanes.find(levelPlane => levelPlane.id === pocDto.levelId)!;
+        const pocArray = this.pocInputParameters.pocs.map(pocDto => {
+            let xAxisStart = this.horizontalAxis.find(axis => axis.id === pocDto.axisXStartId);
+            let yAxisStart = this.verticalAxis.find(axis => axis.id === pocDto.axisYStartId);
+            let xAxisEnd = this.horizontalAxis.find(axis => axis.id === pocDto.axisXEndId);
+            let yAxisEnd = this.verticalAxis.find(axis => axis.id === pocDto.axisYEndId);
+            const level = this.levelPlanes.find(levelPlane => levelPlane.id === pocDto.levelId);
+
+            if (!xAxisStart && !xAxisEnd || !level) {
+                // In case both are null - do not add them to the resulting array
+                return null;
+            } else {
+                if (!xAxisStart) {
+                    xAxisStart = this.horizontalAxis[0];
+                }
+                if (!xAxisEnd) {
+                    xAxisEnd = this.horizontalAxis[this.horizontalAxis.length - 1];
+                }
+            }
+
+            if (!yAxisStart && !yAxisEnd) {
+                // In case both are null - do not add them to the resulting array
+                return null;
+            } else {
+                if (!yAxisStart) {
+                    yAxisStart = this.verticalAxis[0];
+                }
+                if (!yAxisEnd) {
+                    yAxisEnd = this.verticalAxis[this.verticalAxis.length - 1];
+                }
+            }
+
+
 
             const position = {
                 x: yAxisStart.distance + (yAxisEnd.distance - yAxisStart.distance) / 2,
@@ -74,7 +99,14 @@ class POCViewerStore {
                 occupiedPhysicalCapacity: pocDto.occupiedPhysicalCapacity,
                 physicalCapacity: pocDto.physicalCapacity
             };
-        });
+        }).filter(poc => poc !== null) as IViewerPOC[];
+
+        return pocArray;
+    }
+
+    @computed
+    get unusedPOCs (): IUnusedViewerPOC[] {
+        return [];
     }
 
     @computed

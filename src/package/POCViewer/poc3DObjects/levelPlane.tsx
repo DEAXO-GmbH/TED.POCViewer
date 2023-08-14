@@ -9,7 +9,7 @@ import HorizontalAxis from './horizontalAxis';
 import { VerticalAxis } from './verticalAxis';
 import { POCObject3D } from './pocObject3D';
 import { layersWidgetStore } from 'package/stores/widgetStore';
-import { LEVEL_PLANE_INNER_COLOR, LEVEL_PLANE_LABEL_COLOR, LEVEL_PLANE_OUTER_COLOR, LEVEL_PLANE_OUTER_SECOND_COLOR } from 'package/constants';
+import { LEVEL_PLANE_INNER_COLOR, LEVEL_PLANE_LABEL_COLOR, LEVEL_PLANE_OUTER_COLOR, LEVEL_PLANE_OUTER_SECOND_COLOR, OUTER_PLANE_EXTRA_PADDING } from 'package/constants';
 import { Tool } from './tool';
 
 
@@ -27,6 +27,9 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
     const innerPlaneOpacity = isBottommostPlane ? 1 : 0.8;
     const outerPlaneOpacity = isBottommostPlane ? 1 : 0.7;
     const outerPlaneColor = isPlaneIndexEven ? LEVEL_PLANE_OUTER_COLOR : LEVEL_PLANE_OUTER_SECOND_COLOR;
+
+    const outerPlaneWidth = pocViewerStore.planesWidth + OUTER_PLANE_EXTRA_PADDING;
+    const outerPlaneLength = pocViewerStore.planesLength + OUTER_PLANE_EXTRA_PADDING;
 
     const planeGroupRef = useRef<any>(null);
 
@@ -47,7 +50,7 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
                     </Plane>
 
                     <Plane
-                        args={[pocViewerStore.planesWidth + 12, pocViewerStore.planesLength + 12]}
+                        args={[outerPlaneWidth, outerPlaneLength]}
                         rotation={new Euler(1.5 * Math.PI, 0, 0)}
                         position={[0, -0.1, 0]}
                     >

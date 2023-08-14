@@ -2,7 +2,7 @@
 import React from 'react';
 import { extend } from '@react-three/fiber';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry';
-import { useGetFont } from 'package/POCViewer/hooks/useGetFont';
+import { useGetFont } from '../../hooks/useGetFont';
 
 
 extend({ TextGeometry });

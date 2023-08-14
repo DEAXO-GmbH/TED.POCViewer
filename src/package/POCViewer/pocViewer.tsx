@@ -15,12 +15,14 @@ import { pocViewerStore } from 'package/stores/POCViewerStore';
 
 import { IPOCViewerInputParameters, IViewerPOC } from 'package/stores/POCViewerStore/types';
 
-import './pocViewer.css';
 import { SceneSettings } from './sceneSettings';
 
+import './pocViewer.css';
+import { UnusedPOCZone } from './components/unusedPOCZone';
 
 
-interface IPOCViewerProps {
+
+export interface IPOCViewerProps {
     pocInputParameters: IPOCViewerInputParameters | null
     onPOCClick: (poc: IViewerPOC) => void
 }
@@ -72,11 +74,7 @@ export const POCViewer = observer(({ pocInputParameters, onPOCClick }: IPOCViewe
                 <directionalLight />
 
                 <POCObjectsGenerator />
-
-                <axesHelper args={[5]} position={[-50, 1, -50]} />
-                <TextSprite position={[-45, 2, -50]} color={LEVEL_PLANE_LABEL_COLOR}>X</TextSprite>
-                <TextSprite position={[-50, 7, -50]} color={LEVEL_PLANE_LABEL_COLOR}>Y</TextSprite>
-                <TextSprite position={[-50, 2, -45]} color={LEVEL_PLANE_LABEL_COLOR}>Z</TextSprite>
+                <UnusedPOCZone />
             </Canvas>
 
             <ButtonPannel />

@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unknown-property */
 import React from 'react';
-import { Euler, LineBasicMaterial, Vector3 } from 'three';
+import { Euler, Vector3 } from 'three';
 import { Circle } from './basicObjects/circle';
 import { Line } from './basicObjects/line';
 import { Text } from './basicObjects/text';
 import { IHorizontalAxis } from 'package/stores/POCViewerStore/types';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
-import { AXES_COLOR } from 'package/constants';
+import { AXES_COLOR, AXES_LABEL_OFFSET, AXES_LABEL_RADIUS } from 'package/constants';
 import { observer } from 'mobx-react';
 
 
@@ -17,10 +17,11 @@ const HorizontalAxis = observer((props: {horizontalAxis: IHorizontalAxis}) => {
     const text = props.horizontalAxis.name;
     const length = pocViewerStore.planesWidth;
 
-    const radius = 1;
+    const radius = AXES_LABEL_RADIUS;
+    const axisLabelOffset = AXES_LABEL_OFFSET;
+
     const color = AXES_COLOR;
     const textSize = 1;
-    const axisLabelOffset = 3;
 
     return (
         <group

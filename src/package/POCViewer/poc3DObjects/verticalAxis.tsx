@@ -7,7 +7,7 @@ import { Text } from './basicObjects/text';
 import { IVerticalAxis } from 'package/stores/POCViewerStore/types';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 import { observer } from 'mobx-react';
-import { AXES_COLOR } from 'package/constants';
+import { AXES_COLOR, AXES_LABEL_OFFSET, AXES_LABEL_RADIUS } from 'package/constants';
 
 
 export const VerticalAxis = observer((props: {verticalAxis: IVerticalAxis}) => {
@@ -15,10 +15,11 @@ export const VerticalAxis = observer((props: {verticalAxis: IVerticalAxis}) => {
     const text = props.verticalAxis.name;
     const length = pocViewerStore.planesLength;
 
-    const radius = 1;
     const color = AXES_COLOR;
     const textSize = 1;
-    const axisLabelOffset = 3;
+
+    const radius = AXES_LABEL_RADIUS;
+    const axisLabelOffset = AXES_LABEL_OFFSET;
 
     return (
         <group
@@ -31,7 +32,8 @@ export const VerticalAxis = observer((props: {verticalAxis: IVerticalAxis}) => {
                     new Vector3(
                         position.x,
                         position.y + axisLabelOffset + length + radius,
-                        position.z)
+                        position.z
+                    )
                 }
             />
             <Text
@@ -47,8 +49,8 @@ export const VerticalAxis = observer((props: {verticalAxis: IVerticalAxis}) => {
             />
 
             <Line color={color}
-                startPoint={new Vector3(position.x,position.y - axisLabelOffset ,position.z)}
-                endPoint={new Vector3(position.x,position.y + axisLabelOffset + length,position.z)}
+                startPoint={new Vector3(position.x, position.y - axisLabelOffset ,position.z)}
+                endPoint={new Vector3(position.x, position.y + axisLabelOffset + length,position.z)}
             />
 
             <Circle

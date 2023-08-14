@@ -41,12 +41,12 @@ export default {
         typescript(),
         generatePackageJson({
             baseContents: {
-                name: '@DEAXO-GmbH/ted-dxf',
+                name: '@DEAXO-GmbH/poc-viewer',
                 version: '0.1.0',
                 publishConfig: {
                     registry: 'https://npm.pkg.github.com',
                 },
-                repository: 'github.com:DEAXO-GmbH/TED.dxf.git',
+                repository: 'github.com:DEAXO-GmbH/TED.POCViewer.git',
             }
         }),
         json(),

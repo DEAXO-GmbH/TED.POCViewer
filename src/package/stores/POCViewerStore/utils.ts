@@ -103,14 +103,36 @@ export const transformToViewerPOCLines = (pocs: IViewerPOC[], pocLineDtos: IPOCL
 
 
 export const transformToVIewerTools = (tools: IToolDTO[]): IViewerTool[] => {
-    pocViewerStore;
-
     return tools.map(tool => {
-        const xAxisStart = pocViewerStore.horizontalAxis.find(axis => axis.id === tool.axisXStartId)!;
-        const xAxisEnd = pocViewerStore.horizontalAxis.find(axis => axis.id === tool.axisXEndId) || xAxisStart;
-        const yAxisStart = pocViewerStore.verticalAxis.find(axis => axis.id === tool.axisYStartId)!;
-        const yAxisEnd = pocViewerStore.verticalAxis.find(axis => axis.id === tool.axisYEndId) || yAxisStart;
+        let xAxisStart = pocViewerStore.horizontalAxis.find(axis => axis.id === tool.axisXStartId)!;
+        let xAxisEnd = pocViewerStore.horizontalAxis.find(axis => axis.id === tool.axisXEndId) || xAxisStart;
+        let yAxisStart = pocViewerStore.verticalAxis.find(axis => axis.id === tool.axisYStartId)!;
+        let yAxisEnd = pocViewerStore.verticalAxis.find(axis => axis.id === tool.axisYEndId) || yAxisStart;
         const level = pocViewerStore.levelPlanes.find(level => level.id === tool.levelId)!;
+
+        if (xAxisStart === null && xAxisEnd === null) {
+            // In case both are null - do not add them to the resulting array
+            return null;
+        } else {
+            if (!xAxisStart) {
+                xAxisStart = pocViewerStore.horizontalAxis[0];
+            }
+            if (!xAxisEnd) {
+                xAxisEnd = pocViewerStore.horizontalAxis[pocViewerStore.horizontalAxis.length - 1];
+            }
+        }
+
+        if (!yAxisStart && !yAxisEnd) {
+            // In case both are null - do not add them to the resulting array
+            return null;
+        } else {
+            if (!yAxisStart) {
+                yAxisStart = pocViewerStore.verticalAxis[0];
+            }
+            if (!yAxisEnd) {
+                yAxisEnd = pocViewerStore.verticalAxis[pocViewerStore.verticalAxis.length - 1];
+            }
+        }
 
         const toolLength = (xAxisEnd.distance - xAxisStart.distance) || TOOL_DEFAULT_LENGTH;
         const toolWidth = (yAxisEnd.distance - yAxisStart.distance) || TOOL_DEFAULT_WIDTH;
@@ -141,5 +163,5 @@ export const transformToVIewerTools = (tools: IToolDTO[]): IViewerTool[] => {
 
             pocIds: tool.pocIds,
         };
-    });
+    }).filter(tool => tool !== null) as IViewerTool[];
 };

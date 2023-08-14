@@ -16,34 +16,72 @@ interface IPOCLineProps {
     pocLine: IViewerPOCLine,
 }
 
+interface IExtrudeSettings {
+    depth: number
+    extrudePath: THREE.CatmullRomCurve3 | undefined
+    steps: number,
+    bevelEnabled: boolean,
+}
+
 export const POCLine = ({ pocLine }: IPOCLineProps) => {
     const [points, setPoints] = useState<POCViewer3DPoint[]>([]);
+    const [extrudeSettings, setExtrudeSettings] = useState<any | IExtrudeSettings>({
+        depth: 100,
+        extrudePath: undefined,
+        bevelEnabled: true,
+        steps: 100,
+        curveSegments: 100,
+        bevelThickness: 10,
+        bevelSize: 10,
+        bevelOffset: 10,
+        bevelSegments: 10
+    });
+    const shapeRef = useRef();
 
-    const ref = useRef<any>();
+    const ref = useRef<any>(new THREE.Shape());
     const lineColor = useMemo(() => new THREE.Color(0xFFFFFF * Math.random() || POCLINE_COLOR), []);
+
 
     useEffect(() => {
         const points = pocLine.getChildrenPoints([...pocViewerStore.pocs, ...pocViewerStore.pocLines]);
 
-        ref.current.setPoints(points.map(point => new THREE.Vector3(point.x, point.y, point.z)));
-        setPoints(points);
+        // ref.current.setPoints(points.map(point => new THREE.Vector3(point.x, point.y, point.z)));
+        // setPoints(points);
+
+        console.log(points);
+        setExtrudeSettings((prev: any) => {
+            prev.extrudePath = new THREE.CatmullRomCurve3(points.map(point => new THREE.Vector3(point.x, point.y, point.z)), false, 'catmullrom', 0);
+            return { ...prev, steps: points.length + 1000 };
+        });
     }, [pocLine]);
+
+    useEffect(() => {
+        const width = 0.15;
+        const shape = shapeRef.current as unknown as THREE.Shape;
+        shape.moveTo(0, 0);
+        shape.lineTo(0, width);
+        shape.lineTo(width, width);
+        shape.lineTo(width, 0);
+        shape.lineTo(0, 0);
+    }, []);
+
 
     return (
         <>
-            <mesh position={[0, 0.2, 0]}>
+            {/* <mesh position={[0, 0.2, 0]}>
                 <meshLineGeometry ref={ref}/>
                 <meshLineMaterial
                     lineWidth={0.5}
                     color={lineColor}
                     resolution={new THREE.Vector2(121, 121)}
                 />
-            </mesh>
+            </mesh> */}
 
-            {
-                // points.map((point, i) => <TextSprite position={[point.x - 0.3, point.y + 0.2, point.z + 0.3]} fontSize={50} key={i}>{i}</TextSprite>)
-            }
-            <TextSprite fontSize={70} bgColor={0x000020} color={0xFFFFFF} width={1} bgOpacity={1}  position={[points[0]?.x, points[0]?.y + 0.6, points[0]?.z]}>{pocLine.incomingVolumeCapacity}</TextSprite>
+            <mesh position={[0, 1, 0]}>
+                <meshLambertMaterial flatShading color={0x000000 && 0xFFFFFF * Math.random()} />
+                <extrudeGeometry args={[shapeRef.current, extrudeSettings]} />
+            </mesh>
+            <shape ref={shapeRef} />
         </>
     );
 };
