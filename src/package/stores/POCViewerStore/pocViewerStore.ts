@@ -1,13 +1,13 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { IPOCViewerInputParameters, IHorizontalAxis, IVerticalAxis, ILevelPlane, IViewerPOC, ViewerPOCTypes, IViewerPOCLine, IViewerTool, IViewerInterconnection, IUnusedViewerPOC } from './types';
-import { transformLevelsToLevelPlanes, transformToHorizontalAxes, transformToVIewerTools, transformToVerticalAxes, transformToViewerPOCLines } from './utils';
+import { IPOCViewerInputParameters, IHorizontalAxis, IVerticalAxis, ILevelPlane, IViewerPOC, IViewerPOCLine, IViewerTool, IViewerInterconnection, IUnusedViewerPOC } from './types';
+import { transformLevelsToLevelPlanes, transformPOCs, transformToHorizontalAxes, transformToVIewerTools, transformToVerticalAxes, transformToViewerPOCLines, transformUnusedPOCs } from './utils';
 
 
 
 class POCViewerStore {
     @observable pocInputParameters: IPOCViewerInputParameters | null = null;
     @observable hoveredPOCIds: Set<string> = new Set();
-    @observable clickedPOC: IViewerPOC | null = null;
+    @observable clickedPOC: IViewerPOC | IUnusedViewerPOC | null = null;
 
 
     @computed
@@ -35,78 +35,18 @@ class POCViewerStore {
     get pocs (): IViewerPOC[] {
         if (!this.pocInputParameters) return [];
 
-        const pocArray = this.pocInputParameters.pocs.map(pocDto => {
-            let xAxisStart = this.horizontalAxis.find(axis => axis.id === pocDto.axisXStartId);
-            let yAxisStart = this.verticalAxis.find(axis => axis.id === pocDto.axisYStartId);
-            let xAxisEnd = this.horizontalAxis.find(axis => axis.id === pocDto.axisXEndId);
-            let yAxisEnd = this.verticalAxis.find(axis => axis.id === pocDto.axisYEndId);
-            const level = this.levelPlanes.find(levelPlane => levelPlane.id === pocDto.levelId);
-
-            if (!xAxisStart && !xAxisEnd || !level) {
-                // In case both are null - do not add them to the resulting array
-                return null;
-            } else {
-                if (!xAxisStart) {
-                    xAxisStart = this.horizontalAxis[0];
-                }
-                if (!xAxisEnd) {
-                    xAxisEnd = this.horizontalAxis[this.horizontalAxis.length - 1];
-                }
-            }
-
-            if (!yAxisStart && !yAxisEnd) {
-                // In case both are null - do not add them to the resulting array
-                return null;
-            } else {
-                if (!yAxisStart) {
-                    yAxisStart = this.verticalAxis[0];
-                }
-                if (!yAxisEnd) {
-                    yAxisEnd = this.verticalAxis[this.verticalAxis.length - 1];
-                }
-            }
-
-
-
-            const position = {
-                x: yAxisStart.distance + (yAxisEnd.distance - yAxisStart.distance) / 2,
-                y: level.distance,
-                z: xAxisStart.distance + (xAxisEnd.distance - xAxisStart.distance) / 2,
-            };
-
-            return {
-                id: pocDto.id,
-                parentPOCLineId: pocDto.pocLineId,
-
-                name: pocDto.name,
-                description: pocDto.description,
-                type: ViewerPOCTypes.POC,
-
-                index: pocDto.index,
-
-                level: level,
-                xAxisStart: xAxisStart,
-                yAxisStart: yAxisStart,
-                xAxisEnd: xAxisEnd,
-                yAxisEnd: yAxisEnd,
-
-                unit: pocDto.unit,
-
-                position,
-
-                mediaCapacity: pocDto.mediaCapacity,
-                occupiedMediaCapacity: pocDto.occupiedMediaCapacity,
-                occupiedPhysicalCapacity: pocDto.occupiedPhysicalCapacity,
-                physicalCapacity: pocDto.physicalCapacity
-            };
-        }).filter(poc => poc !== null) as IViewerPOC[];
-
-        return pocArray;
+        return transformPOCs(this.pocInputParameters.pocs);
     }
 
     @computed
     get unusedPOCs (): IUnusedViewerPOC[] {
-        return [];
+        if (!this.pocInputParameters) return [];
+        return transformUnusedPOCs(this.pocInputParameters.pocs);
+    }
+
+    @computed // Returns the number of pocs per line in the unused zone
+    get unusedPOCsPerLine (): number {
+        return Math.floor((this.unusedPOCs.length - 1) ** 0.5) + 1;
     }
 
     @computed
@@ -165,7 +105,7 @@ class POCViewerStore {
     }
 
     @action
-    public setClickedPOC (poc: IViewerPOC) {
+    public setClickedPOC (poc: IViewerPOC | IUnusedViewerPOC) {
         this.clickedPOC = poc;
     }
 

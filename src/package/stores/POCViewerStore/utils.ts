@@ -1,5 +1,5 @@
 import { POCLINE_OFFSET_LENGTH, TOOL_DEFAULT_HEIGHT, TOOL_DEFAULT_LENGTH, TOOL_DEFAULT_WIDTH } from 'package/constants';
-import { IAxisXDTO, IAxisYDTO, IHorizontalAxis, ILevelDTO, ILevelPlane, IPOCLineDTO, IToolDTO, IVerticalAxis, IViewerPOC, IViewerPOCLine, IViewerTool, POCViewer3DPoint, ViewerPOCTypes } from './types';
+import { IAxisXDTO, IAxisYDTO, IHorizontalAxis, ILevelDTO, ILevelPlane, IPOCLineDTO, IPocDTO, IToolDTO, IUnusedViewerPOC, IVerticalAxis, IViewerPOC, IViewerPOCLine, IViewerTool, POCViewer3DPoint, ViewerPOCTypes } from './types';
 import { sortBy } from 'lodash';
 import { pocViewerStore } from './pocViewerStore';
 
@@ -164,4 +164,125 @@ export const transformToVIewerTools = (tools: IToolDTO[]): IViewerTool[] => {
             pocIds: tool.pocIds,
         };
     }).filter(tool => tool !== null) as IViewerTool[];
+};
+
+export const transformPOCs = (pocs: IPocDTO[]) => {
+    const pocArray = pocs.map(pocDto => {
+        let xAxisStart = pocViewerStore.horizontalAxis.find(axis => axis.id === pocDto.axisXStartId);
+        let yAxisStart = pocViewerStore.verticalAxis.find(axis => axis.id === pocDto.axisYStartId);
+        let xAxisEnd = pocViewerStore.horizontalAxis.find(axis => axis.id === pocDto.axisXEndId);
+        let yAxisEnd = pocViewerStore.verticalAxis.find(axis => axis.id === pocDto.axisYEndId);
+        const level = pocViewerStore.levelPlanes.find(levelPlane => levelPlane.id === pocDto.levelId);
+
+        if (!xAxisStart && !xAxisEnd || !level) {
+            // In case both are null - do not add them to the resulting array
+            return null;
+        } else {
+            if (!xAxisStart) {
+                xAxisStart = pocViewerStore.horizontalAxis[0];
+            }
+            if (!xAxisEnd) {
+                xAxisEnd = pocViewerStore.horizontalAxis[pocViewerStore.horizontalAxis.length - 1];
+            }
+        }
+
+        if (!yAxisStart && !yAxisEnd) {
+            // In case both are null - do not add them to the resulting array
+            return null;
+        } else {
+            if (!yAxisStart) {
+                yAxisStart = pocViewerStore.verticalAxis[0];
+            }
+            if (!yAxisEnd) {
+                yAxisEnd = pocViewerStore.verticalAxis[pocViewerStore.verticalAxis.length - 1];
+            }
+        }
+
+
+
+        const position = {
+            x: yAxisStart.distance + (yAxisEnd.distance - yAxisStart.distance) / 2,
+            y: level.distance,
+            z: xAxisStart.distance + (xAxisEnd.distance - xAxisStart.distance) / 2,
+        };
+
+        return {
+            id: pocDto.id,
+            parentPOCLineId: pocDto.pocLineId,
+
+            name: pocDto.name,
+            description: pocDto.description,
+            type: ViewerPOCTypes.POC,
+
+            index: pocDto.index,
+
+            level: level,
+            xAxisStart: xAxisStart,
+            yAxisStart: yAxisStart,
+            xAxisEnd: xAxisEnd,
+            yAxisEnd: yAxisEnd,
+
+            unit: pocDto.unit,
+
+            position,
+
+            mediaCapacity: pocDto.mediaCapacity,
+            occupiedMediaCapacity: pocDto.occupiedMediaCapacity,
+            occupiedPhysicalCapacity: pocDto.occupiedPhysicalCapacity,
+            physicalCapacity: pocDto.physicalCapacity
+        };
+    }).filter(poc => poc !== null) as IViewerPOC[];
+
+    return pocArray;
+};
+
+
+export const transformUnusedPOCs = (pocs: IPocDTO[]): IUnusedViewerPOC[] => {
+    const pocArray = pocs.map(pocDto => {
+        const xAxisStart = pocViewerStore.horizontalAxis.find(axis => axis.id === pocDto.axisXStartId);
+        const yAxisStart = pocViewerStore.verticalAxis.find(axis => axis.id === pocDto.axisYStartId);
+        const xAxisEnd = pocViewerStore.horizontalAxis.find(axis => axis.id === pocDto.axisXEndId);
+        const yAxisEnd = pocViewerStore.verticalAxis.find(axis => axis.id === pocDto.axisYEndId);
+        const level = pocViewerStore.levelPlanes.find(levelPlane => levelPlane.id === pocDto.levelId);
+
+        if (!xAxisStart && !xAxisEnd || !level) {
+            // In case both are null - do not add them to the resulting array
+        } else {
+            return null;
+        }
+
+        if (!yAxisStart && !yAxisEnd) {
+            // In case both are null - do not add them to the resulting array
+            return null;
+        } else {
+
+        }
+
+
+        return {
+            id: pocDto.id,
+            parentPOCLineId: pocDto.pocLineId,
+
+            name: pocDto.name,
+            description: pocDto.description,
+            type: ViewerPOCTypes.POC,
+
+            index: pocDto.index,
+
+            level: level,
+            xAxisStart: xAxisStart,
+            yAxisStart: yAxisStart,
+            xAxisEnd: xAxisEnd,
+            yAxisEnd: yAxisEnd,
+
+            unit: pocDto.unit,
+
+            mediaCapacity: pocDto.mediaCapacity,
+            occupiedMediaCapacity: pocDto.occupiedMediaCapacity,
+            occupiedPhysicalCapacity: pocDto.occupiedPhysicalCapacity,
+            physicalCapacity: pocDto.physicalCapacity
+        };
+    }).filter(poc => poc !== null) as IUnusedViewerPOC[];
+
+    return pocArray;
 };

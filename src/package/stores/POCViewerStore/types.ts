@@ -1,3 +1,5 @@
+import { PartialBy } from 'package/types';
+
 export interface IPOCViewerInputParameters {
     xAxes: IAxisXDTO[]
     yAxes: IAxisYDTO[]
@@ -154,6 +156,9 @@ export interface IViewerPOC {
     physicalCapacity: string
     occupiedPhysicalCapacity: string
 }
+
+export type IUnusedViewerPOC = PartialBy<IViewerPOC, 'xAxisStart' | 'xAxisEnd' | 'yAxisEnd' | 'yAxisStart' | 'level' | 'position'>
+
 
 export interface IViewerTool {
     id: string

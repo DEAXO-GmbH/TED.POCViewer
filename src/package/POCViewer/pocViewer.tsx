@@ -13,7 +13,7 @@ import { concatClassnames as cn } from 'package/utils';
 import { LEVEL_PLANE_LABEL_COLOR, POC_VIEWER_CSS_VARIABLES, SCENE_BACKGROUND_COLOR, SCENE_GRID_FIRST_COLOR, SCENE_GRID_SECOND_COLOR } from 'package/constants';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 
-import { IPOCViewerInputParameters, IViewerPOC } from 'package/stores/POCViewerStore/types';
+import { IPOCViewerInputParameters, IUnusedViewerPOC, IViewerPOC } from 'package/stores/POCViewerStore/types';
 
 import { SceneSettings } from './sceneSettings';
 
@@ -24,7 +24,7 @@ import { UnusedPOCZone } from './components/unusedPOCZone';
 
 export interface IPOCViewerProps {
     pocInputParameters: IPOCViewerInputParameters | null
-    onPOCClick: (poc: IViewerPOC) => void
+    onPOCClick: (poc: IViewerPOC | IUnusedViewerPOC) => void
 }
 
 export const POCViewer = observer(({ pocInputParameters, onPOCClick }: IPOCViewerProps) => {

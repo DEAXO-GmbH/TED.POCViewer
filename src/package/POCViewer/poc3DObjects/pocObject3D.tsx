@@ -9,7 +9,11 @@ import POCLabel from './pocLabel';
 
 
 
-export const POCObject3D = observer(({ poc }: {poc: IViewerPOC}) => {
+interface IPOCObject3DProps {
+    poc: IViewerPOC
+}
+
+export const POCObject3D = observer(({ poc }: IPOCObject3DProps) => {
     const isHovered = pocViewerStore.hoveredPOCIds.has(poc.id);
 
     const isMediaOverflow = Number(poc.mediaCapacity) < Number(poc.occupiedMediaCapacity);

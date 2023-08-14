@@ -33,7 +33,6 @@ export const SCENE_GRID_SECOND_COLOR = 0xA2A8AD;
 export const SCENE_DEFAULT_TEXT_COLOR = 0x202121;
 
 // Levels and axes
-// TODO add offset constants
 export const LEVEL_PLANE_INNER_COLOR = 0x3C7CAA;
 export const LEVEL_PLANE_OUTER_COLOR = 0xD3EDFF;
 export const LEVEL_PLANE_OUTER_SECOND_COLOR = 0xD3EDFF;
@@ -45,8 +44,11 @@ export const AXES_LABEL_OFFSET = 3;
 export const OUTER_PLANE_EXTRA_PADDING = AXES_LABEL_OFFSET * 2 + AXES_LABEL_RADIUS * 4;
 
 // Unused poc zone
-export const UNUSED_POC_ZONE_LEFT_OFFSET = 0;
-export const UNUSED_POC_ZONE_COLOR = 0x0066F5;
+export const UNUSED_POC_ZONE_LEFT_OFFSET = 5;
+export const UNUSED_POC_ZONE_COLOR = 0x3C7CAA;
+export const UNUSED_POC_ZONE_PLANE_PADDING = 1;
+export const UNUSED_POC_ZONE_GAP = 1.5;
+export const UNUSED_POC_ZONE_TITLE_LABEL_COLOR = 0x002255;
 
 // POC and POCLines
 export const POC_CRYSTAL_COLOR = 0x41A600;
@@ -56,7 +58,7 @@ export const POC_OVERFLOW_HOVER_COLOR = 0xCC1100;
 export const POC_CRYSTAL_LABEL_COLOR = SCENE_DEFAULT_TEXT_COLOR;
 export const POC_CRYSTAL_METRIC_COLOR = 0x777777;
 export const POC_CRYSTAL_METRIC_OVERLOAD_COLOR = 0xFF0000;
-export const POCLINE_COLOR = 0x110900;
+export const POCLINE_COLOR = 0x333355;
 export const POCLINE_OFFSET_LENGTH = 2;
 
 // Tools

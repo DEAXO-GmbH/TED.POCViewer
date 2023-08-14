@@ -41,8 +41,7 @@ export const TextSprite = (props: any) => {
 
         context.lineWidth = borderThickness;
 
-        context.fillStyle = `#${color.toString(16)}`;
-        // context.fillText(children, textWidth * 1.2 - (textWidth*0.8), fontSize);
+        context.fillStyle = `#${color.toString(16).padStart(6, '0')}`;
         let textXcoordinate = 0;
 
         if (alignment === 'center') {
