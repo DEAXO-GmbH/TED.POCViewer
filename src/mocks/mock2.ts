@@ -26,7 +26,7 @@ export const mock2: IPOCViewerInputParameters = {
             'name': '005',
             'description': 'FAB FACILITY',
             'index': 316,
-            'incomeVolumeCapacity': null,
+            'incomingVolumeCapacity': null,
             'totalMediaCapacity': '0 Nm3/h',
             'occupiedMediaCapacity': '0,314 Nm3/h',
             'factOccupiedMediaCapacity': null,

@@ -74,7 +74,7 @@ export interface IPOCLineDTO {
 
     index: number
 
-    incomingVolumeCapacity: string
+    incomingVolumeCapacity: string | null
 }
 
 export interface IToolDTO {
@@ -132,7 +132,7 @@ export interface IViewerPOCLine {
     type: ViewerPOCTypes.POCLine
 
     index: number
-    incomingVolumeCapacity: string
+    incomingVolumeCapacity: string | null
 
     getDirection: (children: POCViewer3DPoint[]) => 'horizontal' | 'vertical'
     getChildrenPoints: (children: Array<IViewerPOCLine | IViewerPOC>) => POCViewer3DPoint[]
