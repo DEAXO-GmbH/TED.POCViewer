@@ -1,13 +1,13 @@
 // CSS Variables
-export const CSS_BUTTON_PANEL_BTN_BG = '#626262';
-export const CSS_BUTTON_PANEL_BTN_TEXT_COLOR = '#b7b7b7';
-export const CSS_BUTTON_PANEL_BTN_BORDER = '#202020';
+export const CSS_BUTTON_PANEL_BTN_BG = '#dbdbdb';
+export const CSS_BUTTON_PANEL_BTN_TEXT_COLOR = '#777777';
+export const CSS_BUTTON_PANEL_BTN_BORDER = '#777777';
 
-export const CSS_BUTTON_PANEL_MODAL_BG_1 = '#6f6f6f';
-export const CSS_BUTTON_PANEL_MODAL_BG_2 = '#626262';
-export const CSS_BUTTON_PANEL_MODAL_TEXT_COLOR_1 = '#c5c8cc';
-export const CSS_BUTTON_PANEL_MODAL_TEXT_COLOR_2 = '#c0c0c0';
-export const CSS_BUTTON_PANEL_MODAL_BORDER = '#202020';
+export const CSS_BUTTON_PANEL_MODAL_BG_1 = '#e8e8e8';
+export const CSS_BUTTON_PANEL_MODAL_BG_2 = '#dbdbdb';
+export const CSS_BUTTON_PANEL_MODAL_TEXT_COLOR_1 = '#666666';
+export const CSS_BUTTON_PANEL_MODAL_TEXT_COLOR_2 = '#555555';
+export const CSS_BUTTON_PANEL_MODAL_BORDER = '#777777';
 export const CSS_BUTTON_PANEL_MODAL_THUMB_COLOR = '#999999';
 export const CSS_BUTTON_PANEL_MODAL_THUMB_COLOR_HOVER = '#888888';
 

@@ -15,7 +15,7 @@ import { Checkbox } from 'antd';
 
 export const LayersWidget = observer(() => {
     useEffect(() => {
-        layersWidgetStore.addLevels(pocViewerStore.levelPlanes);
+        layersWidgetStore.addLevels(pocViewerStore.levelPlanes.reverse());
     }, [pocViewerStore.levelPlanes]);
 
 
