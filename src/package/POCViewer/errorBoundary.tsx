@@ -46,7 +46,7 @@ export class POCViewerErrorBoundary extends Component<IVIewerErrorBoundaryProps,
     render() {
         if (this.state.hasError) {
             return (
-                <div style={{ color: `#${ERROR_BOUNDARY_TEXT_COLOR.toString(16).padStart(6, '0')}`, textAlign: 'center', paddingTop: 40, fontSize: 20 }}>
+                <div style={{ color: `#${ERROR_BOUNDARY_TEXT_COLOR.toString(16).padStart(6, '0')}`, textAlign: 'center', paddingTop: 60, fontSize: 20 }}>
                     <div style={{ marginBottom: 8 }}>An error occured in POC viewer. Download json below:</div>
                     <Button onClick={this.onDownloadJSONClick} type='primary' style={{ fontSize: 14 }}>Download JSON</Button>
                 </div>

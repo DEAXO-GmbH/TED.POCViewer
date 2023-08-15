@@ -46,7 +46,8 @@ class POCViewerStore {
 
     @computed // Returns the number of pocs per line in the unused zone
     get unusedPOCsPerLine (): number {
-        return Math.floor((this.unusedPOCs.length - 1) ** 0.5) + 1;
+        const pocsPerLine = Math.floor((this.unusedPOCs.length - 1) ** 0.5) + 1;
+        return pocsPerLine || 0;
     }
 
     @computed

@@ -161,7 +161,7 @@ export const transformToVIewerTools = (tools: IToolDTO[]): IViewerTool[] => {
             width: toolWidth,
             position: position,
 
-            pocIds: tool.pocIds,
+            pocIds: tool.pocId,
         };
     }).filter(tool => tool !== null) as IViewerTool[];
 };

@@ -605,7 +605,7 @@ export const mock1: IPOCViewerInputParameters = {
             id: 'tool1',
             levelId: '01',
             name: 'Ice cream-24',
-            pocIds: ['POC42', 'POC1', 'POC3'],
+            pocId: ['POC42', 'POC1', 'POC3'],
         },
         {
             axisXStartId: 'a',
@@ -617,7 +617,7 @@ export const mock1: IPOCViewerInputParameters = {
             id: 'tool2',
             levelId: '01',
             name: 'Wook cutter 11',
-            pocIds: [ 'POC1', 'POC3'],
+            pocId: [ 'POC1', 'POC3'],
         },
         {
             axisXStartId: 'a',
@@ -629,7 +629,7 @@ export const mock1: IPOCViewerInputParameters = {
             id: 'tool3',
             levelId: '01',
             name: 'Cherry 1345',
-            pocIds: ['POC13', 'POC4'],
+            pocId: ['POC13', 'POC4'],
         },
         {
             axisXStartId: 'd',
@@ -641,7 +641,7 @@ export const mock1: IPOCViewerInputParameters = {
             id: 'tool4',
             levelId: '01',
             name: 'Chocolate 42',
-            pocIds: ['POC2', 'POC1'],
+            pocId: ['POC2', 'POC1'],
         },
     ],
 };

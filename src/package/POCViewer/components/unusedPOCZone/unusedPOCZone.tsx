@@ -5,8 +5,8 @@ import { Euler } from 'three';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 import { OUTER_PLANE_EXTRA_PADDING, UNUSED_POC_ZONE_COLOR, UNUSED_POC_ZONE_GAP, UNUSED_POC_ZONE_LEFT_OFFSET, UNUSED_POC_ZONE_PLANE_PADDING, UNUSED_POC_ZONE_TITLE_LABEL_COLOR } from 'package/constants';
 import { POCUnusedObject3D } from 'package/POCViewer/poc3DObjects/pocUnusedObject.3D';
-// import TextSprite from 'package/pocViewer/poc3DObjects/basicObjects/textSprite';
 import TextSprite from '../../poc3DObjects/basicObjects/textSprite';
+
 
 
 export const UnusedPOCZone = () => {
@@ -19,6 +19,10 @@ export const UnusedPOCZone = () => {
     const pocZonePlaneSizeWithOffset = pocZonePlaneSize + UNUSED_POC_ZONE_PLANE_PADDING * 2; // Width/length of the zone's plane
     const pocZonePositionX = levelPlaneSize / 2 + pocZonePlaneSizeWithOffset / 2 + UNUSED_POC_ZONE_LEFT_OFFSET; // zone plane's position
     const pocPointsPlaneSize = pocZonePlaneSize - unusedPOCSize;
+
+    if (pocViewerStore.unusedPOCs.length === 0) {
+        return null;
+    }
 
     return (
         <group position={[pocZonePositionX, -0.1, 0]}>

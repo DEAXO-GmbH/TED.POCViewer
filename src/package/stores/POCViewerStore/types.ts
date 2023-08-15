@@ -74,7 +74,7 @@ export interface IPOCLineDTO {
 export interface IToolDTO {
     id: string
     name: string
-    pocIds: string[]
+    pocId: string[]
 
     buildingId: string
     levelId?: string
