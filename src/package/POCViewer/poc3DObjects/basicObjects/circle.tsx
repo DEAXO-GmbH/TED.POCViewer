@@ -20,6 +20,7 @@ export const Circle = observer((props: any) => {
         const points3d: Vector3[] = [];
         curve.getPoints(50).map(point => points3d.push(new Vector3(point.x,point.y,position.z)));
         void ref.current.setFromPoints(points3d);
+        ref.current.computeBoundingSphere();
 
     }, [props]);
 

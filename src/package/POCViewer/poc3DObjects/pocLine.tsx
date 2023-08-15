@@ -24,14 +24,11 @@ interface IExtrudeSettings {
 
 export const POCLine = ({ pocLine }: IPOCLineProps) => {
     const [extrudeSettings, setExtrudeSettings] = useState<any | IExtrudeSettings>({
-        depth: 100,
         extrudePath: undefined,
-        bevelEnabled: true,
-        steps: 100,
+        steps: 1,
         curveSegments: 100,
         bevelThickness: 10,
-        bevelSize: 10,
-        bevelOffset: 10,
+        bevelSize: 0,
         bevelSegments: 10
     });
     const shapeRef = useRef();
@@ -42,8 +39,12 @@ export const POCLine = ({ pocLine }: IPOCLineProps) => {
         const points = pocLine.getChildrenPoints([...pocViewerStore.pocs, ...pocViewerStore.pocLines]);
 
         setExtrudeSettings((prev: any) => {
-            prev.extrudePath = new THREE.CatmullRomCurve3(points.map(point => new THREE.Vector3(point.x || 0, point.y || 0, point.z || 0)), false, 'catmullrom', 0);
-            return { ...prev, steps: points.length + 1000 };
+            console.log('ppp', points);
+            if (points.length) {
+                prev.extrudePath = new THREE.CatmullRomCurve3(points.map(point => new THREE.Vector3(point.x || 0, point.y || 0, point.z || 0)), false, 'catmullrom', 0);
+            }
+            console.log('ppp2', points);
+            return { ...prev, steps: points.length };
         });
     }, [pocLine]);
 
@@ -64,8 +65,8 @@ export const POCLine = ({ pocLine }: IPOCLineProps) => {
             <mesh position={[0, 1, 0]}>
                 <meshLambertMaterial flatShading color={POCLINE_COLOR} />
                 <extrudeGeometry args={[shapeRef.current, extrudeSettings]} />
+                <shape ref={shapeRef} />
             </mesh>
-            <shape ref={shapeRef} />
         </>
     );
 };

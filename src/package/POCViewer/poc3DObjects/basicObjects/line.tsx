@@ -13,6 +13,7 @@ export const Line = (props: any) => {
                     props.endPoint
                 ]);
         }
+        ref.current.computeBoundingSphere();
     }, [props]);
 
     return (

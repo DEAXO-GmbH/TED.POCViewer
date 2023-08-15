@@ -56,6 +56,9 @@ export const transformToViewerPOCLines = (pocs: IViewerPOC[], pocLineDtos: IPOCL
                     }
                 }).filter(Boolean);// remove undefined from points
 
+                if (points.length === 0) {
+                    return [];
+                }
 
                 // If pocLine parent === null, connect it to the root pocLines, else add an offset point
                 // Connect to the main line
