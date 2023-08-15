@@ -42,7 +42,7 @@ export const POCLine = ({ pocLine }: IPOCLineProps) => {
         const points = pocLine.getChildrenPoints([...pocViewerStore.pocs, ...pocViewerStore.pocLines]);
 
         setExtrudeSettings((prev: any) => {
-            prev.extrudePath = new THREE.CatmullRomCurve3(points.map(point => new THREE.Vector3(point.x, point.y, point.z)), false, 'catmullrom', 0);
+            prev.extrudePath = new THREE.CatmullRomCurve3(points.map(point => new THREE.Vector3(point.x || 0, point.y || 0, point.z || 0)), false, 'catmullrom', 0);
             return { ...prev, steps: points.length + 1000 };
         });
     }, [pocLine]);

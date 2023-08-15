@@ -20,19 +20,25 @@ export type POCViewer3DPoint = {
 export interface IAxisXDTO {
     id: string
     name: string
-    distance: number
+    distance: number | null
+    buildingId: string
+    index: number
 }
 
 export interface IAxisYDTO {
     id: string
     name: string
-    distance: number
+    distance: number | null
+    buildingId: string
+    index: number
 }
 
 export interface ILevelDTO {
     id: string
     name: string
-    distance: number
+    distance: number | null
+    buildingId: string
+    index: number
 }
 
 export interface IPocDTO {
