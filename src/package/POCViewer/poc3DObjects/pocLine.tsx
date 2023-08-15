@@ -25,26 +25,22 @@ interface IExtrudeSettings {
 export const POCLine = ({ pocLine }: IPOCLineProps) => {
     const [extrudeSettings, setExtrudeSettings] = useState<any | IExtrudeSettings>({
         extrudePath: undefined,
-        steps: 1,
-        curveSegments: 100,
-        bevelThickness: 10,
-        bevelSize: 0,
-        bevelSegments: 10
+        steps: null,
+        depth: 0,
+        bevelEnabled: false
     });
     const shapeRef = useRef();
-
 
 
     useEffect(() => {
         const points = pocLine.getChildrenPoints([...pocViewerStore.pocs, ...pocViewerStore.pocLines]);
 
         setExtrudeSettings((prev: any) => {
-            console.log('ppp', points);
             if (points.length) {
                 prev.extrudePath = new THREE.CatmullRomCurve3(points.map(point => new THREE.Vector3(point.x || 0, point.y || 0, point.z || 0)), false, 'catmullrom', 0);
             }
-            console.log('ppp2', points);
-            return { ...prev, steps: points.length };
+
+            return { ...prev, steps: points.length + 1000 };
         });
     }, [pocLine]);
 
@@ -58,7 +54,6 @@ export const POCLine = ({ pocLine }: IPOCLineProps) => {
         shape.lineTo(width, 0);
         shape.lineTo(0, 0);
     }, []);
-
 
     return (
         <>

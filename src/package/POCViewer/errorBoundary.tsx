@@ -1,6 +1,5 @@
 import { Button } from 'antd';
 import { ERROR_BOUNDARY_TEXT_COLOR } from 'package/constants';
-import 'antd/dist/antd.css';
 import React , { Component } from 'react';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 import { downloadFile } from 'package/utils';
@@ -48,7 +47,19 @@ export class POCViewerErrorBoundary extends Component<IVIewerErrorBoundaryProps,
             return (
                 <div style={{ color: `#${ERROR_BOUNDARY_TEXT_COLOR.toString(16).padStart(6, '0')}`, textAlign: 'center', paddingTop: 60, fontSize: 20 }}>
                     <div style={{ marginBottom: 8 }}>An error occured in POC viewer. Download json below:</div>
-                    <Button onClick={this.onDownloadJSONClick} type='primary' style={{ fontSize: 14 }}>Download JSON</Button>
+                    <Button
+                        onClick={this.onDownloadJSONClick}
+                        type='primary'
+                        style={{
+                            fontSize: 14,
+                            color: '#FFFFFF',
+                            background: 'rgb(77 118 255)',
+                            padding: '8px 20px',
+                            border: 0,
+                        }}
+                    >
+                        Download JSON
+                    </Button>
                 </div>
             );
         }

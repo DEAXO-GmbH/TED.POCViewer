@@ -72,10 +72,13 @@ export const ButtonPannel = observer(() => {
                     <button className='poc-viewer__button-pannel_btn' ><ScissorOutlined /></button>
                 </div>
 
-                <div className='poc-viewer__button-pannel_btn-group'>
-                    <button style={{ fontSize: 8 }} className='poc-viewer__button-pannel_btn' onClick={onExportAsJSONClick}>JSON</button>
-                    <button className='poc-viewer__button-pannel_btn' onClick={onImportJSONClick}><UploadOutlined /></button>
-                </div>
+                {
+                    pocViewerStore.isDebugMode &&
+                    <div className='poc-viewer__button-pannel_btn-group'>
+                        <button style={{ fontSize: 8 }} className='poc-viewer__button-pannel_btn' onClick={onExportAsJSONClick}>JSON</button>
+                        <button className='poc-viewer__button-pannel_btn' onClick={onImportJSONClick}><UploadOutlined /></button>
+                    </div>
+                }
             </div>
 
             <LayersWidget />

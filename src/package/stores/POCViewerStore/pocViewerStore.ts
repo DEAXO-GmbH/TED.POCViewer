@@ -8,6 +8,7 @@ class POCViewerStore {
     @observable pocInputParameters: IPOCViewerInputParameters | null = null;
     @observable hoveredPOCIds: Set<string> = new Set();
     @observable clickedPOC: IViewerPOC | IUnusedViewerPOC | null = null;
+    @observable isDebugMode = false;
 
 
     @computed
@@ -136,6 +137,11 @@ class POCViewerStore {
     @action
     public removeHoveredPOCId (pocId: string) {
         this.hoveredPOCIds.delete(pocId);
+    }
+
+    @action
+    setDebugMode (value: boolean) {
+        this.isDebugMode = value;
     }
 }
 

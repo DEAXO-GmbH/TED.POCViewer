@@ -25,9 +25,10 @@ import { POCViewerErrorBoundary } from './errorBoundary';
 export interface IPOCViewerProps {
     pocInputParameters: IPOCViewerInputParameters | null
     onPOCClick: (poc: IViewerPOC | IUnusedViewerPOC) => void
+    debug?: boolean
 }
 
-export const POCViewer = observer(({ pocInputParameters, onPOCClick }: IPOCViewerProps) => {
+export const POCViewer = observer(({ pocInputParameters, onPOCClick, debug = false }: IPOCViewerProps) => {
     useEffect(() => {
         if (pocViewerStore.clickedPOC) {
             onPOCClick(pocViewerStore.clickedPOC);
@@ -42,10 +43,13 @@ export const POCViewer = observer(({ pocInputParameters, onPOCClick }: IPOCViewe
         }
     }, [pocInputParameters]);
 
+    useEffect(() => {
+        pocViewerStore.setDebugMode(debug);
+    }, [debug]);
+
 
     return (
         <POCViewerErrorBoundary>
-
             <div style={{ ...POC_VIEWER_CSS_VARIABLES }} className={cn('poc-viewer_cont', pocViewerStore.hoveredPOCIds.size > 0 && 'poc-hovered')}>
                 <Canvas gl={{ localClippingEnabled: true }}>
                     <SceneSettings />
