@@ -9,7 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "react-scripts start",
     "build": "node scripts/build.js",
-    "lint": "npx eslint --ext .tsx,.ts src/"
+    "lint": "npx eslint --ext .tsx,.ts src/",
+    "ts": "npx tsc --project tsconfig.json"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
