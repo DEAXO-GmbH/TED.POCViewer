@@ -70,3 +70,6 @@ export const TOOL_DEFAULT_HEIGHT = 2;
 export const TOOL_DIMENSIONS_GAP = 0.5;
 export const POC_TOOL_CONNECTION_COLOR = 0x000000;
 export const INTERCONNECTION_COLOR = 0x222222;
+
+// Error boundary
+export const ERROR_BOUNDARY_TEXT_COLOR = 0x222244;
