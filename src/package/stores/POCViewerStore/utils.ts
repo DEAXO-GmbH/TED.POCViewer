@@ -229,10 +229,10 @@ export const transformPOCs = (pocs: IPocDTO[]) => {
 
             position,
 
-            mediaCapacity: pocDto.mediaCapacity,
-            occupiedMediaCapacity: pocDto.occupiedMediaCapacity,
-            occupiedPhysicalCapacity: pocDto.occupiedPhysicalCapacity,
-            physicalCapacity: pocDto.physicalCapacity
+            mediaCapacity: pocDto.mediaCapacity || 0,
+            occupiedMediaCapacity: pocDto.occupiedMediaCapacity || 0,
+            occupiedPhysicalCapacity: pocDto.occupiedPhysicalCapacity || 0,
+            physicalCapacity: pocDto.physicalCapacity || 0,
         };
     }).filter(poc => poc !== null) as IViewerPOC[];
 

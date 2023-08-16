@@ -58,6 +58,7 @@ export const LayersWidget = observer(() => {
                                     <LayerOption onToggle={() => layersWidgetStore.toggleAxesVisibility(levelPlane.levelId)} isVisible={levelOptions.axesHidden} label='Axes' />
                                     <LayerOption onToggle={() => layersWidgetStore.togglePOCVisibility(levelPlane.levelId)} isVisible={levelOptions.pocsHidden} label='POCs' />
                                     <LayerOption onToggle={() => layersWidgetStore.toggleToolsVisibility(levelPlane.levelId)} isVisible={levelOptions.toolsHidden} label='Tools' />
+                                    <LayerOption onToggle={() => layersWidgetStore.togglePlaneVisibility(levelPlane.levelId)} isVisible={levelOptions.planeHidden} label='Plane' />
                                 </div>
                             }
                         </div>

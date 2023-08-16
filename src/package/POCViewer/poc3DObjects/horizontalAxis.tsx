@@ -27,7 +27,6 @@ const HorizontalAxis = observer((props: {horizontalAxis: IHorizontalAxis}) => {
     return (
         <group
             rotation={new Euler(1.5 * Math.PI, 0, 0)}
-            position={[0, 1, 0]}
         >
             <Circle
                 ref={ref}

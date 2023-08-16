@@ -23,6 +23,7 @@ class LayersWidgetStore {
                 axesHidden: false,
                 pocsHidden: false,
                 toolsHidden: false,
+                planeHidden: false,
             };
         });
     }
@@ -34,6 +35,7 @@ class LayersWidgetStore {
             axesHidden: false,
             pocsHidden: false,
             toolsHidden: false,
+            planeHidden: false,
         };
     }
 
@@ -64,6 +66,7 @@ class LayersWidgetStore {
                 axesHidden: false,
                 pocsHidden: false,
                 toolsHidden: false,
+                planeHidden: false,
             });
         } else {
             Object.assign(layer, {
@@ -71,6 +74,7 @@ class LayersWidgetStore {
                 axesHidden: true,
                 pocsHidden: true,
                 toolsHidden: true,
+                planeHidden: true,
             });
         }
     }
@@ -91,6 +95,11 @@ class LayersWidgetStore {
     public toggleToolsVisibility (levelId: string) {
         const layer = this.layerVisibilityOptions.find(layer => layer.levelId === levelId)!;
         layer.toolsHidden = !layer.toolsHidden;
+    }
+
+    @action togglePlaneVisibility (levelId: string) {
+        const layer = this.layerVisibilityOptions.find(layer => layer.levelId === levelId)!;
+        layer.planeHidden = !layer.planeHidden;
     }
 
     @action

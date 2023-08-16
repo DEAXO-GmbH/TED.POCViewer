@@ -17,7 +17,6 @@ export const POCObject3D = observer(({ poc }: IPOCObject3DProps) => {
     const isHovered = pocViewerStore.hoveredPOCIds.has(poc.id);
 
     const isMediaOverflow = Number(poc.mediaCapacity) < Number(poc.occupiedMediaCapacity);
-    // const isPhysicalOverflow = Number(poc.physicalCapacity) < Number(poc.occupiedPhysicalCapacity);
 
     const pocBodyColor =  (isMediaOverflow) ? (isHovered ? POC_OVERFLOW_HOVER_COLOR : POC_OVERFLOW_COLOR) : (isHovered ? POC_CRYSTAL_HOVER_COLOR : POC_CRYSTAL_COLOR);
 

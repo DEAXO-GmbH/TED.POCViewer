@@ -58,11 +58,11 @@ export interface IPocDTO {
     axisXEndId?: string
     axisYEndId?: string
 
-    mediaCapacity: string
-    occupiedMediaCapacity: string
+    mediaCapacity?: string
+    occupiedMediaCapacity?: string
     unit: string
-    physicalCapacity: string
-    occupiedPhysicalCapacity: string
+    physicalCapacity?: string
+    occupiedPhysicalCapacity?: string
 }
 
 export interface IPOCLineDTO {

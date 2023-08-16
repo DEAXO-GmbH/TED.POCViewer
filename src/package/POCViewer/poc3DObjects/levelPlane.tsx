@@ -39,7 +39,7 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
             ref={planeGroupRef}
         >
             {
-                !levelVisibilityOptions.axesHidden &&
+                !levelVisibilityOptions.planeHidden &&
                 <group position={planePosition}>
                     <Plane
                         args={[pocViewerStore.planesWidth, pocViewerStore.planesLength]}
