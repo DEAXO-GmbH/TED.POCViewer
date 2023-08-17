@@ -27,6 +27,9 @@ export const POCObject3D = observer(({ poc }: IPOCObject3DProps) => {
         return plane;
     }, [poc]);
 
+    const height = 2;
+    const radius = 1;
+
 
     return (
         <group
@@ -43,21 +46,21 @@ export const POCObject3D = observer(({ poc }: IPOCObject3DProps) => {
             }}
         >
             <group>
-                <mesh geometry={new THREE.ConeGeometry(1, 2, 4)} position={[0, 0, 0]} rotation={[Math.PI, 0, 0]}>
+                <mesh geometry={new THREE.ConeGeometry(radius, height, 4)} position={[0, 0, 0]} rotation={[Math.PI, 0, 0]}>
                     <meshLambertMaterial flatShading attach="material" color={pocBodyColor} transparent opacity={0.3} side={THREE.DoubleSide}/>
                 </mesh>
 
-                <mesh geometry={new THREE.ConeGeometry(1, 2, 4)} position={[0, 2, 0]}>
+                <mesh geometry={new THREE.ConeGeometry(radius, height, 4)} position={[0, height, 0]}>
                     <meshLambertMaterial flatShading color={pocBodyColor} side={THREE.DoubleSide} transparent opacity={0.3} />
                 </mesh>
             </group>
 
             <group scale={[0.8,0.8,0.8]}>
-                <mesh geometry={new THREE.ConeGeometry(1, 2, 4)} position={[0, 0.25, 0]} rotation={[Math.PI, 0, 0]} >
+                <mesh geometry={new THREE.ConeGeometry(radius, height, 4)} position={[0, 0.25, 0]} rotation={[Math.PI, 0, 0]} >
                     <meshLambertMaterial flatShading attach="material" color={pocBodyColor} side={THREE.DoubleSide} clipShadows clippingPlanes={[capacityClippingPlane]}/>
                 </mesh>
 
-                <mesh geometry={new THREE.ConeGeometry(1, 2, 4)} position={[0, 2.25, 0]}>
+                <mesh geometry={new THREE.ConeGeometry(radius, height, 4)} position={[0, height+0.25, 0]}>
                     <meshLambertMaterial flatShading color={pocBodyColor} side={THREE.DoubleSide} clipShadows clippingPlanes={[capacityClippingPlane]} />
                 </mesh>
             </group>

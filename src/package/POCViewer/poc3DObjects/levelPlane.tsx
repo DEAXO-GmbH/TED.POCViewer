@@ -24,8 +24,8 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
     const isBottommostPlane = pocViewerStore.levelPlanes[0] === props.levelPlane;
     const isPlaneIndexEven = pocViewerStore.levelPlanes.indexOf(props.levelPlane) % 2 === 0;
 
-    const innerPlaneOpacity = isBottommostPlane ? 1 : 0.8;
-    const outerPlaneOpacity = isBottommostPlane ? 1 : 0.7;
+    const innerPlaneOpacity = isBottommostPlane ? 1 : 0.5;
+    const outerPlaneOpacity = isBottommostPlane ? 1 : 0.5;
     const outerPlaneColor = isPlaneIndexEven ? LEVEL_PLANE_OUTER_COLOR : LEVEL_PLANE_OUTER_SECOND_COLOR;
 
     const outerPlaneWidth = pocViewerStore.planesWidth + OUTER_PLANE_EXTRA_PADDING;
