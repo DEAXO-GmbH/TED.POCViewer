@@ -47,7 +47,7 @@ export const UnusedPOCZone = () => {
             }
 
             <TextSprite position={[0, 10, 0]} width={10} fontSize={100} color={UNUSED_POC_ZONE_TITLE_LABEL_COLOR} >
-                Unused POCs
+                Unplaced POCs
             </TextSprite>
         </group>
     );
