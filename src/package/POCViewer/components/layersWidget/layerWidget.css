@@ -98,8 +98,8 @@
 .poc-viewer__layers_global_option > .ant-checkbox-wrapper {
     width: 14px;
     height: 14px;
-    display: inline-block;
-    transform: translateY(3px);
+    position: relative;
+    top: 3px;
     margin-right: 4px;
 }
 

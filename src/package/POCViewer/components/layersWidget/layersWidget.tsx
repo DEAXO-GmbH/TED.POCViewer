@@ -8,8 +8,9 @@ import { concatClassnames as cn } from 'package/utils';
 import { layersWidgetStore } from 'package/stores/widgetStore';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 
-import './layerWidget.css';
 import { Checkbox } from 'antd';
+
+import './layerWidget.css';
 
 
 
@@ -56,9 +57,9 @@ export const LayersWidget = observer(() => {
                                 levelOptions.isLayerExpanded &&
                                 <div className='poc-viewer__layers_layer_options'>
                                     <LayerOption onToggle={() => layersWidgetStore.toggleAxesVisibility(levelPlane.levelId)} isVisible={levelOptions.axesHidden} label='Axes' />
+                                    <LayerOption onToggle={() => layersWidgetStore.togglePlaneVisibility(levelPlane.levelId)} isVisible={levelOptions.planeHidden} label='Plane' />
                                     <LayerOption onToggle={() => layersWidgetStore.togglePOCVisibility(levelPlane.levelId)} isVisible={levelOptions.pocsHidden} label='POCs' />
                                     <LayerOption onToggle={() => layersWidgetStore.toggleToolsVisibility(levelPlane.levelId)} isVisible={levelOptions.toolsHidden} label='Tools' />
-                                    <LayerOption onToggle={() => layersWidgetStore.togglePlaneVisibility(levelPlane.levelId)} isVisible={levelOptions.planeHidden} label='Plane' />
                                 </div>
                             }
                         </div>
