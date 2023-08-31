@@ -12,7 +12,7 @@ import TextSprite from '../../poc3DObjects/basicObjects/textSprite';
 export const UnusedPOCZone = () => {
     const levelPlaneSize = pocViewerStore.planesWidth + OUTER_PLANE_EXTRA_PADDING;
 
-    const pocPerLine = pocViewerStore.unusedPOCsPerLine;
+    const pocPerLine = pocViewerStore.unusedPOCsPerLine; // AAA
     const unusedPOCSize = 2; // How much of a square it takes
 
     const pocZonePlaneSize = pocPerLine * unusedPOCSize + (pocPerLine - 1) * UNUSED_POC_ZONE_GAP;
@@ -20,7 +20,7 @@ export const UnusedPOCZone = () => {
     const pocZonePositionX = levelPlaneSize / 2 + pocZonePlaneSizeWithOffset / 2 + UNUSED_POC_ZONE_LEFT_OFFSET; // zone plane's position
     const pocPointsPlaneSize = pocZonePlaneSize - unusedPOCSize;
 
-    if (pocViewerStore.unusedPOCs.length === 0) {
+    if (pocViewerStore.unusedPOCs.length === 0) { // AAA
         return null;
     }
 
@@ -35,7 +35,7 @@ export const UnusedPOCZone = () => {
             </Plane>
 
             {
-                pocViewerStore.unusedPOCs.map((poc, index) => {
+                pocViewerStore.unusedPOCs.map((poc, index) => { // AAA
                     const row = Math.floor(index / pocPerLine);
                     const col = index % pocPerLine;
 

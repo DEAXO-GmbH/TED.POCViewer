@@ -16,14 +16,6 @@ interface IPOCUnusedObject3DProps {
 export const POCUnusedObject3D = observer(({ poc, position }: IPOCUnusedObject3DProps) => {
     const isHovered = pocViewerStore.hoveredPOCIds.has(poc.id);
 
-    // const isMediaOverflow = Number(poc.mediaCapacity) < Number(poc.occupiedMediaCapacity);
-    // const pocBodyColor =  (isMediaOverflow) ? (isHovered ? POC_OVERFLOW_HOVER_COLOR : POC_OVERFLOW_COLOR) : (isHovered ? POC_CRYSTAL_HOVER_COLOR : POC_CRYSTAL_COLOR);
-    // const mediaCapacityFilled = Number(poc.occupiedMediaCapacity) / Number(poc.mediaCapacity) || 1;
-
-    // const capacityClippingPlane = useMemo(() => {
-    //     const plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), poc.position.y + mediaCapacityFilled * 4);
-    //     return plane;
-    // }, [poc]);
     const pocBodyColor = isHovered ? POC_CRYSTAL_HOVER_COLOR : POC_CRYSTAL_COLOR;
 
     return (

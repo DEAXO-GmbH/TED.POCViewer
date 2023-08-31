@@ -1,5 +1,5 @@
 import { POCLINE_OFFSET_LENGTH, TOOL_DEFAULT_HEIGHT, TOOL_DEFAULT_LENGTH, TOOL_DEFAULT_WIDTH } from 'package/constants';
-import { IAxisXDTO, IAxisYDTO, IHorizontalAxis, ILevelDTO, ILevelPlane, IPOCLineDTO, IPocDTO, IToolDTO, IUnusedViewerPOC, IVerticalAxis, IViewerPOC, IViewerPOCLine, IViewerTool, POCViewer3DPoint, ViewerPOCTypes } from './types';
+import { IAxisXDTO, IAxisYDTO, IHorizontalAxis, ILevelDTO, ILevelPlane, IPocCell, IPocDTO, IToolDTO, IUnusedViewerPOC, IVerticalAxis, IViewerPOC, IViewerTool, POCViewer3DPoint, ViewerPOCTypes } from './types';
 import { sortBy } from 'lodash';
 import { pocViewerStore } from './pocViewerStore';
 
@@ -33,76 +33,6 @@ export const transformToHorizontalAxes = (axes: IAxisXDTO[]): IHorizontalAxis[] 
     });
 };
 
-
-export const transformToViewerPOCLines = (pocs: IViewerPOC[], pocLineDtos: IPOCLineDTO[]): IViewerPOCLine[] => {
-    return pocLineDtos.map(pocLineDto => {
-        return {
-            id: pocLineDto.id,
-            parentPOCLineId: pocLineDto.parentPOCLineId,
-
-            name: pocLineDto.name,
-            desciption: pocLineDto.description,
-            type: ViewerPOCTypes.POCLine,
-
-            index: pocLineDto.index,
-            incomingVolumeCapacity: pocLineDto.incomingVolumeCapacity,
-
-            getChildrenPoints(children: Array<IViewerPOCLine | IViewerPOC>) {
-                const points = sortBy(children.filter(child => child.parentPOCLineId === this.id), ['index']).map(child => {
-                    if (child.type === ViewerPOCTypes.POC) {
-                        return { x: child.position.x, y: child.level.distance, z: -child.position.z };
-                    } else {
-                        return child.getChildrenPoints(children)[0];
-                    }
-                }).filter(Boolean);// remove undefined from points
-
-                if (points.length === 0) {
-                    return [];
-                }
-
-                // If pocLine parent === null, connect it to the root pocLines, else add an offset point
-                // Connect to the main line
-                if (pocLineDto.parentPOCLineId === null) {
-                    const firstPoint = points[0];
-                    const mainPOCLineConnectionPoint: POCViewer3DPoint = { ...firstPoint };
-
-                    if (firstPoint.x > firstPoint.z) {
-                        mainPOCLineConnectionPoint.x = 0;
-                    } else {
-                        mainPOCLineConnectionPoint.z = 0;
-                    }
-                    points.unshift(mainPOCLineConnectionPoint);
-
-                // Add an offset point
-                } else {
-                    const firstPoint = points[0];
-                    const newOffsetPoint = { ...firstPoint };
-                    if (this.getDirection(points) === 'horizontal') {
-                        const isXOutOfBounds = newOffsetPoint.x + POCLINE_OFFSET_LENGTH > pocViewerStore.planesWidth;
-                        newOffsetPoint.x += isXOutOfBounds ? -POCLINE_OFFSET_LENGTH : POCLINE_OFFSET_LENGTH;
-                    } else {
-                        const isZOutOfBounds = -newOffsetPoint.z + POCLINE_OFFSET_LENGTH > pocViewerStore.planesLength;
-                        newOffsetPoint.z += isZOutOfBounds ? POCLINE_OFFSET_LENGTH : -POCLINE_OFFSET_LENGTH;
-                    }
-                    points.unshift(newOffsetPoint);
-                }
-
-
-                // TODO add offset here
-                return points;
-            },
-
-            getDirection(childPoints: POCViewer3DPoint[]) {
-                const maxX = Math.max(...childPoints.map(point => point.x));
-                const minX = Math.min(...childPoints.map(point => point.x));
-                const maxZ = Math.max(...childPoints.map(point => point.z));
-                const minZ = Math.min(...childPoints.map(point => point.z));
-
-                return (maxX - minX) > (maxZ - minZ) ? 'horizontal' : 'vertical';
-            }
-        };
-    });
-};
 
 
 export const transformToVIewerTools = (tools: IToolDTO[]): IViewerTool[] => {
@@ -164,12 +94,16 @@ export const transformToVIewerTools = (tools: IToolDTO[]): IViewerTool[] => {
             width: toolWidth,
             position: position,
 
-            pocIds: tool.pocId,
+            pocCellIds: tool.pocCellId,
         };
     }).filter(tool => tool !== null) as IViewerTool[];
 };
 
-export const transformPOCs = (pocs: IPocDTO[]) => {
+export const transformPOCs = (pocCells: IPocCell[]) => {
+    const pocs: IPocDTO[] = pocCells.reduce((pr, cur) => {
+        return [...pr, ...cur.pocs];
+    }, []);
+
     const pocArray = pocs.map(pocDto => {
         let xAxisStart = pocViewerStore.horizontalAxis.find(axis => axis.id === pocDto.axisXStartId);
         let yAxisStart = pocViewerStore.verticalAxis.find(axis => axis.id === pocDto.axisYStartId);
@@ -211,7 +145,7 @@ export const transformPOCs = (pocs: IPocDTO[]) => {
 
         return {
             id: pocDto.id,
-            parentPOCLineId: pocDto.pocLineId,
+            parentPOCLineId: pocDto,
 
             name: pocDto.name,
             description: pocDto.description,
@@ -225,7 +159,7 @@ export const transformPOCs = (pocs: IPocDTO[]) => {
             xAxisEnd: xAxisEnd,
             yAxisEnd: yAxisEnd,
 
-            unit: pocDto.unit,
+            unit: pocDto.unitSymbol,
 
             position,
 
@@ -257,14 +191,11 @@ export const transformUnusedPOCs = (pocs: IPocDTO[]): IUnusedViewerPOC[] => {
         if (!yAxisStart && !yAxisEnd) {
             // In case both are null - do not add them to the resulting array
             return null;
-        } else {
-
         }
 
 
         return {
             id: pocDto.id,
-            parentPOCLineId: pocDto.pocLineId,
 
             name: pocDto.name,
             description: pocDto.description,
@@ -278,7 +209,7 @@ export const transformUnusedPOCs = (pocs: IPocDTO[]): IUnusedViewerPOC[] => {
             xAxisEnd: xAxisEnd,
             yAxisEnd: yAxisEnd,
 
-            unit: pocDto.unit,
+            unit: pocDto.unitSymbol,
 
             mediaCapacity: pocDto.mediaCapacity,
             occupiedMediaCapacity: pocDto.occupiedMediaCapacity,

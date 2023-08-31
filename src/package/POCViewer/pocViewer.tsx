@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
+import { Canvas, extend } from '@react-three/fiber';
 import { ButtonPannel } from './components/buttonPannel';
 import { POCObjectsGenerator } from './pocObjectsGenerator';
 
@@ -20,7 +20,11 @@ import './pocViewer.css';
 import { UnusedPOCZone } from './components/unusedPOCZone';
 import { POCViewerErrorBoundary } from './errorBoundary';
 
+import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 
+
+
+extend({ MeshLineMaterial, MeshLineGeometry });
 
 export interface IPOCViewerProps {
     pocInputParameters: IPOCViewerInputParameters | null

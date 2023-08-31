@@ -1,6 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { IPOCViewerInputParameters, IHorizontalAxis, IVerticalAxis, ILevelPlane, IViewerPOC, IViewerPOCLine, IViewerTool, IViewerInterconnection, IUnusedViewerPOC } from './types';
-import { transformLevelsToLevelPlanes, transformPOCs, transformToHorizontalAxes, transformToVIewerTools, transformToVerticalAxes, transformToViewerPOCLines, transformUnusedPOCs } from './utils';
+import { IPOCViewerInputParameters, IHorizontalAxis, IVerticalAxis, ILevelPlane, IViewerPOC, IViewerTool, IViewerInterconnection, IUnusedViewerPOC, IViewerPOCCell } from './types';
+import { transformLevelsToLevelPlanes, transformPOCs, transformToHorizontalAxes, transformToVIewerTools, transformToVerticalAxes, transformUnusedPOCs } from './utils';
 
 
 
@@ -17,14 +17,12 @@ class POCViewerStore {
 
         return transformToHorizontalAxes(this.pocInputParameters.xAxes);
     }
-
     @computed
     get verticalAxis (): IVerticalAxis[] {
         if (!this.pocInputParameters) return [];
 
         return transformToVerticalAxes(this.pocInputParameters.yAxes);
     }
-
     @computed
     get levelPlanes (): ILevelPlane[] {
         if (!this.pocInputParameters) return [];
@@ -32,17 +30,18 @@ class POCViewerStore {
         return transformLevelsToLevelPlanes(this.pocInputParameters.levels);
     }
 
+
     @computed
-    get pocs (): IViewerPOC[] {
+    get pocs (): IViewerPOC[] { // :IViewerPOCCell[] ??
         if (!this.pocInputParameters) return [];
 
-        return transformPOCs(this.pocInputParameters.pocs);
+        return transformPOCs(this.pocInputParameters.pocCells);
     }
-
     @computed
     get unusedPOCs (): IUnusedViewerPOC[] {
         if (!this.pocInputParameters) return [];
-        return transformUnusedPOCs(this.pocInputParameters.pocs);
+        // TODO fix
+        return transformUnusedPOCs(this.pocInputParameters.pocNotPlaced);
     }
 
     @computed // Returns the number of pocs per line in the unused zone
@@ -51,12 +50,6 @@ class POCViewerStore {
         return pocsPerLine || 0;
     }
 
-    @computed
-    get pocLines (): IViewerPOCLine[] {
-        if (!this.pocInputParameters) return [];
-
-        return transformToViewerPOCLines(this.pocs, this.pocInputParameters.pocLines);
-    }
 
     @computed
     get tools (): IViewerTool[] {

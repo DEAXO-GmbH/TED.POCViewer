@@ -19,7 +19,8 @@ export const POCAndToolConnection = observer(({ tool }: IPOCAndToolConnection) =
     const isToolHidden = layersWidgetStore.getLevelOptionsById(tool.level.id).toolsHidden;
 
     useEffect(() => {
-        const pocs = pocViewerStore.pocs.filter(poc => tool.pocIds.includes(poc.id));
+        // TODO to fix pocCell ids - gotta make those cells yuh
+        const pocs = pocViewerStore.pocs.filter(poc => tool.pocCellIds.includes(poc.id));
 
         const points = pocs.map(poc => {
             return {

@@ -4,8 +4,9 @@ export interface IPOCViewerInputParameters {
     xAxes: IAxisXDTO[]
     yAxes: IAxisYDTO[]
     levels: ILevelDTO[]
-    pocs: IPocDTO[]
-    pocLines: IPOCLineDTO[]
+
+    pocNotPlaced: IPocDTO[]
+    pocCells: IPocCell[]
     tools: IToolDTO[]
     interconnections: IInterconnectionDTO[]
 }
@@ -41,9 +42,14 @@ export interface ILevelDTO {
     index: number
 }
 
+
+export interface IPocCell {
+    id: string
+    pocs: IPocDTO[]
+}
+
 export interface IPocDTO {
     id: string
-    pocLineId: string | null
 
     name: string
     description: string
@@ -58,29 +64,33 @@ export interface IPocDTO {
     axisXEndId?: string
     axisYEndId?: string
 
+    toolIds: string[]
+
+    elements: IPocElementDto[]
+
     mediaCapacity?: string
     occupiedMediaCapacity?: string
-    unit: string
     physicalCapacity?: string
     occupiedPhysicalCapacity?: string
+    unitSymbol: string
 }
 
-export interface IPOCLineDTO {
-    id: string
-    parentPOCLineId: string | null
-
-    name: string
-    description: string
-
-    index: number
-
-    incomingVolumeCapacity: string | null
+export interface IPocElementDto {
+    toolId: string,
+    toolName: string,
+    toolAverageFlowDouble: number,
+    toolAverageFlow: string,
+    toolMaximumFlowDouble: number,
+    toolMaximumFlow: string,
+    poU_Tag: string,
+    ventile: string
 }
+
 
 export interface IToolDTO {
     id: string
     name: string
-    pocId: string[]
+    pocCellId: string[]
 
     buildingId: string
     levelId?: string
@@ -120,27 +130,10 @@ export interface ILevelPlane {
 
 export enum ViewerPOCTypes {
     POC,
-    POCLine,
-}
-
-export interface IViewerPOCLine {
-    id: string
-    parentPOCLineId: string | null
-
-    name: string
-    desciption: string
-    type: ViewerPOCTypes.POCLine
-
-    index: number
-    incomingVolumeCapacity: string | null
-
-    getDirection: (children: POCViewer3DPoint[]) => 'horizontal' | 'vertical'
-    getChildrenPoints: (children: Array<IViewerPOCLine | IViewerPOC>) => POCViewer3DPoint[]
 }
 
 export interface IViewerPOC {
     id: string
-    parentPOCLineId: string | null
 
     name: string
     description: string
@@ -163,13 +156,18 @@ export interface IViewerPOC {
     occupiedPhysicalCapacity: string
 }
 
+export interface IViewerPOCCell {
+    id: string
+    pocs: IViewerPOC[]
+}
+
 export type IUnusedViewerPOC = PartialBy<IViewerPOC, 'xAxisStart' | 'xAxisEnd' | 'yAxisEnd' | 'yAxisStart' | 'level' | 'position'>
 
 
 export interface IViewerTool {
     id: string
     name: string
-    pocIds: string[]
+    pocCellIds: string[]
 
     buildingId: string
 

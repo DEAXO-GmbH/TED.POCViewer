@@ -4,7 +4,6 @@ import { observer } from 'mobx-react';
 
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 
-import { POCLine } from './poc3DObjects/pocLine';
 import { LevelPlane } from './poc3DObjects/levelPlane';
 
 import { Vector3 } from 'three';
@@ -20,7 +19,6 @@ export const POCObjectsGenerator = observer(() => {
     return (
         <group position={position}>
             {pocViewerStore.levelPlanes.map((levelPlane, index) => <LevelPlane key={index} levelPlane={levelPlane} />)}
-            {pocViewerStore.pocLines.map(pocLine => <POCLine key={pocLine.id} pocLine={pocLine} />)}
             {pocViewerStore.tools.map(tool => <POCAndToolConnection key={tool.id} tool={tool} />)}
             {layersWidgetStore.showInterconnections && pocViewerStore.interconnections.map((intersection, index) => <Interconnection key={index} firstTool={intersection.firstTool} secondTool={intersection.secondTool} />)}
         </group>
