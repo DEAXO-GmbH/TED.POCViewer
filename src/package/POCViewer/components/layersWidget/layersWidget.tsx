@@ -23,13 +23,22 @@ export const LayersWidget = observer(() => {
     return (
         <div className={cn('poc-viewer__layers', layersWidgetStore.isWidgetOpen && 'open')} onContextMenu={(e)=> e.preventDefault()}>
             <div className='poc-viewer__layers_top'>
-                Levels visibility
-                <CloseOutlined onClick={() => layersWidgetStore.closeWidget()} />
+                <div>
+                    Levels visibility
+                    <CloseOutlined onClick={() => layersWidgetStore.closeWidget()} />
+                </div>
+
+                <div>
+                </div>
             </div>
 
             <div className='poc-viewer__layers_global'>
                 <div onClick={() => layersWidgetStore.toggleShowInterconnections()} className='poc-viewer__layers_global_option'>
                     <Checkbox checked={layersWidgetStore.showInterconnections} /> Show interconnections
+                </div>
+
+                <div onClick={() => layersWidgetStore.toggleShowPOCCellLabels()} className='poc-viewer__layers_global_option'>
+                    <Checkbox checked={layersWidgetStore.showPOCCellLabels} /> Show POC Cell labels
                 </div>
             </div>
 

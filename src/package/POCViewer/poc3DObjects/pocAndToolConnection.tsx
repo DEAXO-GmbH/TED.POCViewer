@@ -20,14 +20,14 @@ export const POCAndToolConnection = observer(({ tool }: IPOCAndToolConnection) =
 
     useEffect(() => {
         // TODO to fix pocCell ids - gotta make those cells yuh
-        const pocs = pocViewerStore.pocs.filter(poc => tool.pocCellIds.includes(poc.id));
+        const pocCells = pocViewerStore.pocCells.filter(pocCell => tool.pocCellIds.includes(pocCell.id));
 
-        const points = pocs.map(poc => {
+        const points = pocCells.map(pocCell => {
             return {
                 firstPoint: {
-                    x: poc.position.x,
-                    y: poc.position.y + 1,
-                    z: -poc.position.z,
+                    x: pocCell.position.x,
+                    y: pocCell.position.y + 1,
+                    z: -pocCell.position.z,
                 },
                 secondPoint: {
                     x: tool.position.x,

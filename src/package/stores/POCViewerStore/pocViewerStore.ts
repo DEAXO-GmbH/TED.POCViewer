@@ -1,6 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { IPOCViewerInputParameters, IHorizontalAxis, IVerticalAxis, ILevelPlane, IViewerPOC, IViewerTool, IViewerInterconnection, IUnusedViewerPOC, IViewerPOCCell } from './types';
-import { transformLevelsToLevelPlanes, transformPOCs, transformToHorizontalAxes, transformToVIewerTools, transformToVerticalAxes, transformUnusedPOCs } from './utils';
+import { transformLevelsToLevelPlanes, transformPOCCells, transformPOCs, transformToHorizontalAxes, transformToVIewerTools, transformToVerticalAxes, transformUnusedPOCs } from './utils';
 
 
 
@@ -8,6 +8,7 @@ class POCViewerStore {
     @observable pocInputParameters: IPOCViewerInputParameters | null = null;
     @observable hoveredPOCIds: Set<string> = new Set();
     @observable clickedPOC: IViewerPOC | IUnusedViewerPOC | null = null;
+    @observable clickedPOCCell: IViewerPOCCell | null = null;
     @observable isDebugMode = false;
 
 
@@ -32,15 +33,21 @@ class POCViewerStore {
 
 
     @computed
-    get pocs (): IViewerPOC[] { // :IViewerPOCCell[] ??
+    get pocs (): IViewerPOC[] { // :IViewerPOCCell[] ?? // TODO remove completely
         if (!this.pocInputParameters) return [];
 
         return transformPOCs(this.pocInputParameters.pocCells);
     }
     @computed
+    get pocCells (): IViewerPOCCell[] {
+        if (!this.pocInputParameters) return [];
+
+        return transformPOCCells(this.pocInputParameters.pocCells);
+    }
+    @computed
     get unusedPOCs (): IUnusedViewerPOC[] {
         if (!this.pocInputParameters) return [];
-        // TODO fix
+
         return transformUnusedPOCs(this.pocInputParameters.pocNotPlaced);
     }
 
@@ -105,6 +112,11 @@ class POCViewerStore {
     }
 
     @action
+    public setClickedPOCCell (pocCell: IViewerPOCCell) {
+        this.clickedPOCCell = pocCell;
+    }
+
+    @action
     public async importPocParametersFromJSON (jsonFile: File) {
         const fileContent = await jsonFile.text();
 
@@ -115,6 +127,10 @@ class POCViewerStore {
 
     public getAllLevelPOCs (levelId: string) {
         return this.pocs.filter(poc => poc.level.id === levelId);
+    }
+
+    public getAllPOCCells (levelId: string) {
+        return this.pocCells.filter(pocCell => pocCell.level.id === levelId);
     }
 
     @action

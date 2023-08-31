@@ -12,7 +12,7 @@ import { concatClassnames as cn } from 'package/utils';
 import { POC_VIEWER_CSS_VARIABLES, SCENE_BACKGROUND_COLOR, SCENE_GRID_FIRST_COLOR, SCENE_GRID_SECOND_COLOR } from 'package/constants';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 
-import { IPOCViewerInputParameters, IUnusedViewerPOC, IViewerPOC } from 'package/stores/POCViewerStore/types';
+import { IPOCViewerInputParameters, IUnusedViewerPOC, IViewerPOC, IViewerPOCCell } from 'package/stores/POCViewerStore/types';
 
 import { SceneSettings } from './sceneSettings';
 
@@ -28,16 +28,23 @@ extend({ MeshLineMaterial, MeshLineGeometry });
 
 export interface IPOCViewerProps {
     pocInputParameters: IPOCViewerInputParameters | null
-    onPOCClick: (poc: IViewerPOC | IUnusedViewerPOC) => void
+    onPOCClick?: (poc: IViewerPOC | IUnusedViewerPOC) => void
+    onPOCCellClick?: (pocCell: IViewerPOCCell) => void
     debug?: boolean
 }
 
-export const POCViewer = observer(({ pocInputParameters, onPOCClick, debug = false }: IPOCViewerProps) => {
+export const POCViewer = observer(({ pocInputParameters, onPOCClick, onPOCCellClick, debug = false }: IPOCViewerProps) => {
     useEffect(() => {
         if (pocViewerStore.clickedPOC) {
-            onPOCClick(pocViewerStore.clickedPOC);
+            onPOCClick && onPOCClick(pocViewerStore.clickedPOC);
         }
     }, [pocViewerStore.clickedPOC]);
+
+    useEffect(() => {
+        if (pocViewerStore.clickedPOCCell) {
+            onPOCCellClick && onPOCCellClick(pocViewerStore.clickedPOCCell);
+        }
+    }, [pocViewerStore.clickedPOCCell]);
 
     useEffect(() => {
         if (pocInputParameters) {

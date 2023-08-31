@@ -11,6 +11,7 @@ import { POCObject3D } from './pocObject3D';
 import { layersWidgetStore } from 'package/stores/widgetStore';
 import { LEVEL_PLANE_INNER_COLOR, LEVEL_PLANE_LABEL_COLOR, LEVEL_PLANE_OUTER_COLOR, LEVEL_PLANE_OUTER_SECOND_COLOR, OUTER_PLANE_EXTRA_PADDING } from 'package/constants';
 import { Tool } from './tool';
+import { POCCell } from './pocCell';
 
 
 
@@ -74,8 +75,12 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
             }
 
             <group>
-                {levelVisibilityOptions.pocsHidden || pocViewerStore.getAllLevelPOCs(props.levelPlane.id).map((poc, i) => {
+                {/* {levelVisibilityOptions.pocsHidden || pocViewerStore.getAllLevelPOCs(props.levelPlane.id).map((poc, i) => {
                     return <POCObject3D poc={poc} key={i} />;
+                })} */}
+
+                {levelVisibilityOptions.pocsHidden || pocViewerStore.getAllPOCCells(props.levelPlane.id).map((pocCell, i) => {
+                    return <POCCell pocCell={pocCell} key={i} />;
                 })}
 
                 {levelVisibilityOptions.axesHidden || pocViewerStore.horizontalAxis.map((axis, i) => <HorizontalAxis key={i} horizontalAxis={axis} />)}

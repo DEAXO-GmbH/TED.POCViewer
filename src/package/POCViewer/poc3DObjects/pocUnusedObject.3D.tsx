@@ -57,10 +57,10 @@ export const POCUnusedObject3D = observer(({ poc, position }: IPOCUnusedObject3D
                 // TODO here perfomance problem with this one
                 isHovered &&
                 <POCLabel
-                    mediaCapacity={poc.mediaCapacity}
-                    occupiedMediaCapacity={poc.occupiedMediaCapacity}
-                    occupiedPhysicalCapacity={poc.occupiedPhysicalCapacity}
-                    physicalCapacity={poc.physicalCapacity}
+                    mediaCapacity={poc.mediaCapacity || '0'}
+                    occupiedMediaCapacity={poc.occupiedMediaCapacity || '0'}
+                    occupiedPhysicalCapacity={poc.occupiedPhysicalCapacity || '0'}
+                    physicalCapacity={poc.physicalCapacity || '0'}
                     pocName={poc.name}
                     unit={poc.unit}
                 />

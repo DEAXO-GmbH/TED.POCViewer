@@ -6,6 +6,7 @@ class LayersWidgetStore {
     @observable isWidgetOpen = false;
     @observable layerVisibilityOptions: ILevelLayerOption[] = [];
     @observable showInterconnections = true;
+    @observable showPOCCellLabels = true;
 
     constructor () {
         makeObservable(this);
@@ -105,6 +106,11 @@ class LayersWidgetStore {
     @action
     public toggleShowInterconnections () {
         this.showInterconnections = !this.showInterconnections;
+    }
+
+    @action
+    public toggleShowPOCCellLabels () {
+        this.showPOCCellLabels = !this.showPOCCellLabels;
     }
 }
 

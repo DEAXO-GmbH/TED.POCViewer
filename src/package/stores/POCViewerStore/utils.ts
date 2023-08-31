@@ -1,5 +1,5 @@
 import { POCLINE_OFFSET_LENGTH, TOOL_DEFAULT_HEIGHT, TOOL_DEFAULT_LENGTH, TOOL_DEFAULT_WIDTH } from 'package/constants';
-import { IAxisXDTO, IAxisYDTO, IHorizontalAxis, ILevelDTO, ILevelPlane, IPocCell, IPocDTO, IToolDTO, IUnusedViewerPOC, IVerticalAxis, IViewerPOC, IViewerTool, POCViewer3DPoint, ViewerPOCTypes } from './types';
+import { IAxisXDTO, IAxisYDTO, IHorizontalAxis, ILevelDTO, ILevelPlane, IPocCellDTO, IPocDTO, IToolDTO, IUnusedViewerPOC, IVerticalAxis, IViewerPOC, IViewerPOCCell, IViewerTool, POCViewer3DPoint, ViewerPOCTypes } from './types';
 import { sortBy } from 'lodash';
 import { pocViewerStore } from './pocViewerStore';
 
@@ -99,7 +99,8 @@ export const transformToVIewerTools = (tools: IToolDTO[]): IViewerTool[] => {
     }).filter(tool => tool !== null) as IViewerTool[];
 };
 
-export const transformPOCs = (pocCells: IPocCell[]) => {
+// TODO to remove
+export const transformPOCs = (pocCells: IPocCellDTO[]) => {
     const pocs: IPocDTO[] = pocCells.reduce((pr, cur) => {
         return [...pr, ...cur.pocs];
     }, []);
@@ -182,18 +183,6 @@ export const transformUnusedPOCs = (pocs: IPocDTO[]): IUnusedViewerPOC[] => {
         const yAxisEnd = pocViewerStore.verticalAxis.find(axis => axis.id === pocDto.axisYEndId);
         const level = pocViewerStore.levelPlanes.find(levelPlane => levelPlane.id === pocDto.levelId);
 
-        if (!xAxisStart && !xAxisEnd || !level) {
-            // In case both are null - do not add them to the resulting array
-        } else {
-            return null;
-        }
-
-        if (!yAxisStart && !yAxisEnd) {
-            // In case both are null - do not add them to the resulting array
-            return null;
-        }
-
-
         return {
             id: pocDto.id,
 
@@ -219,4 +208,67 @@ export const transformUnusedPOCs = (pocs: IPocDTO[]): IUnusedViewerPOC[] => {
     }).filter(poc => poc !== null) as IUnusedViewerPOC[];
 
     return pocArray;
+};
+
+export const transformPOCCells = (pocCells: IPocCellDTO[]): IViewerPOCCell[] => {
+    const pocCellsArray: IViewerPOCCell[] = pocCells.map(pocCellDto => {
+        let xAxisStart = pocViewerStore.horizontalAxis.find(axis => axis.id === pocCellDto.axisXStartId);
+        let yAxisStart = pocViewerStore.verticalAxis.find(axis => axis.id === pocCellDto.axisYStartId);
+        let xAxisEnd = pocViewerStore.horizontalAxis.find(axis => axis.id === pocCellDto.axisXEndId);
+        let yAxisEnd = pocViewerStore.verticalAxis.find(axis => axis.id === pocCellDto.axisYEndId);
+        const level = pocViewerStore.levelPlanes.find(levelPlane => levelPlane.id === pocCellDto.levelId);
+
+        if (!xAxisStart && !xAxisEnd || !level) {
+            // In case both are null - do not add them to the resulting array
+            return null;
+        } else {
+            if (!xAxisStart) {
+                xAxisStart = pocViewerStore.horizontalAxis[0];
+            }
+            if (!xAxisEnd) {
+                xAxisEnd = pocViewerStore.horizontalAxis[pocViewerStore.horizontalAxis.length - 1];
+            }
+        }
+
+        if (!yAxisStart && !yAxisEnd) {
+            // In case both are null - do not add them to the resulting array
+            return null;
+        } else {
+            if (!yAxisStart) {
+                yAxisStart = pocViewerStore.verticalAxis[0];
+            }
+            if (!yAxisEnd) {
+                yAxisEnd = pocViewerStore.verticalAxis[pocViewerStore.verticalAxis.length - 1];
+            }
+        }
+
+        const pocArray: IPocDTO[] = pocCellDto.pocs;
+
+        const position = {
+            x: yAxisStart.distance + (yAxisEnd.distance - yAxisStart.distance) / 2,
+            y: level.distance,
+            z: xAxisStart.distance + (xAxisEnd.distance - xAxisStart.distance) / 2,
+        };
+
+        // ===================
+        //  Create a poc cell
+        // ===================
+        const pocCell: IViewerPOCCell = {
+            id: pocCellDto.id,
+            pocs: pocArray,
+
+            level: level,
+            xAxisEnd,
+            xAxisStart,
+            yAxisEnd,
+            yAxisStart,
+
+            position
+        };
+
+        return pocCell;
+    }).filter(pocCell => pocCell !== null) as IViewerPOCCell[];
+
+
+    return pocCellsArray;
 };

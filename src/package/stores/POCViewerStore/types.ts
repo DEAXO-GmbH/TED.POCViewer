@@ -6,7 +6,7 @@ export interface IPOCViewerInputParameters {
     levels: ILevelDTO[]
 
     pocNotPlaced: IPocDTO[]
-    pocCells: IPocCell[]
+    pocCells: IPocCellDTO[]
     tools: IToolDTO[]
     interconnections: IInterconnectionDTO[]
 }
@@ -43,9 +43,15 @@ export interface ILevelDTO {
 }
 
 
-export interface IPocCell {
+export interface IPocCellDTO {
     id: string
     pocs: IPocDTO[]
+
+    levelId?: string
+    axisXStartId?: string
+    axisYStartId?: string
+    axisXEndId?: string
+    axisYEndId?: string
 }
 
 export interface IPocDTO {
@@ -132,6 +138,7 @@ export enum ViewerPOCTypes {
     POC,
 }
 
+// TODO outdated
 export interface IViewerPOC {
     id: string
 
@@ -158,7 +165,15 @@ export interface IViewerPOC {
 
 export interface IViewerPOCCell {
     id: string
-    pocs: IViewerPOC[]
+    pocs: IPocDTO[]
+
+    level: ILevelPlane
+    xAxisStart: IHorizontalAxis
+    yAxisStart: IVerticalAxis
+    xAxisEnd: IHorizontalAxis
+    yAxisEnd: IVerticalAxis
+
+    position: POCViewer3DPoint
 }
 
 export type IUnusedViewerPOC = PartialBy<IViewerPOC, 'xAxisStart' | 'xAxisEnd' | 'yAxisEnd' | 'yAxisStart' | 'level' | 'position'>

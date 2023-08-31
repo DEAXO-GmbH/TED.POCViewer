@@ -12,6 +12,10 @@ export const mock1: IPOCViewerInputParameters = {
     pocCells: [
         {
             id: 'cell_1',
+            axisXEndId: 'c',
+            axisXStartId: 'b',
+            axisYStartId: '3',
+            levelId: '01',
             pocs: [
                 {
                     id: 'POC1',
@@ -628,9 +632,52 @@ export const mock1: IPOCViewerInputParameters = {
         {
             id: 'cell_2',
             pocs: [],
+            axisXEndId: 'c',
+            axisXStartId: 'b',
+            axisYStartId: '1',
+            levelId: '01'
         }
     ],
-    pocNotPlaced: [],
+    pocNotPlaced: [
+        {
+            id: 'POC1',
+            // pocLineId: 'pl1',
+            name: 'RD-2511',
+            description: 'aaa',
+            space: 'dw',
+            buildingId: 'wd',
+            levelId: '01',
+            axisXStartId: 'd',
+            axisXEndId: 'd',
+            axisYStartId: '3',
+            axisYEndId: '3',
+            index: 4,
+            mediaCapacity: '25',
+            occupiedMediaCapacity: '21.1',
+            unitSymbol: 'l/s',
+            toolIds: [],
+            elements: [],
+            occupiedPhysicalCapacity: '500',
+            physicalCapacity: '420',
+        },
+        {
+            id: 'POC2',
+            // pocLineId: 'pl1',
+            name: 'CH11',
+            description: 'aaa2',
+            space: 'dw',
+            buildingId: 'wd',
+            levelId: '01',
+            axisXStartId: 'c',
+            axisXEndId: 'c',
+            axisYStartId: '2',
+            unitSymbol: 'l/s',
+            toolIds: [],
+            elements: [],
+            axisYEndId: '2',
+            index: 6,
+        },
+    ],
     interconnections: [
         { firstToolId: 'tool1', secondToolId: 'tool2' },
         { firstToolId: 'tool3', secondToolId: 'tool2' },
@@ -646,7 +693,7 @@ export const mock1: IPOCViewerInputParameters = {
             id: 'tool1',
             levelId: '01',
             name: 'Ice cream-24',
-            pocCellId: ['POC42', 'POC1', 'POC3'],
+            pocCellId: ['POC42', 'cell_2', 'cell_1'],
         },
         {
             axisXStartId: 'a',
@@ -658,7 +705,7 @@ export const mock1: IPOCViewerInputParameters = {
             id: 'tool2',
             levelId: '01',
             name: 'Wook cutter 11',
-            pocCellId: [ 'POC1', 'POC3'],
+            pocCellId: [ 'POC1', 'POC3', 'cell_1'],
         },
         {
             axisXStartId: 'a',
@@ -670,7 +717,7 @@ export const mock1: IPOCViewerInputParameters = {
             id: 'tool3',
             levelId: '01',
             name: 'Cherry 1345',
-            pocCellId: ['POC13', 'POC4'],
+            pocCellId: ['POC13', 'POC4', 'cell'],
         },
         {
             axisXStartId: 'd',
@@ -682,7 +729,7 @@ export const mock1: IPOCViewerInputParameters = {
             id: 'tool4',
             levelId: '01',
             name: 'Chocolate 42',
-            pocCellId: ['POC2', 'POC1'],
+            pocCellId: ['POC2', 'POC1', 'cell_1'],
         },
     ],
 };
