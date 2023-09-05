@@ -1,11 +1,15 @@
 /* eslint-disable react/no-unknown-property */
+import { DEFAULT_POC_NAME, MAX_CELL_POC_NAME_LENGTH } from 'package/constants';
 import { IPocDTO } from 'package/stores/POCViewerStore/types';
 import React, { useMemo } from 'react';
 import { Vector3 } from 'three';
 
 
-const CANVAS_BASE_WIDTH = 300;
+const CANVAS_BASE_WIDTH = 500;
 const CANVAS_BASE_HEIGHT = 250;
+
+const POC_DATA_OVERFLOW_COLOR = '#FF0000';
+const POC_DATA_NORMAL_COLOR = '#777777';
 
 interface IPOCCellLabelProps {
     pocs: IPocDTO[]
@@ -30,17 +34,54 @@ export const POCCellLabel = ({ pocs }: IPOCCellLabelProps) => {
 
         const fontSize = 27;
         const maxPOCShow = 6;
-        context.font = `${fontSize}px Arial, avenir, helvetica, roboto`;
-        context.fillStyle = '#FFFFFF';
 
         let currentYOffset = fontSize + 8;
         let pocIndex = 0;
         for (const poc of pocs) {
-            context.fillText(`${poc.name}`, 10, currentYOffset);
+            context.fillStyle = '#FFFFFF';
+            context.font = `${fontSize}px Arial, avenir, helvetica, roboto`;
+
+            let pocDisplayName = poc.name || DEFAULT_POC_NAME;
+
+            if (pocDisplayName.length > MAX_CELL_POC_NAME_LENGTH) {
+                pocDisplayName = pocDisplayName.slice(0, 8) + '...';
+            }
+            context.fillText(`${pocDisplayName}`, 10, currentYOffset);
+
+            const mediaCapacityNumber = Number(poc.mediaCapacity) || 0;
+            const occupiedMediaCapacityNumber = Number(poc.occupiedMediaCapacity) || 0;
+            const physicalCapacityNumber = Number(poc.physicalCapacity) || 0;
+            const occupiedPhysicalCapacityNumber = Number(poc.occupiedPhysicalCapacity) || 0;
+
+            const isMediaOverflow = occupiedMediaCapacityNumber > mediaCapacityNumber;
+            const isPhysicalOverflow = occupiedPhysicalCapacityNumber > physicalCapacityNumber;
+
+            context.font = `${fontSize - 5}px Arial, avenir, helvetica, roboto`;
+
+            const physicalCapacityText = `P: ${poc.occupiedPhysicalCapacity || 0} / ${poc.physicalCapacity || 0}`;
+            const mediaCapacityText = `M: ${poc.occupiedMediaCapacity || 0} / ${poc.mediaCapacity || 0} ${poc.unitSymbol}`;
+
+
+            context.fillStyle = isPhysicalOverflow ? POC_DATA_OVERFLOW_COLOR : POC_DATA_NORMAL_COLOR;
+            context.fillText(
+                physicalCapacityText,
+                CANVAS_BASE_WIDTH - 140,
+                currentYOffset
+            );
+
+            context.fillStyle = isMediaOverflow ? POC_DATA_OVERFLOW_COLOR : POC_DATA_NORMAL_COLOR;
+            context.fillText(
+                mediaCapacityText,
+                CANVAS_BASE_WIDTH - 335,
+                currentYOffset
+            );
+
             currentYOffset += fontSize + 5;
             pocIndex++;
 
+
             if (pocIndex + 1 > maxPOCShow) {
+                context.font = `${fontSize}px Arial, avenir, helvetica, roboto`;
                 context.fillStyle = '#777799';
                 context.fillText(`And ${pocs.length - maxPOCShow} more...`, 10, CANVAS_BASE_HEIGHT - 15);
                 break;
@@ -49,7 +90,9 @@ export const POCCellLabel = ({ pocs }: IPOCCellLabelProps) => {
 
         if (pocs.length === 0) {
             context.font = `${35}px Arial, avenir, helvetica, roboto`;
-            context.fillText('No POC data', 45, 100);
+            context.fillStyle = '#999999';
+            const width = context.measureText('No POC data').width;
+            context.fillText('No POC data', (CANVAS_BASE_WIDTH / 2) - width / 2, 100);
         }
 
         return canvas;

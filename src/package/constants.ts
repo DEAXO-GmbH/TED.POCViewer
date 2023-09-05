@@ -50,6 +50,9 @@ export const UNUSED_POC_ZONE_PLANE_PADDING = 1;
 export const UNUSED_POC_ZONE_GAP = 1.5;
 export const UNUSED_POC_ZONE_TITLE_LABEL_COLOR = 0x002255;
 
+export const DEFAULT_POC_NAME = 'N/A';
+export const DEFAULT_POC_UNIT_NAME = 'N/A';
+
 // POC and POCLines
 export const POC_CRYSTAL_COLOR = 0x41A600;
 export const POC_CRYSTAL_HOVER_COLOR = 0x2A6C00;
@@ -63,6 +66,7 @@ export const POCLINE_OFFSET_LENGTH = 2;
 
 // Tools
 export const TOOL_COLOR = 0x5A707F;
+export const TOOL_SIZE_UNSPECIFIED_COLOR = 0x99222A;
 export const TOOL_NAME_COLOR = 0xFFFFFF;
 export const TOOL_DEFAULT_WIDTH = 1.5;
 export const TOOL_DEFAULT_LENGTH = 1.5;
@@ -70,6 +74,9 @@ export const TOOL_DEFAULT_HEIGHT = 2;
 export const TOOL_DIMENSIONS_GAP = 0.5;
 export const POC_TOOL_CONNECTION_COLOR = 0x000000;
 export const INTERCONNECTION_COLOR = 0x222222;
+
+// POC Cells
+export const MAX_CELL_POC_NAME_LENGTH = 9;
 
 // Error boundary
 export const ERROR_BOUNDARY_TEXT_COLOR = 0x222244;

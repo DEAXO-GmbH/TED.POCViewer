@@ -57,8 +57,8 @@ export interface IPocCellDTO {
 export interface IPocDTO {
     id: string
 
-    name: string
-    description: string
+    name?: string
+    description?: string
     space: string
 
     index: number
@@ -78,7 +78,7 @@ export interface IPocDTO {
     occupiedMediaCapacity?: string
     physicalCapacity?: string
     occupiedPhysicalCapacity?: string
-    unitSymbol: string
+    unitSymbol?: string
 }
 
 export interface IPocElementDto {
@@ -105,7 +105,7 @@ export interface IToolDTO {
     axisXEndId?: string
     axisYEndId?: string
 
-    height: number
+    height?: number | undefined | null
 }
 
 export interface IInterconnectionDTO {
@@ -174,9 +174,14 @@ export interface IViewerPOCCell {
     yAxisEnd: IVerticalAxis
 
     position: POCViewer3DPoint
+    isOverflow: boolean
 }
 
-export type IUnusedViewerPOC = PartialBy<IViewerPOC, 'xAxisStart' | 'xAxisEnd' | 'yAxisEnd' | 'yAxisStart' | 'level' | 'position'>
+export type IUnusedViewerPOC = PartialBy<IViewerPOC,
+    'xAxisStart' |'xAxisEnd' | 'yAxisEnd' | 'yAxisStart' | 'level' |
+    'position' | 'occupiedMediaCapacity' | 'occupiedPhysicalCapacity' |
+    'mediaCapacity' | 'physicalCapacity' | 'unit'
+>
 
 
 export interface IViewerTool {
@@ -194,7 +199,7 @@ export interface IViewerTool {
 
     width: number
     length: number
-    height: number
+    height: number | null | undefined
     position: POCViewer3DPoint
 }
 

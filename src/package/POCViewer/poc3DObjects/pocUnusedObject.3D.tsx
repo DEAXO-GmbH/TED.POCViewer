@@ -4,7 +4,7 @@ import React from 'react';
 import * as THREE from 'three';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 import { observer } from 'mobx-react';
-import { POC_CRYSTAL_COLOR, POC_CRYSTAL_HOVER_COLOR } from 'package/constants';
+import { DEFAULT_POC_NAME, DEFAULT_POC_UNIT_NAME, POC_CRYSTAL_COLOR, POC_CRYSTAL_HOVER_COLOR } from 'package/constants';
 import POCLabel from './pocLabel';
 
 
@@ -61,8 +61,8 @@ export const POCUnusedObject3D = observer(({ poc, position }: IPOCUnusedObject3D
                     occupiedMediaCapacity={poc.occupiedMediaCapacity || '0'}
                     occupiedPhysicalCapacity={poc.occupiedPhysicalCapacity || '0'}
                     physicalCapacity={poc.physicalCapacity || '0'}
-                    pocName={poc.name}
-                    unit={poc.unit}
+                    pocName={poc.name || DEFAULT_POC_NAME}
+                    unit={poc.unit || DEFAULT_POC_UNIT_NAME}
                 />
             }
 

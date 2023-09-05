@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unknown-property */
 import { observer } from 'mobx-react';
-import { POC_CRYSTAL_HOVER_COLOR, POC_CRYSTAL_COLOR } from 'package/constants';
+import { POC_CRYSTAL_HOVER_COLOR, POC_CRYSTAL_COLOR, POC_OVERFLOW_COLOR, POC_OVERFLOW_HOVER_COLOR } from 'package/constants';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 import { IViewerPOCCell } from 'package/stores/POCViewerStore/types';
-import React, { useMemo } from 'react';
+import React from 'react';
 import { ConeGeometry, DoubleSide } from 'three';
 import POCCellLabel from './pocCellLabel';
 import { layersWidgetStore } from 'package/stores/widgetStore';
@@ -14,7 +14,11 @@ interface IPOCCellProps {
 
 export const POCCell = observer(({ pocCell }: IPOCCellProps) => {
     const isHovered = pocViewerStore.hoveredPOCIds.has(pocCell.id);
-    const pocBodyColor = isHovered ? POC_CRYSTAL_HOVER_COLOR : POC_CRYSTAL_COLOR;
+    let pocBodyColor = isHovered ? POC_CRYSTAL_HOVER_COLOR : POC_CRYSTAL_COLOR;
+
+    if (pocCell.isOverflow) {
+        pocBodyColor = isHovered ? POC_OVERFLOW_HOVER_COLOR : POC_OVERFLOW_COLOR;
+    }
     // const pocBodyColor = 0x0000FF;
 
     const height = 2;

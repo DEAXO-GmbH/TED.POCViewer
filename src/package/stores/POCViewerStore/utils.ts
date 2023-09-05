@@ -1,6 +1,5 @@
-import { POCLINE_OFFSET_LENGTH, TOOL_DEFAULT_HEIGHT, TOOL_DEFAULT_LENGTH, TOOL_DEFAULT_WIDTH } from 'package/constants';
-import { IAxisXDTO, IAxisYDTO, IHorizontalAxis, ILevelDTO, ILevelPlane, IPocCellDTO, IPocDTO, IToolDTO, IUnusedViewerPOC, IVerticalAxis, IViewerPOC, IViewerPOCCell, IViewerTool, POCViewer3DPoint, ViewerPOCTypes } from './types';
-import { sortBy } from 'lodash';
+import { DEFAULT_POC_NAME, TOOL_DEFAULT_LENGTH, TOOL_DEFAULT_WIDTH } from 'package/constants';
+import { IAxisXDTO, IAxisYDTO, IHorizontalAxis, ILevelDTO, ILevelPlane, IPocCellDTO, IPocDTO, IToolDTO, IUnusedViewerPOC, IVerticalAxis, IViewerPOC, IViewerPOCCell, IViewerTool, ViewerPOCTypes } from './types';
 import { pocViewerStore } from './pocViewerStore';
 
 export const transformLevelsToLevelPlanes = (levels: ILevelDTO[]): ILevelPlane[] => {
@@ -69,7 +68,7 @@ export const transformToVIewerTools = (tools: IToolDTO[]): IViewerTool[] => {
 
         const toolLength = (xAxisEnd.distance - xAxisStart.distance) || TOOL_DEFAULT_LENGTH;
         const toolWidth = (yAxisEnd.distance - yAxisStart.distance) || TOOL_DEFAULT_WIDTH;
-        const toolHeight = tool.height || TOOL_DEFAULT_HEIGHT;
+        const toolHeight = tool.height;
 
         const position = {
             x: yAxisStart.distance + (yAxisEnd.distance - yAxisStart.distance) / 2,
@@ -186,7 +185,7 @@ export const transformUnusedPOCs = (pocs: IPocDTO[]): IUnusedViewerPOC[] => {
         return {
             id: pocDto.id,
 
-            name: pocDto.name,
+            name: pocDto.name || DEFAULT_POC_NAME,
             description: pocDto.description,
             type: ViewerPOCTypes.POC,
 
@@ -207,7 +206,7 @@ export const transformUnusedPOCs = (pocs: IPocDTO[]): IUnusedViewerPOC[] => {
         };
     }).filter(poc => poc !== null) as IUnusedViewerPOC[];
 
-    return pocArray;
+    return pocArray.sort((poc1, poc2) => poc1.name > poc2.name ? 1 : -1);
 };
 
 export const transformPOCCells = (pocCells: IPocCellDTO[]): IViewerPOCCell[] => {
@@ -250,6 +249,23 @@ export const transformPOCCells = (pocCells: IPocCellDTO[]): IViewerPOCCell[] => 
             z: xAxisStart.distance + (xAxisEnd.distance - xAxisStart.distance) / 2,
         };
 
+        let isOverflow = false;
+
+        for (const poc of pocCellDto.pocs) {
+            const mediaCapacityNumber = Number(poc.mediaCapacity) || 0;
+            const occupiedMediaCapacityNumber = Number(poc.occupiedMediaCapacity) || 0;
+            const physicalCapacityNumber = Number(poc.physicalCapacity) || 0;
+            const occupiedPhysicalCapacityNumber = Number(poc.occupiedPhysicalCapacity) || 0;
+
+            const isMediaOverflow = occupiedMediaCapacityNumber > mediaCapacityNumber;
+            const isPhysicalOverflow = occupiedPhysicalCapacityNumber > physicalCapacityNumber;
+
+            if (isMediaOverflow || isPhysicalOverflow) {
+                isOverflow = true;
+                break;
+            }
+        }
+
         // ===================
         //  Create a poc cell
         // ===================
@@ -263,7 +279,8 @@ export const transformPOCCells = (pocCells: IPocCellDTO[]): IViewerPOCCell[] => 
             yAxisEnd,
             yAxisStart,
 
-            position
+            position,
+            isOverflow,
         };
 
         return pocCell;
