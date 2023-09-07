@@ -40,6 +40,10 @@ export const LayersWidget = observer(() => {
                 <div onClick={() => layersWidgetStore.toggleShowPOCCellLabels()} className='poc-viewer__layers_global_option'>
                     <Checkbox checked={layersWidgetStore.showPOCCellLabels} /> Show POC Cell labels
                 </div>
+
+                <div onClick={() => layersWidgetStore.toggleToolsTransparent()} className='poc-viewer__layers_global_option'>
+                    <Checkbox checked={layersWidgetStore.toolsTransparent} /> Tool transparency
+                </div>
             </div>
 
             <div className='poc-viewer__layers_main'>

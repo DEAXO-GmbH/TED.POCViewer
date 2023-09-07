@@ -106,6 +106,8 @@ export interface IToolDTO {
     axisYEndId?: string
 
     height?: number | undefined | null
+    length?: number | undefined | null
+    width?: number | undefined | null
 }
 
 export interface IInterconnectionDTO {
@@ -197,8 +199,8 @@ export interface IViewerTool {
     axisXEnd: IVerticalAxis
     axisYEnd: IVerticalAxis
 
-    width: number
-    length: number
+    width: number | null | undefined
+    length: number | null | undefined
     height: number | null | undefined
     position: POCViewer3DPoint
 }

@@ -2,11 +2,14 @@ import { action, makeObservable, observable } from 'mobx';
 import { ILevelLayerOption } from './types';
 import { ILevelPlane } from '../POCViewerStore/types';
 
+
 class LayersWidgetStore {
     @observable isWidgetOpen = false;
     @observable layerVisibilityOptions: ILevelLayerOption[] = [];
     @observable showInterconnections = true;
-    @observable showPOCCellLabels = true;
+    @observable showPOCCellLabels = false;
+    @observable toolsTransparent = false;
+
 
     constructor () {
         makeObservable(this);
@@ -111,6 +114,11 @@ class LayersWidgetStore {
     @action
     public toggleShowPOCCellLabels () {
         this.showPOCCellLabels = !this.showPOCCellLabels;
+    }
+
+    @action
+    public toggleToolsTransparent () {
+        this.toolsTransparent = !this.toolsTransparent;
     }
 }
 

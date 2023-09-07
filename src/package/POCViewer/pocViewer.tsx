@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { GizmoHelper, OrbitControls, PerspectiveCamera } from '@react-three/drei';
 import { Canvas, extend } from '@react-three/fiber';
 import { ButtonPannel } from './components/buttonPannel';
 import { POCObjectsGenerator } from './pocObjectsGenerator';

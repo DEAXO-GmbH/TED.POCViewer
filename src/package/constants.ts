@@ -43,6 +43,8 @@ export const AXES_LABEL_RADIUS = 1;
 export const AXES_LABEL_OFFSET = 3;
 export const OUTER_PLANE_EXTRA_PADDING = AXES_LABEL_OFFSET * 2 + AXES_LABEL_RADIUS * 4;
 
+export const LEVEL_EDGE_HIGHLIGHT_COLOR = 0x000000;
+
 // Unused poc zone
 export const UNUSED_POC_ZONE_LEFT_OFFSET = 5;
 export const UNUSED_POC_ZONE_COLOR = 0x3C7CAA;
@@ -67,16 +69,15 @@ export const POCLINE_OFFSET_LENGTH = 2;
 // Tools
 export const TOOL_COLOR = 0x5A707F;
 export const TOOL_SIZE_UNSPECIFIED_COLOR = 0x99222A;
-export const TOOL_NAME_COLOR = 0xFFFFFF;
+export const TOOL_NAME_COLOR = 0x000000;
 export const TOOL_DEFAULT_WIDTH = 1.5;
 export const TOOL_DEFAULT_LENGTH = 1.5;
 export const TOOL_DEFAULT_HEIGHT = 2;
 export const TOOL_DIMENSIONS_GAP = 0.5;
 export const POC_TOOL_CONNECTION_COLOR = 0x000000;
 export const INTERCONNECTION_COLOR = 0x222222;
+export const TOOL_EDGES_COLOR = 0x000000;
 
-// POC Cells
-export const MAX_CELL_POC_NAME_LENGTH = 9;
 
 // Error boundary
 export const ERROR_BOUNDARY_TEXT_COLOR = 0x222244;

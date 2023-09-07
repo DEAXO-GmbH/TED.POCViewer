@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Euler, Vector3 } from 'three';
 import { Circle } from './basicObjects/circle';
 import { Line } from './basicObjects/line';

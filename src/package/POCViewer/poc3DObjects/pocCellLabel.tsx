@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unknown-property */
-import { DEFAULT_POC_NAME, MAX_CELL_POC_NAME_LENGTH } from 'package/constants';
+import { DEFAULT_POC_NAME } from 'package/constants';
 import { IPocDTO } from 'package/stores/POCViewerStore/types';
 import React, { useMemo } from 'react';
 import { Vector3 } from 'three';
 
 
 const CANVAS_BASE_WIDTH = 500;
-const CANVAS_BASE_HEIGHT = 250;
+const CANVAS_BASE_HEIGHT = 270;
 
 const POC_DATA_OVERFLOW_COLOR = '#FF0000';
 const POC_DATA_NORMAL_COLOR = '#777777';
@@ -33,7 +33,7 @@ export const POCCellLabel = ({ pocs }: IPOCCellLabelProps) => {
         context.fillRect(0, 0, CANVAS_BASE_WIDTH, CANVAS_BASE_HEIGHT);
 
         const fontSize = 27;
-        const maxPOCShow = 6;
+        const maxPOCShow = 3;
 
         let currentYOffset = fontSize + 8;
         let pocIndex = 0;
@@ -41,11 +41,8 @@ export const POCCellLabel = ({ pocs }: IPOCCellLabelProps) => {
             context.fillStyle = '#FFFFFF';
             context.font = `${fontSize}px Arial, avenir, helvetica, roboto`;
 
-            let pocDisplayName = poc.name || DEFAULT_POC_NAME;
+            const pocDisplayName = poc.name || DEFAULT_POC_NAME;
 
-            if (pocDisplayName.length > MAX_CELL_POC_NAME_LENGTH) {
-                pocDisplayName = pocDisplayName.slice(0, 8) + '...';
-            }
             context.fillText(`${pocDisplayName}`, 10, currentYOffset);
 
             const mediaCapacityNumber = Number(poc.mediaCapacity) || 0;
@@ -65,18 +62,18 @@ export const POCCellLabel = ({ pocs }: IPOCCellLabelProps) => {
             context.fillStyle = isPhysicalOverflow ? POC_DATA_OVERFLOW_COLOR : POC_DATA_NORMAL_COLOR;
             context.fillText(
                 physicalCapacityText,
-                CANVAS_BASE_WIDTH - 140,
-                currentYOffset
+                10,
+                currentYOffset + fontSize + 2
             );
 
             context.fillStyle = isMediaOverflow ? POC_DATA_OVERFLOW_COLOR : POC_DATA_NORMAL_COLOR;
             context.fillText(
                 mediaCapacityText,
-                CANVAS_BASE_WIDTH - 335,
-                currentYOffset
+                CANVAS_BASE_WIDTH - 320,
+                currentYOffset + fontSize + 2
             );
 
-            currentYOffset += fontSize + 5;
+            currentYOffset += fontSize * 2 + 15;
             pocIndex++;
 
 

@@ -7,11 +7,11 @@ import { ILevelPlane } from 'package/stores/POCViewerStore/types';
 import { observer } from 'mobx-react';
 import HorizontalAxis from './horizontalAxis';
 import { VerticalAxis } from './verticalAxis';
-import { POCObject3D } from './pocObject3D';
 import { layersWidgetStore } from 'package/stores/widgetStore';
-import { LEVEL_PLANE_INNER_COLOR, LEVEL_PLANE_LABEL_COLOR, LEVEL_PLANE_OUTER_COLOR, LEVEL_PLANE_OUTER_SECOND_COLOR, OUTER_PLANE_EXTRA_PADDING } from 'package/constants';
+import { LEVEL_EDGE_HIGHLIGHT_COLOR, LEVEL_PLANE_INNER_COLOR, LEVEL_PLANE_LABEL_COLOR, LEVEL_PLANE_OUTER_COLOR, LEVEL_PLANE_OUTER_SECOND_COLOR, OUTER_PLANE_EXTRA_PADDING } from 'package/constants';
 import { Tool } from './tool';
 import { POCCell } from './pocCell';
+import { Line } from './basicObjects/line';
 
 
 
@@ -34,11 +34,26 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
 
     const planeGroupRef = useRef<any>(null);
 
+    const planeEdgeLineP1 = new Vector3(0, 0, 0);
+    const planeEdgeLineP2 = new Vector3(0, 0, -pocViewerStore.planesLength);
+    const planeEdgeLineP3 = new Vector3(pocViewerStore.planesWidth, 0, -pocViewerStore.planesLength);
+
     return (
         <group
             position={position}
             ref={planeGroupRef}
         >
+            <Line
+                color={LEVEL_EDGE_HIGHLIGHT_COLOR}
+                startPoint={planeEdgeLineP1}
+                endPoint={planeEdgeLineP2}
+            />
+            <Line
+                color={LEVEL_EDGE_HIGHLIGHT_COLOR}
+                startPoint={planeEdgeLineP2}
+                endPoint={planeEdgeLineP3}
+            />
+
             {
                 !levelVisibilityOptions.planeHidden &&
                 <group position={planePosition}>

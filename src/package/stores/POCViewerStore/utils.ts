@@ -66,8 +66,10 @@ export const transformToVIewerTools = (tools: IToolDTO[]): IViewerTool[] => {
             }
         }
 
-        const toolLength = (xAxisEnd.distance - xAxisStart.distance) || TOOL_DEFAULT_LENGTH;
-        const toolWidth = (yAxisEnd.distance - yAxisStart.distance) || TOOL_DEFAULT_WIDTH;
+        // const toolLength = (xAxisEnd.distance - xAxisStart.distance) || TOOL_DEFAULT_LENGTH;
+        // const toolWidth = (yAxisEnd.distance - yAxisStart.distance) || TOOL_DEFAULT_WIDTH;
+        const toolLength = tool.length;
+        const toolWidth = tool.width;
         const toolHeight = tool.height;
 
         const position = {
