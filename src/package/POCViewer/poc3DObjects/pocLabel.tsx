@@ -3,8 +3,8 @@ import React, { useMemo } from 'react';
 import { Vector3 } from 'three';
 
 
-const CANVAS_BASE_WIDTH = 300;
-const CANVAS_BASE_HEIGHT = 150;
+const CANVAS_BASE_WIDTH = 420;
+const CANVAS_BASE_HEIGHT = 160;
 
 interface IPOCLabelProps {
     mediaCapacity: string

@@ -85,6 +85,7 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
                     position={[0 - LEVEL_EDGE_LINE_OFFSET - 1, -0.5, 0 + LEVEL_EDGE_LINE_OFFSET]}
                     scale={[textScale, textScale, textScale]}
                     fillOpacity={1}
+                    rotation={[0, Math.PI / 2, 0]}
                 >
                     {props.levelPlane.levelName}
                 </Text>
