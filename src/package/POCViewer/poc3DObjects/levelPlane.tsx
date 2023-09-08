@@ -93,11 +93,11 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
                 <Text
                     color={LEVEL_PLANE_LABEL_COLOR}
                     outlineWidth = {0}
-                    anchorX="right"
+                    anchorX="left"
                     anchorY="bottom"
                     position={[outerPlaneWidth -  0.5 * LEVEL_EDGE_LINE_OFFSET + 1.5, -0.5, -outerPlaneLength + LEVEL_EDGE_LINE_OFFSET / 2]}
                     scale={[textScale, textScale, textScale]}
-                    rotation={[0, Math.PI, 0]}
+                    rotation={[0, 0, 0]}
                     fillOpacity={1}
                 >
                     {props.levelPlane.levelName}
