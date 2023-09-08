@@ -34,9 +34,10 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
 
     const planeGroupRef = useRef<any>(null);
 
-    const planeEdgeLineP1 = new Vector3(0, 0, 0);
-    const planeEdgeLineP2 = new Vector3(0, 0, -pocViewerStore.planesLength);
-    const planeEdgeLineP3 = new Vector3(pocViewerStore.planesWidth, 0, -pocViewerStore.planesLength);
+    const LEVEL_EDGE_LINE_OFFSET = 7;
+    const planeEdgeLineP1 = new Vector3(0 - LEVEL_EDGE_LINE_OFFSET, 0, 0 + LEVEL_EDGE_LINE_OFFSET);
+    const planeEdgeLineP2 = new Vector3(0 - LEVEL_EDGE_LINE_OFFSET, 0, -pocViewerStore.planesLength - LEVEL_EDGE_LINE_OFFSET);
+    const planeEdgeLineP3 = new Vector3(pocViewerStore.planesWidth + LEVEL_EDGE_LINE_OFFSET, 0, -pocViewerStore.planesLength - LEVEL_EDGE_LINE_OFFSET);
 
     return (
         <group
@@ -73,27 +74,36 @@ export const LevelPlane = observer((props: {levelPlane: ILevelPlane}) => {
                         <meshBasicMaterial attach="material" color={outerPlaneColor} opacity={outerPlaneOpacity} transparent={true} side={DoubleSide} />
                     </Plane>
 
-                    <Suspense fallback={<></>}>
-                        <Text
-                            color={LEVEL_PLANE_LABEL_COLOR}
-                            outlineWidth = {0}
-                            anchorX="right"
-                            anchorY="bottom"
-                            position={[-(pocViewerStore.planesWidth + 16) / 2, 0, (pocViewerStore.planesLength + 12) / 2]}
-                            scale={[textScale, textScale, textScale]}
-                            fillOpacity={1}
-                        >
-                            {props.levelPlane.levelName}
-                        </Text>
-                    </Suspense>
                 </group>
             }
+            <Suspense fallback={<></>}>
+                <Text
+                    color={LEVEL_PLANE_LABEL_COLOR}
+                    outlineWidth = {0}
+                    anchorX="right"
+                    anchorY="bottom"
+                    position={[0 - LEVEL_EDGE_LINE_OFFSET - 1, -0.5, 0 + LEVEL_EDGE_LINE_OFFSET]}
+                    scale={[textScale, textScale, textScale]}
+                    fillOpacity={1}
+                >
+                    {props.levelPlane.levelName}
+                </Text>
+
+                <Text
+                    color={LEVEL_PLANE_LABEL_COLOR}
+                    outlineWidth = {0}
+                    anchorX="right"
+                    anchorY="bottom"
+                    position={[outerPlaneWidth -  0.5 * LEVEL_EDGE_LINE_OFFSET + 1.5, -0.5, -outerPlaneLength + LEVEL_EDGE_LINE_OFFSET / 2]}
+                    scale={[textScale, textScale, textScale]}
+                    rotation={[0, Math.PI, 0]}
+                    fillOpacity={1}
+                >
+                    {props.levelPlane.levelName}
+                </Text>
+            </Suspense>
 
             <group>
-                {/* {levelVisibilityOptions.pocsHidden || pocViewerStore.getAllLevelPOCs(props.levelPlane.id).map((poc, i) => {
-                    return <POCObject3D poc={poc} key={i} />;
-                })} */}
-
                 {levelVisibilityOptions.pocsHidden || pocViewerStore.getAllPOCCells(props.levelPlane.id).map((pocCell, i) => {
                     return <POCCell pocCell={pocCell} key={i} />;
                 })}

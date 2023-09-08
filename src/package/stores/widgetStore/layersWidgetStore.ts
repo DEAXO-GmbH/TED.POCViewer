@@ -18,16 +18,17 @@ class LayersWidgetStore {
 
     @action
     public addLevels (levels: ILevelPlane[]) {
-        this.layerVisibilityOptions = levels.map(level => {
+        this.layerVisibilityOptions = levels.map((level, index) => {
+            const isPlaneBottommost = index === levels.length - 1;
             return {
                 levelId: level.id,
                 levelName: level.levelName,
                 isLayerExpanded: false,
                 levelHidden: false,
-                axesHidden: false,
+                axesHidden: isPlaneBottommost ? false : true,
                 pocsHidden: false,
                 toolsHidden: false,
-                planeHidden: false,
+                planeHidden: true,
             };
         });
     }

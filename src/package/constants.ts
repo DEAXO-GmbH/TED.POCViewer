@@ -47,7 +47,7 @@ export const LEVEL_EDGE_HIGHLIGHT_COLOR = 0x000000;
 
 // Unused poc zone
 export const UNUSED_POC_ZONE_LEFT_OFFSET = 5;
-export const UNUSED_POC_ZONE_COLOR = 0x3C7CAA;
+export const UNUSED_POC_ZONE_COLOR = 0x5C7CB8;
 export const UNUSED_POC_ZONE_PLANE_PADDING = 1;
 export const UNUSED_POC_ZONE_GAP = 1.5;
 export const UNUSED_POC_ZONE_TITLE_LABEL_COLOR = 0x002255;

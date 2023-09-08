@@ -31,7 +31,7 @@ export const UnusedPOCZone = () => {
                 rotation={new Euler(1.5 * Math.PI, 0, 0)}
                 position={[0, 0, 0]}
             >
-                <meshBasicMaterial attach="material" color={UNUSED_POC_ZONE_COLOR} opacity={1} transparent={true} />
+                <meshBasicMaterial attach="material" color={UNUSED_POC_ZONE_COLOR} opacity={0.5} transparent={true} />
             </Plane>
 
             {
