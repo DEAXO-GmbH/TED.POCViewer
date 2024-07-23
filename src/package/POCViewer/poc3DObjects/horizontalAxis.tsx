@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import React, { useRef } from 'react';
+import React from 'react';
 import { Euler, Vector3 } from 'three';
 import { Circle } from './basicObjects/circle';
 import { Line } from './basicObjects/line';
@@ -13,7 +13,7 @@ import { observer } from 'mobx-react';
 
 const HorizontalAxis = observer((props: {horizontalAxis: IHorizontalAxis}) => {
     const position = new Vector3(0, props.horizontalAxis.distance, 0);
-    const ref = useRef();
+    // const ref = useRef();
 
     const text = props.horizontalAxis.name;
     const length = pocViewerStore.planesWidth;
@@ -29,7 +29,8 @@ const HorizontalAxis = observer((props: {horizontalAxis: IHorizontalAxis}) => {
             rotation={new Euler(1.5 * Math.PI, 0, 0)}
         >
             <Circle
-                ref={ref}
+                /**ToDo: Do we need this ref here? If its redundant, we should remove it  */
+                //ref={ref}
                 color={color}
                 radius={radius}
                 position={new Vector3(
