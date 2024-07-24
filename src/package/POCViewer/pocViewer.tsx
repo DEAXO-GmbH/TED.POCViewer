@@ -1,5 +1,5 @@
 /* eslint react/no-unknown-property: 0 */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react'
 import { observer } from 'mobx-react';
 
 import { OrbitControls, OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
@@ -43,6 +43,8 @@ export interface IPOCViewerProps {
     debug?: boolean
 }
 
+
+
 export const POCViewer = observer(({ pocInputParameters, onPOCClick, onPOCCellClick, debug = false }: IPOCViewerProps) => {
     useEffect(() => {
         if (pocViewerStore.clickedPOC) {
@@ -68,6 +70,13 @@ export const POCViewer = observer(({ pocInputParameters, onPOCClick, onPOCCellCl
         pocViewerStore.setDebugMode(debug);
     }, [debug]);
 
+    const ortoCamera = useRef<any>(null);
+    const perspectiveCamera = useRef<any>(null);
+
+    useEffect(() => {
+        layersWidgetStore.ortoCamera = ortoCamera
+        layersWidgetStore.perspectiveCamera = perspectiveCamera
+    }, [ortoCamera, perspectiveCamera]);
 
     return (
         <POCViewerErrorBoundary>
@@ -78,14 +87,16 @@ export const POCViewer = observer(({ pocInputParameters, onPOCClick, onPOCCellCl
                     <color attach='background' args={[SCENE_BACKGROUND_COLOR]} />
                     {
                         (layersWidgetStore.showOrthographicCamera)
-                            ? <OrthographicCamera makeDefault position={[0,0,300]} far={1000} />
-                            : <PerspectiveCamera makeDefault position={[0,0,300]} far={1000} />
+                            ? <OrthographicCamera makeDefault position={layersWidgetStore.cameraPosition} far={1000} near={5}
+                                ref={ortoCamera} scale={layersWidgetStore.cameraScale}/>
+                            : <PerspectiveCamera makeDefault position={layersWidgetStore.cameraPosition} far={1000} near={5}
+                                ref={perspectiveCamera} scale={layersWidgetStore.cameraScale}/>
                     }
 
                     <OrbitControls
                         makeDefault
                         minDistance={0.01}
-                        maxDistance={5000}
+                        maxDistance={10000}
 
                         minPolarAngle={0}
                         maxPolarAngle={1.5}

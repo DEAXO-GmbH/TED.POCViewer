@@ -1,6 +1,7 @@
 import { action, makeObservable, observable } from 'mobx'
 import { ILevelLayerOption } from './types'
 import { ILevelPlane } from '../POCViewerStore/types'
+import { Vector3 } from 'three';
 
 
 class LayersWidgetStore {
@@ -10,6 +11,11 @@ class LayersWidgetStore {
     @observable showPOCCellLabels = false;
     @observable toolsTransparent = true;
     @observable showOrthographicCamera = false;
+
+    ortoCamera: any = undefined;
+    perspectiveCamera: any = undefined;
+    cameraPosition: Vector3 = new Vector3 (300, 300, 300)
+    cameraScale: Vector3 = new Vector3 (1, 1, 1)
 
     constructor () {
         makeObservable(this);
@@ -124,6 +130,13 @@ class LayersWidgetStore {
 
     @action
     public toggleOrthographicCamera () {
+        this.cameraPosition = (this.showOrthographicCamera)
+            ? this.ortoCamera?.current?.position
+            : this.perspectiveCamera?.current?.position
+        this.cameraScale = (this.showOrthographicCamera)
+            ? this.ortoCamera?.current?.scale
+            : this.perspectiveCamera?.current?.scale
+
         this.showOrthographicCamera = !this.showOrthographicCamera;
     }
 }
