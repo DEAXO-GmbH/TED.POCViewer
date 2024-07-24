@@ -748,7 +748,7 @@ export const mock1: IPOCViewerInputParameters = {
             height: 5,
             id: 'tool2',
             levelId: '01',
-            name: 'Wook cutter 11',
+            name: 'FUR_A01_002.01 ELECTRICAL CABINET',
             pocCellId: [ 'POC1', 'POC3', 'cell_1'],
         },
         {

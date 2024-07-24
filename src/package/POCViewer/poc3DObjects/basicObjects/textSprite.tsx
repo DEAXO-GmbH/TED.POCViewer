@@ -6,7 +6,7 @@ const CANVAS_BASE_WIDTH = 100;
 const CANVAS_BASE_HEIGHT = 100;
 
 export const TextSprite = (props: any) => {
-    const { fontSize = 100, color = 0x000088, children, position=[0, 0, 0], alignment='center', width=5, bgColor=0x000000, bgOpacity=0 } = props;
+    const { fontSize = 100, color = 0x000088, children, position=[0, 0, 0], alignment='center', width=10, bgColor=0x000000, bgOpacity=0 } = props;
 
     const canvas = useMemo(() => {
         const CANVAS_WIDTH = CANVAS_BASE_WIDTH * width;

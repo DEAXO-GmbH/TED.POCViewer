@@ -1,8 +1,6 @@
-import { action, makeObservable, observable } from 'mobx';
-import { ILevelLayerOption } from './types';
-import { ILevelPlane } from '../POCViewerStore/types';
-import { Vector3 } from 'three';
-import { Euler } from '@react-three/fiber';
+import { action, makeObservable, observable } from 'mobx'
+import { ILevelLayerOption } from './types'
+import { ILevelPlane } from '../POCViewerStore/types'
 
 
 class LayersWidgetStore {
@@ -11,7 +9,7 @@ class LayersWidgetStore {
     @observable showInterconnections = true;
     @observable showPOCCellLabels = false;
     @observable toolsTransparent = true;
-    @observable showOrthographicCamera = true;
+    @observable showOrthographicCamera = false;
 
     constructor () {
         makeObservable(this);
