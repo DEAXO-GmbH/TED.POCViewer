@@ -1,6 +1,8 @@
 import { action, makeObservable, observable } from 'mobx';
 import { ILevelLayerOption } from './types';
 import { ILevelPlane } from '../POCViewerStore/types';
+import { Vector3 } from 'three';
+import { Euler } from '@react-three/fiber';
 
 
 class LayersWidgetStore {
@@ -9,7 +11,7 @@ class LayersWidgetStore {
     @observable showInterconnections = true;
     @observable showPOCCellLabels = false;
     @observable toolsTransparent = true;
-
+    @observable showOrthographicCamera = true;
 
     constructor () {
         makeObservable(this);
@@ -68,10 +70,10 @@ class LayersWidgetStore {
         if (layer.levelHidden) {
             Object.assign(layer, {
                 levelHidden: false,
-                axesHidden: false,
+                axesHidden: true,
                 pocsHidden: false,
                 toolsHidden: false,
-                planeHidden: false,
+                planeHidden: true,
             });
         } else {
             Object.assign(layer, {
@@ -120,6 +122,11 @@ class LayersWidgetStore {
     @action
     public toggleToolsTransparent () {
         this.toolsTransparent = !this.toolsTransparent;
+    }
+
+    @action
+    public toggleOrthographicCamera () {
+        this.showOrthographicCamera = !this.showOrthographicCamera;
     }
 }
 

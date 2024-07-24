@@ -55,12 +55,13 @@ export const POCAndToolConnection = observer(({ tool }: IPOCAndToolConnection) =
 
                     return (
                         <mesh key={index}>
-                            <meshLineGeometry points={points}/>
+                            <meshLineGeometry attach="geometry" points={points}/>
                             <meshLineMaterial
                                 dashOffset={0.3}
                                 dashRatio={0.2}
                                 dashArray={0.05}
-                                lineWidth={0.25}
+                                lineWidth={0.002}
+                                sizeAttenuation={0.002}
                                 alphaTest={0}
                                 color={new Color(POC_TOOL_CONNECTION_COLOR)}
                                 resolution={new Vector2(121, 121)}

@@ -32,6 +32,10 @@ export const LayersWidget = observer(() => {
             </div>
 
             <div className='poc-viewer__layers_global'>
+                <div onClick={() => layersWidgetStore.toggleOrthographicCamera()} className='poc-viewer__layers_global_option'>
+                    <Checkbox checked={layersWidgetStore.showOrthographicCamera} /> Orthographic camera
+                </div>
+
                 <div onClick={() => layersWidgetStore.toggleToolsTransparent()} className='poc-viewer__layers_global_option'>
                     <Checkbox checked={layersWidgetStore.toolsTransparent} /> Tool transparency
                 </div>

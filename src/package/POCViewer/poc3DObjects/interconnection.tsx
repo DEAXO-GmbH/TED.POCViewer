@@ -28,7 +28,8 @@ export const Interconnection = ({ firstTool, secondTool }: IPOCAndToolConnection
                 <meshLineMaterial
                     color={new Color(INTERCONNECTION_COLOR)}
                     resolution={new Vector2(121, 121)}
-                    lineWidth={0.5}
+                    lineWidth={0.002}
+                    sizeAttenuation={0.002}
                 />
             </mesh>
         </>

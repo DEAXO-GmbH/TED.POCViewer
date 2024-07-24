@@ -2,17 +2,27 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 
-import { GizmoHelper, OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { OrbitControls, OrthographicCamera, PerspectiveCamera } from '@react-three/drei';
 import { Canvas, extend } from '@react-three/fiber';
 import { ButtonPannel } from './components/buttonPannel';
 import { POCObjectsGenerator } from './pocObjectsGenerator';
 
 import { concatClassnames as cn } from 'package/utils';
 
-import { POC_VIEWER_CSS_VARIABLES, SCENE_BACKGROUND_COLOR, SCENE_GRID_FIRST_COLOR, SCENE_GRID_SECOND_COLOR } from 'package/constants';
+import {
+    POC_VIEWER_CSS_VARIABLES,
+    SCENE_BACKGROUND_COLOR,
+    SCENE_GRID_FIRST_COLOR,
+    SCENE_GRID_SECOND_COLOR
+} from 'package/constants';
 import { pocViewerStore } from 'package/stores/POCViewerStore';
 
-import { IPOCViewerInputParameters, IUnusedViewerPOC, IViewerPOC, IViewerPOCCell } from 'package/stores/POCViewerStore/types';
+import {
+    IPOCViewerInputParameters,
+    IUnusedViewerPOC,
+    IViewerPOC,
+    IViewerPOCCell
+} from 'package/stores/POCViewerStore/types';
 
 import { SceneSettings } from './sceneSettings';
 
@@ -21,7 +31,7 @@ import { UnusedPOCZone } from './components/unusedPOCZone';
 import { POCViewerErrorBoundary } from './errorBoundary';
 
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
-
+import { layersWidgetStore } from '../stores/widgetStore';
 
 
 extend({ MeshLineMaterial, MeshLineGeometry });
@@ -66,7 +76,12 @@ export const POCViewer = observer(({ pocInputParameters, onPOCClick, onPOCCellCl
                     <SceneSettings />
 
                     <color attach='background' args={[SCENE_BACKGROUND_COLOR]} />
-                    <PerspectiveCamera makeDefault position={[0,0,300]} far={1000} />
+                    {
+                        (layersWidgetStore.showOrthographicCamera)
+                            ? <OrthographicCamera makeDefault position={[0,0,300]} far={1000} />
+                            : <PerspectiveCamera makeDefault position={[0,0,300]} far={1000} />
+                    }
+
                     <OrbitControls
                         makeDefault
                         minDistance={0.01}
