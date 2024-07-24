@@ -69,7 +69,7 @@ export const ButtonPannel = observer(() => {
 
                 <div className='poc-viewer__button-pannel_btn-group'>
                     <button className='poc-viewer__button-pannel_btn' onClick={onLayersClick}><CopyOutlined /></button>
-                    <button className='poc-viewer__button-pannel_btn' ><ScissorOutlined /></button>
+                    {/*<button className='poc-viewer__button-pannel_btn' ><ScissorOutlined /></button>*/}
                 </div>
 
                 {

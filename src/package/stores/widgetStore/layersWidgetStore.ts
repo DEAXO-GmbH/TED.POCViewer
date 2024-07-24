@@ -4,11 +4,11 @@ import { ILevelPlane } from '../POCViewerStore/types';
 
 
 class LayersWidgetStore {
-    @observable isWidgetOpen = false;
+    @observable isWidgetOpen = true;
     @observable layerVisibilityOptions: ILevelLayerOption[] = [];
     @observable showInterconnections = true;
     @observable showPOCCellLabels = false;
-    @observable toolsTransparent = false;
+    @observable toolsTransparent = true;
 
 
     constructor () {

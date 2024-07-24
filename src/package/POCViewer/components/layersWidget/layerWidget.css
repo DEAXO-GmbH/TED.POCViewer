@@ -13,11 +13,13 @@
     width: 250px;
     position: absolute;
     top: 8px;
-    right: 40px;
+    right: 60px;
     animation: poc_viewer_layers_appear 50ms;
-    
-    color: var(--button-panel-modal-text-color-2);
-    font-size: 13px;
+
+    /*color: var(--button-panel-modal-text-color-2);*/
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
 
     box-shadow: inset 0 0 0px 1px #eff1f030, 0 0 5px 0 rgba(0, 0, 0, 0.348);
     background-color: var(--button-panel-modal-bg-2);
@@ -46,7 +48,7 @@
 
 .poc-viewer__layers_main {
     padding: 14px 16px 20px;
-    
+
     max-height: 300px;
     overflow: hidden auto;
 }

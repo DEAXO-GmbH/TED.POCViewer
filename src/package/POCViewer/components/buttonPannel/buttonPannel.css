@@ -14,8 +14,8 @@
 
 .poc-viewer__button-pannel_btn {
     display: block;
-    width: 28px;
-    height: 28px;
+    width: 42px;
+    height: 42px;
     cursor: pointer;
     background-color: var(--button-panel-bg);
     border-width: 2px;
@@ -30,7 +30,7 @@
     justify-content: center;
     align-items: center;
 
-    font-size: 13px;
+    font-size: 18px;
     color: var(--button-panel-text-color);
 }
 
@@ -46,7 +46,7 @@
 
 .poc-viewer__button-pannel_btn:not(:last-child) {
     border-bottom: none;
-} 
+}
 
 .poc-viewer__button-pannel_btn:hover {
     filter: brightness(1.03);

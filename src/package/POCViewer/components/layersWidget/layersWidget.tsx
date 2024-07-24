@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
-import { CloseOutlined, EyeOutlined, EyeInvisibleOutlined, DownOutlined } from '@ant-design/icons';
+import { CloseOutlined, DownOutlined, EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import { LayerOption } from './layerOption';
 
 import { concatClassnames as cn } from 'package/utils';
@@ -13,7 +13,6 @@ import { Checkbox } from 'antd';
 import './layerWidget.css';
 
 
-
 export const LayersWidget = observer(() => {
     useEffect(() => {
         layersWidgetStore.addLevels(pocViewerStore.levelPlanes.reverse());
@@ -24,7 +23,7 @@ export const LayersWidget = observer(() => {
         <div className={cn('poc-viewer__layers', layersWidgetStore.isWidgetOpen && 'open')} onContextMenu={(e)=> e.preventDefault()}>
             <div className='poc-viewer__layers_top'>
                 <div>
-                    Levels visibility
+                    Properties
                     <CloseOutlined onClick={() => layersWidgetStore.closeWidget()} />
                 </div>
 
@@ -33,6 +32,10 @@ export const LayersWidget = observer(() => {
             </div>
 
             <div className='poc-viewer__layers_global'>
+                <div onClick={() => layersWidgetStore.toggleToolsTransparent()} className='poc-viewer__layers_global_option'>
+                    <Checkbox checked={layersWidgetStore.toolsTransparent} /> Tool transparency
+                </div>
+
                 <div onClick={() => layersWidgetStore.toggleShowInterconnections()} className='poc-viewer__layers_global_option'>
                     <Checkbox checked={layersWidgetStore.showInterconnections} /> Show interconnections
                 </div>
@@ -41,9 +44,6 @@ export const LayersWidget = observer(() => {
                     <Checkbox checked={layersWidgetStore.showPOCCellLabels} /> Show POC Cell labels
                 </div>
 
-                <div onClick={() => layersWidgetStore.toggleToolsTransparent()} className='poc-viewer__layers_global_option'>
-                    <Checkbox checked={layersWidgetStore.toolsTransparent} /> Tool transparency
-                </div>
             </div>
 
             <div className='poc-viewer__layers_main'>

@@ -3,9 +3,9 @@ export const CSS_BUTTON_PANEL_BTN_BG = '#dbdbdb';
 export const CSS_BUTTON_PANEL_BTN_TEXT_COLOR = '#777777';
 export const CSS_BUTTON_PANEL_BTN_BORDER = '#777777';
 
-export const CSS_BUTTON_PANEL_MODAL_BG_1 = '#e8e8e8';
-export const CSS_BUTTON_PANEL_MODAL_BG_2 = '#dbdbdb';
-export const CSS_BUTTON_PANEL_MODAL_TEXT_COLOR_1 = '#666666';
+export const CSS_BUTTON_PANEL_MODAL_BG_1 = '#232b33';
+export const CSS_BUTTON_PANEL_MODAL_BG_2 = '#ececec';
+export const CSS_BUTTON_PANEL_MODAL_TEXT_COLOR_1 = '#eae9e9';
 export const CSS_BUTTON_PANEL_MODAL_TEXT_COLOR_2 = '#555555';
 export const CSS_BUTTON_PANEL_MODAL_BORDER = '#777777';
 export const CSS_BUTTON_PANEL_MODAL_THUMB_COLOR = '#999999';
@@ -27,7 +27,7 @@ export const POC_VIEWER_CSS_VARIABLES = {
 
 
 // Scene and general
-export const SCENE_BACKGROUND_COLOR = 0xE7EEF3;
+export const SCENE_BACKGROUND_COLOR = 0xf3f4f6;
 export const SCENE_GRID_FIRST_COLOR = 0xD3DEE6;
 export const SCENE_GRID_SECOND_COLOR = 0xA2A8AD;
 export const SCENE_DEFAULT_TEXT_COLOR = 0x202121;
