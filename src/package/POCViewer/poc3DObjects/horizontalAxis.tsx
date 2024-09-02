@@ -13,7 +13,7 @@ import { observer } from 'mobx-react';
 
 const HorizontalAxis = observer((props: {horizontalAxis: IHorizontalAxis}) => {
     const position = new Vector3(0, props.horizontalAxis.distance, 0);
-    const ref = useRef();
+    const refForLine = useRef();
 
     const text = props.horizontalAxis.name;
     const length = pocViewerStore.planesWidth;
@@ -29,7 +29,7 @@ const HorizontalAxis = observer((props: {horizontalAxis: IHorizontalAxis}) => {
             rotation={new Euler(1.5 * Math.PI, 0, 0)}
         >
             <Circle
-                ref={ref}
+                refForLine={refForLine}
                 color={color}
                 radius={radius}
                 position={new Vector3(
