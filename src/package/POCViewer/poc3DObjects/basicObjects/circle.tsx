@@ -1,9 +1,11 @@
 /* eslint-disable react/no-unknown-property */
 import { observer } from 'mobx-react';
-import React, { useLayoutEffect } from 'react';
-import { BufferGeometry, EllipseCurve, Mesh, ShapeGeometry, Vector3 } from 'three';
+import React, { forwardRef, useLayoutEffect } from 'react';
+import { EllipseCurve, Vector3 } from 'three';
 
-export const Circle = observer((props: any) => {
+
+// eslint-disable-next-line react/display-name
+export const Circle = observer(forwardRef((props: any, refForLine: React.ForwardedRef<any>) => {
     const ref = React.useRef<any>(null!);
     const { position, radius, color } = props;
 
@@ -26,11 +28,11 @@ export const Circle = observer((props: any) => {
 
 
     return (
-        <line>
+        <line ref={refForLine}>
             <bufferGeometry ref={ref} />
             <lineBasicMaterial color={color} opacity={0.4} transparent />
         </line>
     );
-});
+}));
 
 export default Circle;

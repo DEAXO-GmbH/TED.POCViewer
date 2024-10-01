@@ -7,7 +7,7 @@ import { IViewerTool } from 'package/stores/POCViewerStore/types';
 
 import { TOOL_COLOR, TOOL_DEFAULT_HEIGHT, TOOL_DEFAULT_LENGTH, TOOL_DEFAULT_WIDTH, TOOL_DIMENSIONS_GAP, TOOL_EDGES_COLOR, TOOL_NAME_COLOR, TOOL_SIZE_UNSPECIFIED_COLOR } from 'package/constants';
 
-import { Box3, DoubleSide, EdgesGeometry, LineSegments, Mesh, Line, Object3D } from 'three';
+import { Box3, DoubleSide, EdgesGeometry, LineSegments, Mesh, Line, Color } from 'three';
 import { Text } from './basicObjects/text';
 import TextSprite from './basicObjects/textSprite';
 
@@ -37,8 +37,7 @@ export const Tool = observer(({ tool }: IToolProps) => {
 
         if (textMesh) {
             const boundingBox = new Box3().setFromObject(textMesh);
-            const textWidth = boundingBox.max.x - boundingBox.min.x;
-            return textWidth;
+            return  boundingBox.max.x - boundingBox.min.x;
         }
 
         return undefined;
@@ -54,8 +53,7 @@ export const Tool = observer(({ tool }: IToolProps) => {
         const toolEdgeLine = new LineSegments(toolEdges);
         toolEdgeLine.position.y += toolHeight / 2 + 0.1;
         // @ts-ignore
-        toolEdgeLine.material.color = TOOL_EDGES_COLOR;
-
+        toolEdgeLine.material.color = new Color(TOOL_EDGES_COLOR);
         setEdgesLine(toolEdgeLine);
     }, [toolBoxRef.current]);
 
