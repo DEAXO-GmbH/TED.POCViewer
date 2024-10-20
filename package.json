@@ -1,6 +1,6 @@
 {
   "name": "TED.POCViewer",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -13,28 +13,24 @@
     "ts": "npx tsc --project tsconfig.json"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.2.2",
-    "@react-three/drei": "8.20.0",
-    "@react-three/fiber": "7.0.27",
+    "@ant-design/icons": "4.8.3",
+    "@react-three/drei": "^9.108.4",
+    "@react-three/fiber": "^8.16.8",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "12.1.2",
     "@testing-library/user-event": "^14.4.3",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.10",
-    "@types/react": "^18.0.26",
-    "@types/react-dom": "^18.0.9",
-    "antd": "^4.6.4",
+    "antd": "^4.24.16",
     "lodash": "^4.17.15",
     "meshline": "^3.1.6",
-    "mobx": "6.5.0",
-    "mobx-react": "7.3.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "mobx": "6.13.1",
+    "mobx-react": "9.1.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-scripts": "^5.0.1",
-    "three": "^0.148.0",
+    "three": "^0.166.0",
     "three.meshline": "^1.4.0",
-    "web-vitals": "^2.1.4",
-    "tslib": "*"
+    "tslib": "*",
+    "web-vitals": "^2.1.4"
   },
   "devDependencies": {
     "@rollup/plugin-babel": "^6.0.3",
@@ -43,8 +39,12 @@
     "@rollup/plugin-node-resolve": "^15.1.0",
     "@rollup/plugin-replace": "^5.0.2",
     "@rollup/plugin-typescript": "^11.1.1",
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
     "@types/lodash": "^4.14.191",
-    "@types/three": "^0.148.0",
+    "@types/three": "^0.166.0",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.10",
     "eslint": "^8.38.0",
     "json-loader": "^0.5.7",
     "react-router": "^6.13.0",
@@ -55,9 +55,13 @@
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-rename": "^1.0.1",
     "ts-loader": "^9.4.2",
-    "typescript": "^4.4.2",
+    "typescript": "5.1.6",
     "webpack": "^5.79.0",
     "webpack-cli": "^5.0.1"
+  },
+  "resolutions": {
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0"
   },
   "eslintConfig": {
     "extends": [

@@ -15,7 +15,7 @@ export const Text = (props: any) => {
         <mesh position={
             position
         }>
-            <textGeometry args={[text, { font, size, height: 0.1 }]} />
+            <textGeometry args={[text, { font, size, depth: 0.1 }]} />
             <meshLambertMaterial attach='material' color={color} />
         </mesh>
     );
